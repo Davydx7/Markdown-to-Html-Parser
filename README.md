@@ -1,8 +1,6 @@
 # frontend Codebase
 
 Project initailization
-[]: # Language: markdown
-[]: # Path: README.md
 
 ## Description
 

@@ -1,0 +1,38 @@
+@use 'fonts';
+@use 'variables';
+// @import 'node_modules/modern-normalize/modern-normalize.css';
+
+*, ::after, ::before {
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.6rem;
+  min-height: 100vh;
+  background-image: linear-gradient(to left bottom, #9b346f, #306cb4, #1b9991);
+}
+
+//Hide scrollbar
+body::-webkit-scrollbar {
+  display: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+

@@ -1,0 +1,15 @@
+.button {
+	border: none;
+	border-radius: 0.5rem;
+	background-color: var(--primary);
+	color: var(--secondary);
+	font-size: 1.5rem;
+	padding: 1rem 2rem;
+	font-weight: 500;
+
+	&:hover {
+		background-color: var(--secondary);
+		color: var(--primary);
+		outline: 1px solid var(--primary);
+	}
+}
