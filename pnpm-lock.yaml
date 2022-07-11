@@ -19,12 +19,16 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-react: ^7.28.0
   eslint-plugin-react-hooks: ^4.3.0
+  flag-icons: ^6.6.3
   modern-normalize: ^1.1.0
   normalize.css: ^8.0.1
   prettier: ^2.7.1
   react: ^18.2.0
+  react-colorful: ^5.5.1
   react-dom: ^18.2.0
+  react-draggable: ^4.4.5
   react-hook-form: ^7.33.1
+  react-icons: ^4.4.0
   react-router-dom: ^6.3.0
   react-scripts: 5.0.1
   sass: ^1.53.0
@@ -40,11 +44,15 @@ dependencies:
   '@types/react-dom': 18.0.6
   axios: 0.27.2
   classnames: 2.3.1
+  flag-icons: 6.6.3
   modern-normalize: 1.1.0
   normalize.css: 8.0.1
   react: 18.2.0
+  react-colorful: 5.5.1_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
+  react-draggable: 4.4.5_biqbaboplfbrettd7655fr4n2y
   react-hook-form: 7.33.1_react@18.2.0
+  react-icons: 4.4.0_react@18.2.0
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.1_ofyfyiqkeyx3o7lmfnyy2wbffy
   sass: 1.53.0
@@ -3395,6 +3403,11 @@ packages:
       wrap-ansi: 7.0.0
     dev: false
 
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
+
   /co/4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
@@ -4842,6 +4855,10 @@ packages:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
+    dev: false
+
+  /flag-icons/6.6.3:
+    resolution: {integrity: sha512-MXkQ6TQVdjHir8fNE2YEoxyJZh7B2AZLPBr5AnJCzdOEY982Q8Lczy5MUay3OFh1ZofEhuIIPQGRADE42N1B6w==}
     dev: false
 
   /flat-cache/3.0.4:
@@ -7882,6 +7899,16 @@ packages:
       whatwg-fetch: 3.6.2
     dev: false
 
+  /react-colorful/5.5.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-M1TJH2X3RXEt12sWkpa6hLc/bbYS0H6F4rIqjQZ+RxNBstpY67d9TrFXtqdZwhpmBXcCwEi7stKqFue3ZRkiOg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
   /react-dev-utils/12.0.1_vzvrbkqxq2uhuknms22gvb2xwq:
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
@@ -7928,6 +7955,18 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-draggable/4.4.5_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-OMHzJdyJbYTZo4uQE393fHcqqPYsEtkjfMgvCHr6rejT+Ezn4OZbNyGH50vv+SunC1RMvwOTSWkEODQLzw1M9g==}
+    peerDependencies:
+      react: '>= 16.3.0'
+      react-dom: '>= 16.3.0'
+    dependencies:
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
   /react-error-overlay/6.0.11:
     resolution: {integrity: sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==}
     dev: false
@@ -7937,6 +7976,14 @@ packages:
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /react-icons/4.4.0_react@18.2.0:
+    resolution: {integrity: sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==}
+    peerDependencies:
+      react: '*'
     dependencies:
       react: 18.2.0
     dev: false

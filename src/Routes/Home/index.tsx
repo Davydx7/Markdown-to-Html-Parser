@@ -1,3 +1,4 @@
+import { FaPaperPlane, FaPlane } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Button from '../../Components/Button';
 import Layout from '../../Components/Layout';
@@ -5,15 +6,29 @@ import './home.scss';
 
 const Home: React.FC = () => (
   <Layout>
-    <h1>Welcome!</h1>
-    <p>We offer convenience at its best</p>
-    <div className="buttons">
-      <Button type="button" size="large">
-        <Link to="details">Book a flight</Link>
-      </Button>
-      <Button type="button" group="secondary" size="medium">
-        Your Bookings
-      </Button>
+    <div className="home">
+      <div>
+        <span className="welcome">Welcome!</span> <FaPaperPlane className="icon" />
+        {/* <FaPlane />
+        ·························································
+        <FaPlane /> */}
+      </div>
+      <p>
+        We offer convenience at its best
+        <br />
+        below are primary, secondary and tertiary button of large sizes
+      </p>
+      <div className="buttons">
+        <Button type="button" group="secondary" size="large">
+          Your Bookings
+        </Button>
+        <Button type="button" group="primary" size="large">
+          <Link to="details">Book a flight</Link>
+        </Button>
+        <Button type="button" group="tertiary" size="large">
+          Travel Planner
+        </Button>
+      </div>
     </div>
   </Layout>
 );

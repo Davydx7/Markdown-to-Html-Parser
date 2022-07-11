@@ -3,48 +3,48 @@
 const flights = [
   {
     id: '1',
-    name: 'Flight 1',
-    from: 'London',
-    to: 'Paris',
-    date: '2020-01-01',
-    time: '12:00',
-    price: 100
+    name: 'Chris Airways',
+    from: 'Vienna',
+    to: 'New York',
+    date: 'July 22  ',
+    time: '15:30 UTC',
+    price: 450.99
   },
   {
     id: '2',
-    name: 'Flight 2',
-    from: 'London',
-    to: 'Paris',
-    date: '2020-01-01',
-    time: '12:00',
-    price: 100
+    name: 'Jumbo Airways',
+    from: 'Vienna',
+    to: 'New York',
+    date: 'July 24  ',
+    time: '13:00 UTC',
+    price: 389.99
   },
   {
     id: '3',
-    name: 'Flight 3',
-    from: 'London',
-    to: 'Paris',
-    date: '2020-01-01',
-    time: '12:00',
-    price: 100
+    name: 'Ryanair',
+    from: 'Vienna',
+    to: 'New York',
+    date: 'July 25  ',
+    time: '11:00 UTC',
+    price: 732.49
   },
   {
     id: '4',
-    name: 'Flight 4',
-    from: 'London',
-    to: 'Paris',
-    date: '2020-01-01',
-    time: '12:00',
-    price: 100
+    name: 'Lufthansa',
+    from: 'Vienna',
+    to: 'New York',
+    date: 'July 26  ',
+    time: '16:00 UTC',
+    price: 926.79
   },
   {
     id: '5',
-    name: 'Flight 5',
-    from: 'London',
-    to: 'Paris',
-    date: '2020-01-01',
-    time: '12:00',
-    price: 100
+    name: 'EasyJet',
+    from: 'Vienna',
+    to: 'New York',
+    date: 'July 21  ',
+    time: '15:40 UTC',
+    price: 523.99
   }
 ];
 

@@ -1,10 +1,29 @@
-h1 {
-	font-size: 5rem;
-	font-weight: 400;
-}
-
-div {
+.home {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-around;
-	gap: 3rem;
+	align-items: center;
+	height: 40rem;
+
+	.welcome {
+			font-size: 5rem;
+			font-weight: 400;
+	}
+
+	.icon {
+		width: 4rem;
+		height: 4rem;
+		color: rgb(var(--primary));
+	}
+
+	p {
+		text-align: center;
+	}
+
+	.buttons {
+		display: flex;
+		// align-items: center;
+		justify-content: space-around;
+		gap: 3rem;
+	}
 }

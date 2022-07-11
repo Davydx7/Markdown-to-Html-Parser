@@ -16,7 +16,7 @@ const Button: React.FC<Props> = ({
   group = 'primary',
   type = 'button'
 }) => (
-  <button type={type} onClick={onClick} className={classNames('button', { size, group })}>
+  <button type={type} onClick={onClick} className={`button ${size} ${group}`}>
     {children || 'Button'}
   </button>
 );

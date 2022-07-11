@@ -19,6 +19,7 @@ body {
   font-size: 1.6rem;
   min-height: 100vh;
   background-image: linear-gradient(to left bottom, #9b346f, #306cb4, #1b9991);
+  color: rgb(var(--primary));
 }
 
 //Hide scrollbar
@@ -36,3 +37,25 @@ a {
   color: inherit;
 }
 
+input,select {
+  border: none;
+  border-radius: 0.5rem;
+  background-color: rgba(var(--primary),0.1);
+  padding: 1rem 1.5rem;
+  width: 100%;
+  font-size: 1.25rem;
+  color: rgb(var(--primary));
+
+}
+select {
+  width: fit-content;
+  option {
+    color: rgb(var(--primary));
+    background-color: rgb(var(--secondary));
+  }
+}
+.title {
+	padding: 1rem 0;
+	font-size: 2rem;
+	border-bottom: 1px solid rgb(var(--primary));
+}
