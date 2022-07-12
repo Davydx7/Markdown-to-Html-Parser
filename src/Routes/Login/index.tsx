@@ -23,7 +23,7 @@ function Login() {
         <form onSubmit={handleSubmit(onSubmit)} className={id === '1' ? 'signUp' : 'Login'}>
           {id === '1' && (
             <>
-              <select {...register('Title', { required: true })}>
+              <select {...register('Title', { required: 'required', shouldUnregister: true })}>
                 <option value="Mr">Mr</option>
                 <option value="Mrs">Mrs</option>
                 <option value="Miss">Miss</option>
@@ -32,24 +32,45 @@ function Login() {
               <input
                 type="text"
                 placeholder="First name"
-                {...register('First name', { required: true, maxLength: 80 })}
+                {...register('First name', {
+                  required: 'required',
+                  maxLength: { value: 15, message: 'max character length is 15' },
+                  shouldUnregister: true
+                })}
               />
               <input
                 type="text"
                 placeholder="Last name"
-                {...register('Last name', { required: true, maxLength: 100 })}
+                {...register('Last name', {
+                  required: 'required',
+                  maxLength: { value: 15, message: 'max character length is 15' },
+                  shouldUnregister: true
+                })}
               />
               <input
                 type="tel"
                 placeholder="Mobile number"
-                {...register('Mobile number', { required: true, minLength: 6, maxLength: 16 })}
+                {...register('Mobile number', {
+                  required: false,
+                  pattern: {
+                    value: /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s./0-9]*$/g,
+                    message: 'Invalid mobile number'
+                  },
+                  shouldUnregister: true
+                })}
               />{' '}
             </>
           )}
           <input
             type="text"
             placeholder="Email"
-            {...register('Email', { required: true, pattern: /^\S+@\S+$/i })}
+            {...register('Email', {
+              required: true,
+              pattern: {
+                value: /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/,
+                message: 'Invalid Email'
+              }
+            })}
           />
           <input
             type="password"
@@ -60,7 +81,7 @@ function Login() {
             <input
               type="password"
               placeholder="Confirm Password"
-              {...register('Confirm Password', { required: true })}
+              {...register('Confirm Password', { required: true, shouldUnregister: true })}
             />
           )}
           <Button type="submit">{id === '1' ? 'Sign Up' : 'Login'}</Button>

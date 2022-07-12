@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import './button.scss';
 
 type Props = {

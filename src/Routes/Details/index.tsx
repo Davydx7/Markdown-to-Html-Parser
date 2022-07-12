@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/Button';
 import Layout from '../../Components/Layout';
+import Autocomplete from '../../Components/Autocomplete';
 import './details.scss';
 
 const Details: React.FC = () => {
@@ -21,6 +22,8 @@ const Details: React.FC = () => {
   };
   // console.log(errors);
 
+  const reg = register('To(Destination)', { required: true, maxLength: 100 });
+
   return (
     <Layout>
       <div className="detailsPage">
@@ -31,11 +34,13 @@ const Details: React.FC = () => {
             placeholder="From(Location)"
             {...register('From(Location)', { required: true, maxLength: 100 })}
           />
-          <input
+          {/* <input
             type="text"
             placeholder="To(Destination)"
             {...register('To(Destination)', { required: true, maxLength: 100 })}
-          />
+          /> */}
+
+          <Autocomplete reg={reg} />
 
           <div>
             <input
