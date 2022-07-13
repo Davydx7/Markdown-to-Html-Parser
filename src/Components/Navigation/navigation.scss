@@ -6,6 +6,7 @@
 	overflow: hidden;
 	transition: height 0.3s ease-in-out, width 0.3s ease-in-out;
 	cursor: move;
+	z-index: 999;
 	// height: 3.5rem;
 
 	&>#navigationheader{

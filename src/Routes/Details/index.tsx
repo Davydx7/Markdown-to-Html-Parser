@@ -5,12 +5,28 @@ import Layout from '../../Components/Layout';
 import Autocomplete from '../../Components/Autocomplete';
 import './details.scss';
 
+export type FormValues = {
+  From: string;
+  To: string;
+  departureDate: string;
+  returningDate: string;
+};
+
 const Details: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
-  } = useForm();
+    control,
+    formState: { errors, isValid }
+  } = useForm<FormValues>({
+    mode: 'onChange',
+    defaultValues: {
+      From: '',
+      To: '',
+      departureDate: '',
+      returningDate: ''
+    }
+  });
 
   const navigate = useNavigate();
 
@@ -22,39 +38,49 @@ const Details: React.FC = () => {
   };
   // console.log(errors);
 
-  const reg = register('To(Destination)', { required: true, maxLength: 100 });
-
   return (
     <Layout>
       <div className="detailsPage">
         <h2 className="title">Book your next flight!</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            type="text"
-            placeholder="From(Location)"
-            {...register('From(Location)', { required: true, maxLength: 100 })}
+          <Autocomplete
+            placeholder="Departure location"
+            name="From"
+            control={control}
+            rules={{ required: 'required' }}
           />
-          {/* <input
-            type="text"
-            placeholder="To(Destination)"
-            {...register('To(Destination)', { required: true, maxLength: 100 })}
-          /> */}
+          <Autocomplete
+            placeholder="Destination"
+            name="To"
+            control={control}
+            rules={{ required: 'required' }}
+          />
 
-          <Autocomplete reg={reg} />
+          <label>
+            <span className="label">
+              Departure Date<i>*</i>
+            </span>
 
-          <div>
-            <input
+            <input type="date" />
+            {/* <input
               type="datetime"
-              placeholder="Departure Date"
-              {...register('Departure', { required: true })}
-            />
+              placeholder="Departure date"
+              {...register('departureDate', { required: true })}
+            /> */}
+            {errors.departureDate && <span className="error">{errors.departureDate.message}</span>}
+          </label>
+
+          <label>
+            <span className="label">
+              Returning Date<i>*</i>
+            </span>
             <input
-              type="datetime"
-              placeholder="Return Date"
-              {...register('Return', { required: true })}
+              type="date"
+              placeholder="Returning Date"
+              {...register('returningDate', { required: true })}
             />
-          </div>
-          {errors.Title && <p>errors.Title.message</p>}
+            {errors.returningDate && <span className="error">{errors.returningDate.message}</span>}
+          </label>
           <Button type="submit">Search Flight</Button>
         </form>
       </div>

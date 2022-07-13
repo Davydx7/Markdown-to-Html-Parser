@@ -5,29 +5,36 @@
 	gap: 2rem;
 
 	form {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		row-gap: 1.5rem;
+		column-gap: 3rem;
 
-		// & input,select {
-		// 	border: none;
-		// 	border-radius: 0.5rem;
-		// 	background-color: rgba(var(--primary),0.1);
-		// 	padding: 1rem 1.5rem;
-		// 	width: 100%;
-		// 	font-size: 1.25rem;
-		// }
+		label {
+			position: relative;
+			display: grid;
+			font-size: small;
 
-		& select {
-			width: fit-content;
+			i {
+				color: var(--error)
+			}
+
+			.label {
+				padding: 0.5rem;
+			}
+
+			>.error {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				font-size: x-small;
+				// color: rgb(var(--error));
+				color: var(--error)
+			}
 		}
 
-		&>div {
-			display: flex;
-			gap: 2rem;
-		}
-
-		&>*:last-child {
+		button {
+			grid-column: 1/3;
 			width: 100%;
 		}
 	}

@@ -56,4 +56,9 @@
 		font-size: 2rem;
 		font-weight: 400;
 	}
+
+	&:disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
 }

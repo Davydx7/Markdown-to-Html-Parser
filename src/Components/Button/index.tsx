@@ -6,6 +6,7 @@ type Props = {
   size?: 'small' | 'medium' | 'large';
   children?: React.ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
 const Button: React.FC<Props> = ({
@@ -13,9 +14,10 @@ const Button: React.FC<Props> = ({
   children,
   onClick,
   group = 'primary',
-  type = 'button'
+  type = 'button',
+  disabled = false
 }) => (
-  <button type={type} onClick={onClick} className={`button ${size} ${group}`}>
+  <button disabled={disabled} type={type} onClick={onClick} className={`button ${size} ${group}`}>
     {children || 'Button'}
   </button>
 );

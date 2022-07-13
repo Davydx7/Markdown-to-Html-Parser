@@ -1,8 +1,24 @@
-import { useState } from 'react';
+import { InputHTMLAttributes, useState } from 'react';
+import { useController, UseControllerProps } from 'react-hook-form';
+import { FormValues } from '../../Routes/Details';
 
 import './autocomplete.scss';
 
-const Autocomplete: React.FC<{ reg: {} }> = ({ reg }) => {
+type Props = UseControllerProps<FormValues> & InputHTMLAttributes<HTMLInputElement>;
+
+const Autocomplete: React.FC<Props> = ({ placeholder, ...props }) => {
+  const { field, fieldState } = useController(props);
+  // const {
+  //   field: { onChange, onBlur, name, value, ref },
+  //   fieldState: { invalid, isTouched, isDirty },
+  //   formState: { touchedFields, dirtyFields }
+  // } = useController({
+  //   name,
+  //   control,
+  //   rules: { required: true },
+  //   defaultValue: "",
+  // });
+
   const suggestions: string[] = [
     'Amsterdam',
     'Barcelona',
@@ -17,13 +33,14 @@ const Autocomplete: React.FC<{ reg: {} }> = ({ reg }) => {
   ];
 
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>(suggestions.slice(0, 5));
+
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number>(0);
+
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [input, setInput] = useState('');
 
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    setInput(e.currentTarget.innerText);
+    field.onChange(e.currentTarget.innerText);
     setActiveSuggestionIndex(0);
     setShowSuggestions(false);
   };
@@ -45,12 +62,14 @@ const Autocomplete: React.FC<{ reg: {} }> = ({ reg }) => {
       }
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      setInput(filteredSuggestions[activeSuggestionIndex]);
+      field.onChange(filteredSuggestions[activeSuggestionIndex]);
       setShowSuggestions(false);
     }
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const myChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    field.onChange(e.currentTarget.value);
+
     const userInput = e.currentTarget.value;
 
     // Filter our suggestions that don't contain the user's input
@@ -58,47 +77,54 @@ const Autocomplete: React.FC<{ reg: {} }> = ({ reg }) => {
       (suggestion) => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
 
-    setInput(e.target.value);
+    // setInput(e.target.value);
     setFilteredSuggestions(filtered.slice(0, 5));
     setActiveSuggestionIndex(0);
     setShowSuggestions(true);
   };
 
   return (
-    <div className="suggestionWrapper">
+    <label className="suggestionWrapper">
+      <span className="label">
+        {field.name}
+        <i>*</i>
+      </span>
       <input
-        onChange={onChange}
+        onChange={myChange}
         onKeyDown={onKeyDown}
         type="text"
-        placeholder="To(Destination)"
-        value={input}
+        placeholder={placeholder}
+        value={field.value}
         onFocus={() => setShowSuggestions(true)}
-        onBlur={() => setShowSuggestions(false)}
-        // {...reg}
-        // {...register('To(Destination)', { required: true, maxLength: 100 })}
+        onBlur={() => {
+          field.onBlur();
+          setShowSuggestions(false);
+        }}
+        ref={field.ref}
       />
-      {showSuggestions &&
-        (filteredSuggestions.length ? (
-          <ul className="suggestions">
-            {filteredSuggestions.map((suggestion, index) => {
-              let className;
-              // Flag the active suggestion with a class
-              if (index === activeSuggestionIndex) {
-                className = 'suggestion-active';
-              }
-              return (
-                <li tabIndex={-1} className={className} key={suggestion} onMouseDown={onClick}>
-                  {suggestion}
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <div className="suggestions">
-            <span>Destination not available</span>
-          </div>
-        ))}
-    </div>
+
+      {filteredSuggestions.length ? (
+        <ul className={`suggestions ${showSuggestions && 'show'}`}>
+          {filteredSuggestions.map((suggestion, index) => {
+            let className;
+            // Flag the active suggestion with a class
+            if (index === activeSuggestionIndex) {
+              className = 'suggestion-active';
+            }
+            return (
+              <li tabIndex={-1} className={className} key={suggestion} onMouseDown={onClick}>
+                {suggestion}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div className="suggestions">
+          <span>Destination not available</span>
+        </div>
+      )}
+      {fieldState.error && <span className="error">{fieldState.error.message}</span>}
+    </label>
   );
 };
 export default Autocomplete;

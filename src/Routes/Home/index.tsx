@@ -20,7 +20,7 @@ const Home: React.FC = () => (
       </p>
       <div className="buttons">
         <Button type="button" group="secondary" size="large">
-          Your Bookings
+          <Link to="bookings">Your Bookings</Link>
         </Button>
         <Button type="button" group="primary" size="large">
           <Link to="details">Book a flight</Link>

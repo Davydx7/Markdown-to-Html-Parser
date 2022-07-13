@@ -9,8 +9,10 @@ function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isValid }
   } = useForm({
+    mode: 'onChange',
+    // reValidateMode: 'onBlur',
     defaultValues: {
       title: '',
       firstName: '',
@@ -26,6 +28,7 @@ function Login() {
   console.log(errors);
 
   const { id } = useParams<{ id: string }>();
+  console.log('isvalid', isValid);
 
   return (
     <Layout>
@@ -34,79 +37,134 @@ function Login() {
         <form onSubmit={handleSubmit(onSubmit)} className={id === '1' ? 'signUp' : 'Login'}>
           {id === '1' && (
             <>
-              <select {...register('title', { required: 'required', shouldUnregister: true })}>
-                <option value="Mr">Mr</option>
-                <option value="Mrs">Mrs</option>
-                <option value="Miss">Miss</option>
-                <option value="Dr">Dr</option>
-              </select>
-              {errors.title && <span className="error">{errors.title.message}</span>}
-              <input
-                type="text"
-                placeholder="Firstname"
-                {...register('firstName', {
-                  required: 'required',
-                  maxLength: { value: 15, message: 'max character length is 15' },
-                  shouldUnregister: true
-                })}
-              />
-              {errors.firstName && <span className="error">{errors.firstName.message}</span>}
-              <input
-                type="text"
-                placeholder="Lastname"
-                {...register('lastName', {
-                  required: 'required',
-                  maxLength: { value: 15, message: 'max character length is 15' },
-                  shouldUnregister: true
-                })}
-              />
-              {errors.lastName && <span className="error">{errors.lastName.message}</span>}
-              <input
-                type="tel"
-                placeholder="Mobile number"
-                {...register('mobileNumber', {
-                  required: false,
-                  pattern: {
-                    value: /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s./0-9]*$/g,
-                    message: 'Invalid mobile number'
-                  },
-                  shouldUnregister: true
-                })}
-              />
-              {errors.mobileNumber && <span className="error">{errors.mobileNumber.message}</span>}
+              {/* <label>
+                <span className="label">
+                  Title:<i>*</i>
+                </span>
+                <select
+                  placeholder="Title"
+                  {...register('title', { required: 'required', shouldUnregister: true })}>
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Dr">Dr</option>
+                </select>
+                {errors.title && <span className="error">{errors.title.message}</span>}
+              </label> */}
+
+              <label>
+                <span className="label">
+                  Firstname:<i>*</i>
+                </span>
+                <input
+                  type="text"
+                  placeholder="2 to 15 characters"
+                  {...register('firstName', {
+                    required: 'required',
+                    minLength: { value: 2, message: 'min character length is 2' },
+                    maxLength: { value: 15, message: 'max character length is 15' },
+                    shouldUnregister: true
+                  })}
+                />
+                {errors.firstName && <span className="error">{errors.firstName.message}</span>}
+              </label>
+
+              <label>
+                <span className="label">
+                  Lastname:<i>*</i>
+                </span>
+                <input
+                  type="text"
+                  placeholder="2 to 15 characters"
+                  {...register('lastName', {
+                    required: 'required',
+                    minLength: { value: 2, message: 'min character length is 2' },
+                    maxLength: { value: 15, message: 'max character length is 15' },
+                    shouldUnregister: true
+                  })}
+                />
+                {errors.lastName && <span className="error">{errors.lastName.message}</span>}
+              </label>
+
+              <label>
+                <span className="label">Tel:</span>
+                <input
+                  type="tel"
+                  placeholder="8 to 14 digits"
+                  {...register('mobileNumber', {
+                    required: false,
+                    pattern: {
+                      value: /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s./0-9]*$/g,
+                      message: 'Invalid mobile number'
+                    },
+                    minLength: { value: 8, message: 'min character length is 8' },
+                    maxLength: { value: 14, message: 'max character length is 14' },
+                    shouldUnregister: true
+                  })}
+                />
+                {errors.mobileNumber && (
+                  <span className="error">{errors.mobileNumber.message}</span>
+                )}
+              </label>
             </>
           )}
-          <input
-            type="text"
-            placeholder="Email"
-            {...register('email', {
-              required: 'required',
-              pattern: {
-                value: /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/,
-                message: 'Invalid Email'
-              }
-            })}
-          />
-          {errors.email && <span className="error">{errors.email.message}</span>}
-          <input
-            type="password"
-            placeholder="Password"
-            {...register('password', { required: 'required' })}
-          />
-          {errors.password && <span className="error">{errors.password.message}</span>}
+          <label>
+            <span className="label">
+              Email:<i>*</i>
+            </span>
+            <input
+              type="email"
+              placeholder="example@domain.abc"
+              {...register('email', {
+                required: 'required',
+                pattern: {
+                  value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/gi,
+                  message: 'Invalid Email'
+                }
+              })}
+            />
+            {errors.email && <span className="error">{errors.email.message}</span>}
+          </label>
+
+          <label>
+            <span className="label">
+              Password:<i>*</i>
+            </span>
+            <input
+              type="password"
+              placeholder="8 to 20 characters"
+              {...register('password', {
+                required: 'required',
+                minLength: {
+                  value: 8,
+                  message: 'minimum length 8 characters'
+                },
+                maxLength: {
+                  value: 20,
+                  message: 'maximun length 20 characters'
+                }
+              })}
+            />
+            {errors.password && <span className="error">{errors.password.message}</span>}
+          </label>
           {id === '1' && (
-            <div>
+            <label>
+              <span className="label">
+                Confirm Password:<i>*</i>
+              </span>
               <input
                 type="password"
                 placeholder="confirmPassword"
-                {...register('confirmPassword', { required: true, shouldUnregister: true })}
+                {...register('confirmPassword', { required: 'required', shouldUnregister: true })}
               />
               {errors.confirmPassword && (
                 <span className="error">{errors.confirmPassword.message}</span>
               )}
-            </div>
+            </label>
           )}
-          <Button type="submit">{id === '1' ? 'Sign Up' : 'Login'}</Button>
+          <Button disabled={!isValid} type="submit">
+            {id === '1' ? 'Sign Up' : 'Login'}
+          </Button>
         </form>
         <p> or {id === '1' ? 'signUp' : 'login'} with:</p>
         <div className="socialLogin">
@@ -119,7 +177,6 @@ function Login() {
             Forgot Password?
           </Button>
         )}
-
         <Button type="button" group="tertiary" size="small">
           {id === '1' ? (
             <Link to="/login/2">Existing User?</Link>

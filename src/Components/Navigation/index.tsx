@@ -8,9 +8,10 @@ import {
   FaPlane,
   FaKey,
   FaRegCreditCard,
-  FaFileSignature
+  FaFileSignature,
+  FaDoorOpen
 } from 'react-icons/fa';
-import { BiError } from 'react-icons/bi';
+import { BiBookBookmark, BiError } from 'react-icons/bi';
 
 import './navigation.scss';
 import { ReactNode } from 'react';
@@ -28,6 +29,12 @@ const pages: page[] = [
     title: 'Go to home page',
     path: '/',
     icon: <FaHome className="icon" />
+  },
+  {
+    text: 'Bookings',
+    title: 'See all bookings',
+    path: '/bookings',
+    icon: <BiBookBookmark className="icon" />
   },
   {
     text: 'Flight details',
@@ -58,6 +65,12 @@ const pages: page[] = [
     title: 'Login page',
     path: '/login/2',
     icon: <FaKey className="icon" />
+  },
+  {
+    text: 'Logout',
+    title: 'Logout page',
+    path: '/logout',
+    icon: <FaDoorOpen className="icon" />
   },
   {
     text: 'Payment',
