@@ -8,21 +8,56 @@
 	form {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		gap: 2rem;
+		row-gap: 1.5rem;
+		column-gap: 3rem;
 
-		.cardtype  {
+		>label {
+			position: relative;
+			display: grid;
+			font-size: small;
+
+			i {
+				color: var(--error)
+			}
+
+			.label {
+				padding: 0.5rem;
+			}
+
+			>.error {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				font-size: x-small;
+				// color: rgb(var(--error));
+				color: var(--error)
+			}
+		}
+
+		>label:first-child {
+			grid-column: 1 / 3;
+		}
+
+		>label:nth-child(6) {
+			grid-column: 1 / 3;
+		}
+
+		fieldset {
 			display: flex;
+			gap: 0;
 			justify-content: space-around;
 			align-items: center;
-			gap: 1rem;
-			// background-color: red;
+			border: none;
 
-			button {
-				border: none;
-				border-radius: 0.5rem;
-				background-color: rgba(var(--primary),0);
-				height: fit-content;
-				width: fit-content;
+			label {
+				position: relative;
+			}
+
+			input {
+				position: absolute;
+				top: 40%;
+				left: 40%;
+				opacity: 0;
 			}
 
 			img {
@@ -33,7 +68,7 @@
 				border-radius: 0.5rem;
 			}
 
-			.chosen {
+			input:checked + img {
 				outline: 0.2rem solid rgb(var(--tertiary));
 				outline-offset: 0.3rem;
 			}
@@ -43,28 +78,6 @@
 			grid-column: 2;
 			width: 100%;
 		}
-	}
-
-
-	// & input,select {
-	// 	border: none;
-	// 	border-radius: 0.5rem;
-	// 	background-color: rgba(var(--primary),0.1);
-	// 	padding: 1rem 1.5rem;
-	// 	width: 100%;
-	// 	font-size: 1.25rem;
-	// }
-
-	input:nth-child(1) {
-		grid-column: 1 / 3;
-	}
-
-	input:nth-child(6) {
-		grid-column: 1 / 3;
-	}
-
-	input:nth-child(6) {
-		grid-column: 1 / 3;
 	}
 
 	.remember {

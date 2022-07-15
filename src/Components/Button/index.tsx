@@ -1,3 +1,4 @@
+import { useNavigate, To } from 'react-router-dom';
 import './button.scss';
 
 type Props = {
@@ -7,18 +8,27 @@ type Props = {
   children?: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
+  goTo?: string | number;
 };
 
 const Button: React.FC<Props> = ({
   size = 'medium',
   children,
   onClick,
+  goTo,
   group = 'primary',
   type = 'button',
   disabled = false
-}) => (
-  <button disabled={disabled} type={type} onClick={onClick} className={`button ${size} ${group}`}>
-    {children || 'Button'}
-  </button>
-);
+}) => {
+  const navigate = useNavigate();
+  return (
+    <button
+      disabled={disabled}
+      type={type}
+      onClick={onClick || (goTo ? () => navigate(goTo as To) : undefined)}
+      className={`button ${size} ${group}`}>
+      {children || 'Button'}
+    </button>
+  );
+};
 export default Button;

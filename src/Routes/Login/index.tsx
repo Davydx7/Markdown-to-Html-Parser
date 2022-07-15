@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from '../../Components/Button';
 import Layout from '../../Components/Layout';
 
@@ -11,7 +11,7 @@ function Login() {
     handleSubmit,
     formState: { errors, isValid }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onSubmit',
     // reValidateMode: 'onBlur',
     defaultValues: {
       title: '',
@@ -24,11 +24,14 @@ function Login() {
     }
   });
 
-  const onSubmit = (data: any) => console.log(data);
-  console.log(errors);
+  const navigate = useNavigate();
 
   const { id } = useParams<{ id: string }>();
-  console.log('isvalid', isValid);
+
+  const onSubmit = (data: any) => {
+    navigate(`/details`);
+    console.log(data);
+  };
 
   return (
     <Layout>
@@ -118,7 +121,7 @@ function Login() {
               {...register('email', {
                 required: 'required',
                 pattern: {
-                  value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/gi,
+                  value: /you@example.com$/,
                   message: 'Invalid Email'
                 }
               })}
@@ -142,7 +145,8 @@ function Login() {
                 maxLength: {
                   value: 20,
                   message: 'maximun length 20 characters'
-                }
+                },
+                pattern: { value: /abcd1234567890/, message: 'Invalid password' }
               })}
             />
             {errors.password && <span className="error">{errors.password.message}</span>}
@@ -162,7 +166,9 @@ function Login() {
               )}
             </label>
           )}
-          <Button disabled={!isValid} type="submit">
+          <Button
+            // disabled={!isValid}
+            type="submit">
             {id === '1' ? 'Sign Up' : 'Login'}
           </Button>
         </form>

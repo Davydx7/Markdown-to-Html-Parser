@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { startOfToday, addDays } from 'date-fns';
+
 import Button from '../../Components/Button';
 import Layout from '../../Components/Layout';
 import Autocomplete from '../../Components/Autocomplete';
@@ -9,7 +11,6 @@ export type FormValues = {
   From: string;
   To: string;
   departureDate: string;
-  returningDate: string;
 };
 
 const Details: React.FC = () => {
@@ -17,14 +18,14 @@ const Details: React.FC = () => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors, isValid }
   } = useForm<FormValues>({
     mode: 'onChange',
     defaultValues: {
       From: '',
       To: '',
-      departureDate: '',
-      returningDate: ''
+      departureDate: ''
     }
   });
 
@@ -37,6 +38,9 @@ const Details: React.FC = () => {
     navigate('/list');
   };
   // console.log(errors);
+  const today = startOfToday();
+  const tomorrow = addDays(today, 1);
+  const next2days = addDays(today, 2);
 
   return (
     <Layout>
@@ -47,41 +51,52 @@ const Details: React.FC = () => {
             placeholder="Departure location"
             name="From"
             control={control}
-            rules={{ required: 'required' }}
+            rules={{
+              required: 'required',
+              validate: () => watch('From') !== watch('To') || 'Locations must be different'
+            }}
           />
+
           <Autocomplete
             placeholder="Destination"
             name="To"
             control={control}
-            rules={{ required: 'required' }}
+            rules={{
+              required: 'required',
+              validate: () => watch('From') !== watch('To') || 'Locations must be different'
+            }}
           />
 
           <label>
             <span className="label">
-              Departure Date<i>*</i>
+              Departure Day<i>*</i>
             </span>
-
-            <input type="date" />
-            {/* <input
-              type="datetime"
-              placeholder="Departure date"
-              {...register('departureDate', { required: true })}
-            /> */}
+            <select {...register('departureDate', { required: 'required' })}>
+              <option selected disabled value="">
+                {' '}
+                Select a day
+              </option>
+              <option value={today.getDate()}>{`Today, ${today.toLocaleDateString('en-GB', {
+                weekday: 'long'
+              })}`}</option>
+              <option value={tomorrow.getDate()}>{`Tommorow, ${tomorrow.toLocaleDateString(
+                'en-GB',
+                {
+                  weekday: 'long'
+                }
+              )}`}</option>
+              <option value={next2days.getDate()}>
+                {next2days.toLocaleDateString('en-GB', {
+                  weekday: 'long'
+                })}
+              </option>
+            </select>
             {errors.departureDate && <span className="error">{errors.departureDate.message}</span>}
           </label>
 
-          <label>
-            <span className="label">
-              Returning Date<i>*</i>
-            </span>
-            <input
-              type="date"
-              placeholder="Returning Date"
-              {...register('returningDate', { required: true })}
-            />
-            {errors.returningDate && <span className="error">{errors.returningDate.message}</span>}
-          </label>
-          <Button type="submit">Search Flight</Button>
+          <Button disabled={!isValid} type="submit">
+            Search Flight
+          </Button>
         </form>
       </div>
     </Layout>

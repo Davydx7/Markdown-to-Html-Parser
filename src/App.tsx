@@ -1,6 +1,9 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import './App.scss';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { AnimatePresence } from 'framer-motion';
+import './styles/App.scss';
+
 import Footer from './Components/Footer';
 import Header from './Components/Header';
 import Navigation from './Components/Navigation';
@@ -15,30 +18,35 @@ import NotFound from './Routes/NotFound';
 import Logout from './Routes/Logout';
 import Bookings from './Routes/Bookings';
 
+const queryClient = new QueryClient();
+
 function App() {
   const location = useLocation();
 
   return (
-    <div className="App">
-      <Header />
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <Header />
 
-      <AnimatePresence initial exitBeforeEnter>
-        <Routes location={location} key={location.pathname}>
-          <Route index element={<Home />} />
-          <Route path="bookings" element={<Bookings />} />
-          <Route path="details" element={<Details />} />
-          <Route path="list" element={<List />} />
-          <Route path="summary" element={<Summary />} />
-          <Route path="payment" element={<Payment />} />
-          <Route path="login/:id" element={<Login />} />
-          <Route path="logout" element={<Logout />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AnimatePresence>
+        <AnimatePresence initial exitBeforeEnter>
+          <Routes location={location} key={location.pathname}>
+            <Route index element={<Home />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="details" element={<Details />} />
+            <Route path="list" element={<List />} />
+            <Route path="summary" element={<Summary />} />
+            <Route path="payment" element={<Payment />} />
+            <Route path="login/:id" element={<Login />} />
+            <Route path="logout" element={<Logout />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AnimatePresence>
 
-      <Footer />
-      <Navigation />
-    </div>
+        <Footer />
+        <Navigation />
+      </div>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

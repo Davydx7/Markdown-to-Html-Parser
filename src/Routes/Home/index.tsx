@@ -1,5 +1,4 @@
-import { FaPaperPlane, FaPlane } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaPaperPlane } from 'react-icons/fa';
 import Button from '../../Components/Button';
 import Layout from '../../Components/Layout';
 import './home.scss';
@@ -19,11 +18,11 @@ const Home: React.FC = () => (
         below are primary, secondary and tertiary button of large sizes
       </p>
       <div className="buttons">
-        <Button type="button" group="secondary" size="large">
-          <Link to="bookings">Your Bookings</Link>
+        <Button goTo="/bookings" type="button" group="secondary" size="large">
+          Your Bookings
         </Button>
-        <Button type="button" group="primary" size="large">
-          <Link to="details">Book a flight</Link>
+        <Button goTo="/details" type="button" group="primary" size="large">
+          Book a flight
         </Button>
         <Button type="button" group="tertiary" size="large">
           Travel Planner

@@ -19,24 +19,13 @@ const Autocomplete: React.FC<Props> = ({ placeholder, ...props }) => {
   //   defaultValue: "",
   // });
 
-  const suggestions: string[] = [
-    'Amsterdam',
-    'Barcelona',
-    'Berlin',
-    'London',
-    'Madrid',
-    'New york',
-    'Paris',
-    'Prague',
-    'Rome',
-    'Vienna'
-  ];
+  const suggestions: string[] = ['Madrid', 'New york', 'Vienna'];
 
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>(suggestions.slice(0, 5));
 
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number>(0);
 
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

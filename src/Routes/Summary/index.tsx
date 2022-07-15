@@ -1,5 +1,4 @@
 import { FaPlaneArrival, FaPlaneDeparture } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { BiPlanet } from 'react-icons/bi';
 import Button from '../../Components/Button';
 import Layout from '../../Components/Layout';
@@ -77,8 +76,11 @@ const Summary: React.FC = () => (
         Make a downpayment of 10% <br />
         to secure seat
       </p>
-      <Button type="button" size="medium">
-        <Link to="/payment">Pay 10% now</Link>
+      <Button goTo="/payment" type="button" size="medium">
+        Pay 10% now
+      </Button>
+      <Button goTo="/list" type="button" size="medium" group="secondary">
+        Go back
       </Button>
     </div>
   </Layout>

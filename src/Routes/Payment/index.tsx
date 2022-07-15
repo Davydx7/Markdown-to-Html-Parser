@@ -8,70 +8,133 @@ import americanExpress from '../../assets/png/americanExpress.png';
 
 import './payment.scss';
 
-function Payment() {
-  const [chosen, setchosen] = useState<string>('visa');
+type PaymentDetails = {
+  cardNumber: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvv: string;
+  name: string;
+  cardType: string;
+  retainCard: boolean;
+};
 
+const Payment: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
+  } = useForm<PaymentDetails>({
+    defaultValues: {
+      cardNumber: '',
+      expiryMonth: '',
+      expiryYear: '',
+      cvv: '',
+      name: '',
+      cardType: ''
+    }
+  });
   const onSubmit = (data: any) => console.log(data);
-  console.log(errors);
-
-  const select = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setchosen(e.currentTarget.children[0].getAttribute('alt') as string);
-  };
 
   return (
     <Layout>
       <div className="paymentPage">
         <h1 className="title">Check Out</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            type="text"
-            placeholder="Card Number"
-            {...register('Card Number', { required: true, maxLength: 20 })}
-          />
-          <div className="cardtype">
-            <button type="button" onClick={select}>
-              <img className={chosen === 'visa' ? 'chosen' : ''} src={visa} alt="visa" />
-            </button>
-            <button type="button" onClick={select}>
-              <img
-                className={chosen === 'mastercard' ? 'chosen' : ''}
-                src={mastercard}
-                alt="mastercard"
+          <label>
+            <input
+              type="text"
+              placeholder="Card Number"
+              {...register('cardNumber', { required: 'required', maxLength: 20 })}
+            />
+            {errors.cardNumber && <span>{errors.cardNumber.message}</span>}
+          </label>
+
+          <fieldset>
+            <label htmlFor="visa">
+              <input
+                {...register('cardType', { required: 'required' })}
+                name="cardType
+                "
+                type="radio"
+                id="visa"
+                value="visa"
               />
-            </button>
-            <button type="button" onClick={select}>
-              <img
-                className={chosen === 'americanExpress' ? 'chosen' : ''}
-                src={americanExpress}
-                alt="americanExpress"
+              <img src={visa} alt="visa" />
+            </label>
+
+            <label htmlFor="masterCard">
+              <input
+                {...register('cardType', { required: 'required' })}
+                name="cardType"
+                type="radio"
+                id="masterCard"
+                value="masterCard"
               />
-            </button>
-          </div>
-          <input
-            type="datetime"
-            placeholder="Expiration Month"
-            {...register('Expiration Month.', { required: true })}
-          />
-          <input
-            type="datetime"
-            placeholder="Expiration Year"
-            {...register('Expiration Year', { required: true })}
-          />
-          <input type="text" placeholder="CVV" {...register('CVV', { maxLength: 3 })} />
-          <input type="text" placeholder="Card Holder Name" {...register('Card Holder Name', {})} />
-          <div className="remember">
+              <img src={mastercard} alt="mastercard" />
+            </label>
+
+            <label htmlFor="americanExpress">
+              <input
+                {...register('cardType', { required: 'required' })}
+                name="cardType"
+                type="radio"
+                id="americanExpress"
+                value="americanExpress"
+              />
+              <img src={americanExpress} alt="americanExpress" />
+            </label>
+            {errors.cardType && <span>{errors.cardType.message}</span>}
+          </fieldset>
+
+          <label>
+            <input
+              type="datetime"
+              placeholder="Expiration Month"
+              {...register('expiryMonth', { required: 'required' })}
+            />
+            {errors.expiryMonth && <span>{errors.expiryMonth.message}</span>}
+          </label>
+
+          <label>
+            <input
+              type="datetime"
+              placeholder="Expiration Year"
+              {...register('expiryYear', { required: true })}
+            />
+            {errors.expiryYear && <span>{errors.expiryYear.message}</span>}
+          </label>
+
+          <label>
+            <input
+              type="text"
+              maxLength={3}
+              placeholder="CVV"
+              {...register('cvv', {
+                required: 'required',
+                pattern: { value: /^[0-9]{3}$/, message: 'Invalid CVV' }
+              })}
+            />
+            {errors.cvv && <span>{errors.cvv.message}</span>}
+          </label>
+
+          <label>
+            <input
+              type="text"
+              placeholder="Card Holder Name"
+              {...register('name', { required: 'required' })}
+            />
+            {errors.name && <span>{errors.name.message}</span>}
+          </label>
+
+          <label className="remember">
             <input
               type="checkbox"
               placeholder="Save credit information"
-              {...register('Save credit information', {})}
+              {...register('retainCard')}
             />
             <p>Remeber details</p>
-          </div>
+          </label>
+
           <Button type="submit" size="medium" group="primary">
             Pay
           </Button>
@@ -79,5 +142,5 @@ function Payment() {
       </div>
     </Layout>
   );
-}
+};
 export default Payment;

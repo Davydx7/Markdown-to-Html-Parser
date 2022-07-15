@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Button from '../Button';
 import './flightItem.scss';
 
@@ -35,8 +34,8 @@ const FlightItem: React.FC<Props> = ({ name, from, to, date, time, price }) => (
         <span>${price}</span>
       </h3>
     </div>
-    <Button type="button" size="medium">
-      <Link to="/summary"> Book </Link>
+    <Button goTo="/summary" type="button" size="medium">
+      Book
     </Button>
   </li>
 );
