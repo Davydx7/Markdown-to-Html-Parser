@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Button from '../../Components/Button';
-import Layout from '../../Components/Layout';
+import Button from '../../components/Button';
+import Layout from '../../components/Layout';
 
 import './login.scss';
 

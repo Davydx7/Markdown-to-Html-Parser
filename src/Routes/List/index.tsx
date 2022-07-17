@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
-import FlightItem from '../../Components/FlightItem';
-import Layout from '../../Components/Layout';
-import useFlights from '../../Stores/Server/Available flights';
-import { flightType } from '../../Stores/Server/ServerData/Flights';
+import FlightItem from '../../components/FlightItem';
+import Layout from '../../components/Layout';
+import useFlights from '../../stores/server/Available flights';
+import { flightType } from '../../stores/Server/ServerData/Flights';
 import './list.scss';
 
 function List() {

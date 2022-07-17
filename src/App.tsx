@@ -4,19 +4,19 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { AnimatePresence } from 'framer-motion';
 import './styles/App.scss';
 
-import Footer from './Components/Footer';
-import Header from './Components/Header';
-import Navigation from './Components/Navigation';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Navigation from './components/Navigation';
 
-import Home from './Routes/Home';
-import Details from './Routes/Details';
-import List from './Routes/List';
-import Summary from './Routes/Summary';
-import Login from './Routes/Login';
-import Payment from './Routes/Payment';
-import NotFound from './Routes/NotFound';
-import Logout from './Routes/Logout';
-import Bookings from './Routes/Bookings';
+import Home from './routes/Home';
+import Details from './routes/Details';
+import List from './routes/List';
+import Summary from './routes/Summary';
+import Login from './routes/Login';
+import Payment from './routes/Payment';
+import NotFound from './routes/NotFound';
+import Logout from './routes/Logout';
+import Bookings from './routes/Bookings';
 
 const queryClient = new QueryClient();
 

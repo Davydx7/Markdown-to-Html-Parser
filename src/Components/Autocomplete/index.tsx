@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, useState } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { FormValues } from '../../Routes/Details';
+import { FormValues } from '../../routes/Details';
 
 import './autocomplete.scss';
 

@@ -1,6 +1,6 @@
 import { FaPaperPlane } from 'react-icons/fa';
-import Button from '../../Components/Button';
-import Layout from '../../Components/Layout';
+import Button from '../../components/Button';
+import Layout from '../../components/Layout';
 import './home.scss';
 
 const Home: React.FC = () => (

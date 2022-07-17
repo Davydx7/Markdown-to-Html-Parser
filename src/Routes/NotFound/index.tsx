@@ -1,4 +1,4 @@
-import Button from '../../Components/Button';
+import Button from '../../components/Button';
 import './notFound.scss';
 
 function NotFound() {

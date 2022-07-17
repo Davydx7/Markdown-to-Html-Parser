@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Button from '../../Components/Button';
-import Layout from '../../Components/Layout';
+import Button from '../../components/Button';
+import Layout from '../../components/Layout';
 import visa from '../../assets/png/visa.png';
 import mastercard from '../../assets/png/mastercard.png';
 import americanExpress from '../../assets/png/americanExpress.png';
 
 import './payment.scss';
+import useFlightDetails from '../../stores/clientStores/flightDetailsStore';
 
 type PaymentDetails = {
   cardNumber: string;
@@ -33,7 +34,13 @@ const Payment: React.FC = () => {
       cardType: ''
     }
   });
-  const onSubmit = (data: any) => console.log(data);
+
+  const { setFlightDetails } = useFlightDetails((store) => store.setFlightDetails);
+
+  const onSubmit = (data: any) => {
+    setFlightDetails(data);
+    console.log(data);
+  };
 
   return (
     <Layout>
@@ -46,15 +53,14 @@ const Payment: React.FC = () => {
               placeholder="Card Number"
               {...register('cardNumber', { required: 'required', maxLength: 20 })}
             />
-            {errors.cardNumber && <span>{errors.cardNumber.message}</span>}
+            {errors.cardNumber && <span className="error">{errors.cardNumber.message}</span>}
           </label>
 
           <fieldset>
             <label htmlFor="visa">
               <input
                 {...register('cardType', { required: 'required' })}
-                name="cardType
-                "
+                name="cardType"
                 type="radio"
                 id="visa"
                 value="visa"
@@ -83,7 +89,7 @@ const Payment: React.FC = () => {
               />
               <img src={americanExpress} alt="americanExpress" />
             </label>
-            {errors.cardType && <span>{errors.cardType.message}</span>}
+            {errors.cardType && <span className="error">{errors.cardType.message}</span>}
           </fieldset>
 
           <label>
@@ -92,16 +98,15 @@ const Payment: React.FC = () => {
               placeholder="Expiration Month"
               {...register('expiryMonth', { required: 'required' })}
             />
-            {errors.expiryMonth && <span>{errors.expiryMonth.message}</span>}
+            {errors.expiryMonth && <span className="error">{errors.expiryMonth.message}</span>}
           </label>
-
           <label>
             <input
               type="datetime"
-              placeholder="Expiration Year"
-              {...register('expiryYear', { required: true })}
+              placeholder="Expiration Month"
+              {...register('expiryYear', { required: 'required' })}
             />
-            {errors.expiryYear && <span>{errors.expiryYear.message}</span>}
+            {errors.expiryYear && <span className="error">{errors.expiryYear.message}</span>}
           </label>
 
           <label>
@@ -114,7 +119,7 @@ const Payment: React.FC = () => {
                 pattern: { value: /^[0-9]{3}$/, message: 'Invalid CVV' }
               })}
             />
-            {errors.cvv && <span>{errors.cvv.message}</span>}
+            {errors.cvv && <span className="error">{errors.cvv.message}</span>}
           </label>
 
           <label>
@@ -123,7 +128,7 @@ const Payment: React.FC = () => {
               placeholder="Card Holder Name"
               {...register('name', { required: 'required' })}
             />
-            {errors.name && <span>{errors.name.message}</span>}
+            {errors.name && <span className="error">{errors.name.message}</span>}
           </label>
 
           <label className="remember">

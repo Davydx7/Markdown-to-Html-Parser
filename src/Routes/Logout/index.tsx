@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../Components/Button';
-import Layout from '../../Components/Layout';
+import Button from '../../components/Button';
+import Layout from '../../components/Layout';
 import './logout.scss';
 
 const Logout = () => (

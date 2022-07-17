@@ -1,6 +1,6 @@
-import Button from '../../Components/Button';
-import FlightItem from '../../Components/FlightItem';
-import Layout from '../../Components/Layout';
+import Button from '../../components/Button';
+import FlightItem from '../../components/FlightItem';
+import Layout from '../../components/Layout';
 import './booking.scss';
 
 const Bookings = () => (
