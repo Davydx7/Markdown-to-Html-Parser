@@ -1,15 +1,15 @@
 import { useQuery } from 'react-query';
 import FlightItem from '../../components/FlightItem';
 import Layout from '../../components/Layout';
-import useFlights from '../../stores/server/Available flights';
-import { flightType } from '../../stores/Server/ServerData/Flights';
+import { FlightType } from '../../stores/server/serverData/flights';
+import { useFlights } from '../../stores/server/serverStores/availableFlights';
 import './list.scss';
 
 function List() {
   const fetchFlights = useFlights((state) => state.getAvailableFlights);
 
   // This Data will be gotten from server later;
-  const { data: flights } = useQuery<flightType[], Error>('flights', fetchFlights, {
+  const { data: flights } = useQuery<FlightType[], Error>('flights', fetchFlights, {
     staleTime: Infinity
   });
 

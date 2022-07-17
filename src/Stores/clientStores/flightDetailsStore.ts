@@ -13,7 +13,7 @@ type FlightDetailsStore = {
 
 const useFlightDetails = create<FlightDetailsStore>((set) => ({
   flightDetails: {},
-  setFlightDetails: (flightDetails: FlightDetails) =>
+  setFlightDetails: (flightDetails: FlightDetails): void =>
     set((state) => ({
       flightDetails
     }))

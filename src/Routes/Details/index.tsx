@@ -6,12 +6,7 @@ import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 import Autocomplete from '../../components/Autocomplete';
 import './details.scss';
-
-export type FormValues = {
-  From: string;
-  To: string;
-  departureDate: string;
-};
+import useFlightDetails, { FlightDetails } from '../../stores/clientStores/flightDetailsStore';
 
 const Details: React.FC = () => {
   const {
@@ -20,24 +15,27 @@ const Details: React.FC = () => {
     control,
     watch,
     formState: { errors, isValid }
-  } = useForm<FormValues>({
+  } = useForm<FlightDetails>({
     mode: 'onChange',
     defaultValues: {
-      From: '',
-      To: '',
+      from: '',
+      to: '',
       departureDate: ''
     }
   });
 
+  const setFlightDetails = useFlightDetails((store) => store.setFlightDetails);
+
   const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FlightDetails) => {
     // eslint-disable-next-line no-console
+    setFlightDetails(data);
     console.log(data);
 
     navigate('/list');
   };
-  // console.log(errors);
+
   const today = startOfToday();
   const tomorrow = addDays(today, 1);
   const next2days = addDays(today, 2);
@@ -49,21 +47,21 @@ const Details: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Autocomplete
             placeholder="Departure location"
-            name="From"
+            name="from"
             control={control}
             rules={{
               required: 'required',
-              validate: () => watch('From') !== watch('To') || 'Locations must be different'
+              validate: () => watch('from') !== watch('to') || 'Locations must be different'
             }}
           />
 
           <Autocomplete
             placeholder="Destination"
-            name="To"
+            name="to"
             control={control}
             rules={{
               required: 'required',
-              validate: () => watch('From') !== watch('To') || 'Locations must be different'
+              validate: () => watch('from') !== watch('to') || 'Locations must be different'
             }}
           />
 
@@ -76,16 +74,13 @@ const Details: React.FC = () => {
                 {' '}
                 Select a day
               </option>
-              <option value={today.getDate()}>{`Today, ${today.toLocaleDateString('en-GB', {
+              <option value={today.toJSON()}>{`Today, ${today.toLocaleDateString('en-GB', {
                 weekday: 'long'
               })}`}</option>
-              <option value={tomorrow.getDate()}>{`Tommorow, ${tomorrow.toLocaleDateString(
-                'en-GB',
-                {
-                  weekday: 'long'
-                }
-              )}`}</option>
-              <option value={next2days.getDate()}>
+              <option value={tomorrow.toJSON()}>{`Tommorow, ${tomorrow.toLocaleDateString('en-GB', {
+                weekday: 'long'
+              })}`}</option>
+              <option value={next2days.toJSON()}>
                 {next2days.toLocaleDateString('en-GB', {
                   weekday: 'long'
                 })}

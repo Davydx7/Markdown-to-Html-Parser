@@ -1,10 +1,10 @@
 import { InputHTMLAttributes, useState } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { FormValues } from '../../routes/Details';
+import { FlightDetails } from '../../stores/clientStores/flightDetailsStore';
 
 import './autocomplete.scss';
 
-type Props = UseControllerProps<FormValues> & InputHTMLAttributes<HTMLInputElement>;
+type Props = UseControllerProps<FlightDetails> & InputHTMLAttributes<HTMLInputElement>;
 
 const Autocomplete: React.FC<Props> = ({ placeholder, ...props }) => {
   const { field, fieldState } = useController(props);

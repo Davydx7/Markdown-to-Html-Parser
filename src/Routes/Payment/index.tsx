@@ -7,7 +7,6 @@ import mastercard from '../../assets/png/mastercard.png';
 import americanExpress from '../../assets/png/americanExpress.png';
 
 import './payment.scss';
-import useFlightDetails from '../../stores/clientStores/flightDetailsStore';
 
 type PaymentDetails = {
   cardNumber: string;
@@ -35,10 +34,7 @@ const Payment: React.FC = () => {
     }
   });
 
-  const { setFlightDetails } = useFlightDetails((store) => store.setFlightDetails);
-
   const onSubmit = (data: any) => {
-    setFlightDetails(data);
     console.log(data);
   };
 

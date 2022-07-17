@@ -1,4 +1,4 @@
-export type flightType = {
+export type FlightType = {
   id: string;
   name: string;
   from: string;
@@ -8,7 +8,7 @@ export type flightType = {
   price: number;
 };
 
-const flights: flightType[] = [
+const flights: FlightType[] = [
   {
     id: '1',
     name: 'Chris Airways',
