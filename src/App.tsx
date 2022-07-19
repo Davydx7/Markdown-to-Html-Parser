@@ -2,12 +2,10 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimatePresence } from 'framer-motion';
-import './styles/App.scss';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
-
 import Home from './routes/Home';
 import Details from './routes/Details';
 import Flights from './routes/Flights';
@@ -18,6 +16,8 @@ import NotFound from './routes/NotFound';
 import Logout from './routes/Logout';
 import Bookings from './routes/Bookings';
 import Signup from './routes/signup/Signup';
+
+import './styles/App.scss';
 
 const queryClient = new QueryClient();
 
