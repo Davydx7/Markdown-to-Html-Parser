@@ -1,12 +1,17 @@
+import { addHours } from 'date-fns/esm';
+
 export type FlightType = {
   id: string;
   name: string;
   from: string;
   to: string;
-  date: string /* Date */;
-  time: string /* Date */;
+  departureDate: string /* Date */;
+  arrivalDate: string;
   price: number;
 };
+
+const date: string = new Date().toJSON();
+const arrival: string = addHours(new Date(), 12).toJSON();
 
 const flights: FlightType[] = [
   {
@@ -14,8 +19,8 @@ const flights: FlightType[] = [
     name: 'Chris Airways',
     from: 'Vienna',
     to: 'New York',
-    date: 'July 22  ',
-    time: '15:30 UTC',
+    departureDate: date,
+    arrivalDate: arrival,
     price: 450.99
   },
   {
@@ -23,8 +28,8 @@ const flights: FlightType[] = [
     name: 'Jumbo Airways',
     from: 'Vienna',
     to: 'New York',
-    date: 'July 24  ',
-    time: '13:00 UTC',
+    departureDate: date,
+    arrivalDate: arrival,
     price: 389.99
   },
   {
@@ -32,8 +37,8 @@ const flights: FlightType[] = [
     name: 'Ryanair',
     from: 'Madrid',
     to: 'New York',
-    date: 'July 25  ',
-    time: '11:00 UTC',
+    departureDate: date,
+    arrivalDate: arrival,
     price: 732.49
   },
   {
@@ -41,8 +46,8 @@ const flights: FlightType[] = [
     name: 'Lufthansa',
     from: 'Madrid',
     to: 'New York',
-    date: 'July 26  ',
-    time: '16:00 UTC',
+    departureDate: date,
+    arrivalDate: arrival,
     price: 926.79
   },
   {
@@ -50,8 +55,8 @@ const flights: FlightType[] = [
     name: 'EasyJet',
     from: 'Vienna',
     to: 'Madrid',
-    date: 'July 21  ',
-    time: '15:40 UTC',
+    departureDate: date,
+    arrivalDate: arrival,
     price: 523.99
   },
   {
@@ -59,8 +64,8 @@ const flights: FlightType[] = [
     name: 'EasyJet',
     from: 'Vienna',
     to: 'Madrid',
-    date: 'July 21  ',
-    time: '15:40 UTC',
+    departureDate: date,
+    arrivalDate: arrival,
     price: 523.99
   }
   // {
@@ -68,8 +73,8 @@ const flights: FlightType[] = [
   //   name: 'Chris Airways',
   //   from: 'New york',
   //   to: 'Madrid',
-  //   date: 'July 22  ',
-  //   time: '15:30 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 450.99
   // },
   // {
@@ -77,8 +82,8 @@ const flights: FlightType[] = [
   //   name: 'Jumbo Airways',
   //   from: 'New york',
   //   to: 'Madrid',
-  //   date: 'July 24  ',
-  //   time: '13:00 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 389.99
   // },
   // {
@@ -86,8 +91,8 @@ const flights: FlightType[] = [
   //   name: 'Ryanair',
   //   from: 'New york',
   //   to: 'Vienna',
-  //   date: 'July 25  ',
-  //   time: '11:00 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 732.49
   // },
   // {
@@ -95,8 +100,8 @@ const flights: FlightType[] = [
   //   name: 'Lufthansa',
   //   from: 'New york',
   //   to: 'Vienna',
-  //   date: 'July 26  ',
-  //   time: '16:00 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 926.79
   // },
   // {
@@ -104,8 +109,8 @@ const flights: FlightType[] = [
   //   name: 'EasyJet',
   //   from: 'Madrid',
   //   to: 'Vienna',
-  //   date: 'July 21  ',
-  //   time: '15:40 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 523.99
   // },
   // {
@@ -113,8 +118,8 @@ const flights: FlightType[] = [
   //   name: 'EasyJet',
   //   from: 'Madrid',
   //   to: 'Vienna',
-  //   date: 'July 21  ',
-  //   time: '15:40 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 523.99
   // },
   // {
@@ -122,8 +127,8 @@ const flights: FlightType[] = [
   //   name: 'EasyJet',
   //   from: 'Vienna',
   //   to: 'Madrid',
-  //   date: 'July 21  ',
-  //   time: '15:40 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 523.99
   // },
   // {
@@ -131,8 +136,8 @@ const flights: FlightType[] = [
   //   name: 'Chris Airways',
   //   from: 'New york',
   //   to: 'Madrid',
-  //   date: 'July 22  ',
-  //   time: '15:30 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 450.99
   // },
   // {
@@ -140,8 +145,8 @@ const flights: FlightType[] = [
   //   name: 'Lufthansa',
   //   from: 'New york',
   //   to: 'Vienna',
-  //   date: 'July 26  ',
-  //   time: '16:00 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 926.79
   // },
   // {
@@ -149,8 +154,8 @@ const flights: FlightType[] = [
   //   name: 'EasyJet',
   //   from: 'Madrid',
   //   to: 'Vienna',
-  //   date: 'July 21  ',
-  //   time: '15:40 UTC',
+  //   departureDate: date,
+  //   arrivalDate: arrival,
   //   price: 523.99
   // }
 ];

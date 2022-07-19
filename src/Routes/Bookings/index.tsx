@@ -1,5 +1,4 @@
 import Button from '../../components/Button';
-import FlightItem from '../../components/FlightItem';
 import Layout from '../../components/Layout';
 import './booking.scss';
 
@@ -7,7 +6,7 @@ const Bookings = () => (
   <Layout>
     <h1>Bookings</h1>
     <div>
-      <FlightItem
+      {/* <FlightItem
         name="Chris Airways"
         id="XYZ123"
         date="July 22"
@@ -15,7 +14,8 @@ const Bookings = () => (
         from="Vienna"
         to="New York"
         price={450.99}
-      />
+      /> */}
+      Bookings to be redesigned
     </div>
     <Button type="button" group="primary" goTo="/details">
       Book a flight

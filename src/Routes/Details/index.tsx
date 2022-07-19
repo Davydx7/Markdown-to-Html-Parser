@@ -33,7 +33,7 @@ const Details: React.FC = () => {
     setFlightDetails(data);
     console.log(data);
 
-    navigate('/list');
+    navigate('/flights');
   };
 
   const today = startOfToday();

@@ -1,29 +1,3 @@
 # frontend Codebase
 
-Project initailization
-
-## Description
-
-Repository for the frontend codebase.
-
-## Badges
-
-## Visuals
-
-## Installation
-
-## Usage
-
-## Support
-
-## Roadmap
-
-## Contributing
-
-## Authors and acknowledgment
-
-## License
-
-## Project status
-
-Initaitiing
+- Redo Booking proper Ux to determine actual needed data

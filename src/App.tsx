@@ -10,7 +10,7 @@ import Navigation from './components/Navigation';
 
 import Home from './routes/Home';
 import Details from './routes/Details';
-import List from './routes/List';
+import Flights from './routes/Flights';
 import Summary from './routes/Summary';
 import Login from './routes/Login';
 import Payment from './routes/Payment';
@@ -33,8 +33,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path="bookings" element={<Bookings />} />
             <Route path="details" element={<Details />} />
-            <Route path="list" element={<List />} />
-            <Route path="summary" element={<Summary />} />
+            <Route path="flights">
+              <Route index element={<Flights />} />
+              <Route path=":id" element={<Summary />} />
+            </Route>
             <Route path="payment" element={<Payment />} />
             <Route path="login/:id" element={<Login />} />
             <Route path="logout" element={<Logout />} />

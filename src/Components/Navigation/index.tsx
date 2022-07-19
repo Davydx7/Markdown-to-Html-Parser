@@ -43,15 +43,15 @@ const pages: page[] = [
     icon: <FaUserAlt className="icon" />
   },
   {
-    text: 'Flight list',
+    text: 'Flights',
     title: 'List of available flight based on passenger details',
-    path: '/list',
+    path: '/flights',
     icon: <FaListAlt className="icon" />
   },
   {
-    text: 'Summary',
+    text: 'Flight Summary',
     title: 'summary of passenger flight booking',
-    path: '/summary',
+    path: '/flights/1', // let's see if it will work after summanry uses 'id'
     icon: <FaPlane className="icon" />
   },
   {
