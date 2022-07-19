@@ -11,7 +11,7 @@ function Login() {
     handleSubmit,
     formState: { errors, isValid }
   } = useForm({
-    mode: 'onSubmit',
+    mode: 'onBlur',
     // reValidateMode: 'onBlur',
     defaultValues: {
       title: '',
@@ -66,6 +66,7 @@ function Login() {
                     required: 'required',
                     minLength: { value: 2, message: 'min character length is 2' },
                     maxLength: { value: 15, message: 'max character length is 15' },
+                    pattern: { value: /^[a-z]+$/i, message: 'Alphabelts only' },
                     shouldUnregister: true
                   })}
                 />
@@ -83,6 +84,7 @@ function Login() {
                     required: 'required',
                     minLength: { value: 2, message: 'min character length is 2' },
                     maxLength: { value: 15, message: 'max character length is 15' },
+                    pattern: { value: /^[a-z]+$/i, message: 'Alphabelts only' },
                     shouldUnregister: true
                   })}
                 />
@@ -93,15 +95,15 @@ function Login() {
                 <span className="label">Tel:</span>
                 <input
                   type="tel"
-                  placeholder="8 to 14 digits"
+                  placeholder="8 to 15 digits"
                   {...register('mobileNumber', {
                     required: false,
                     pattern: {
-                      value: /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s./0-9]*$/g,
+                      value: /^\+?\d?\s?(\(\d{1,4}\))?[-\s./0-9]*$/,
                       message: 'Invalid mobile number'
                     },
                     minLength: { value: 8, message: 'min character length is 8' },
-                    maxLength: { value: 14, message: 'max character length is 14' },
+                    maxLength: { value: 15, message: 'max character length is 15' },
                     shouldUnregister: true
                   })}
                 />
