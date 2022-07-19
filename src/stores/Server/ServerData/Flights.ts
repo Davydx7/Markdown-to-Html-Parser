@@ -1,4 +1,5 @@
 import { addHours } from 'date-fns/esm';
+// import { faker } from '@faker-js/faker';
 
 export type FlightType = {
   id: string;

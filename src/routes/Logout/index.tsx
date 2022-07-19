@@ -8,7 +8,7 @@ const Logout = () => (
   <Layout>
     <h1>Logging out</h1>
     <p>Are you sure you want to log out?</p>
-    <Button goTo="/login/2" type="button" group="secondary">
+    <Button goTo="/" type="button" group="secondary">
       Log out
     </Button>
     <Button goTo={-1} type="button" group="primary">

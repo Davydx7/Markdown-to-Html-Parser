@@ -70,8 +70,7 @@ const Details: React.FC = () => {
               Departure Day<i>*</i>
             </span>
             <select {...register('departureDate', { required: 'required' })}>
-              <option selected disabled value="">
-                {' '}
+              <option selected disabled hidden value="">
                 Select a day
               </option>
               <option value={today.toJSON()}>{`Today, ${today.toLocaleDateString('en-GB', {

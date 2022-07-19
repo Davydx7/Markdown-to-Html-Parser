@@ -57,13 +57,13 @@ const pages: page[] = [
   {
     text: 'Sign Up',
     title: 'Sign Up page',
-    path: '/login/1',
+    path: '/signup',
     icon: <FaFileSignature className="icon" />
   },
   {
     text: 'Login',
     title: 'Login page',
-    path: '/login/2',
+    path: '/login',
     icon: <FaKey className="icon" />
   },
   {

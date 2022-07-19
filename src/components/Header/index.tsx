@@ -72,10 +72,10 @@ const Header: React.FC<Props> = () => {
       </div>
       <p>Current Theme: {theme}</p>
       <div className="buttons">
-        <Button type="button" goTo="/login/1">
+        <Button type="button" goTo="/signup">
           Sign Up
         </Button>
-        <Button type="button" group="secondary" goTo="/login/2">
+        <Button type="button" group="secondary" goTo="/login">
           Login
         </Button>
       </div>
