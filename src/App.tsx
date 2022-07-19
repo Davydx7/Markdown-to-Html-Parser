@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimatePresence } from 'framer-motion';
 import './styles/App.scss';
 
@@ -17,6 +17,7 @@ import Payment from './routes/Payment';
 import NotFound from './routes/NotFound';
 import Logout from './routes/Logout';
 import Bookings from './routes/Bookings';
+import Signup from './routes/signup/Signup';
 
 const queryClient = new QueryClient();
 
@@ -38,7 +39,8 @@ function App() {
               <Route path=":id" element={<Summary />} />
             </Route>
             <Route path="payment" element={<Payment />} />
-            <Route path="login/:id" element={<Login />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
             <Route path="logout" element={<Logout />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

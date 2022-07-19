@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { FlightType } from '../stores/server/serverData/flights';
 import { useFlights } from '../stores/server/serverStores/availableFlights';
 
@@ -6,7 +6,7 @@ import { useFlights } from '../stores/server/serverStores/availableFlights';
 function useFetchFlights() {
   const fetchFlights = useFlights((state) => state.getAvailableFlights);
 
-  return useQuery<FlightType[], Error>('flights', fetchFlights, {
+  return useQuery<FlightType[], Error>(['flights'], fetchFlights, {
     staleTime: Infinity
   });
 }
