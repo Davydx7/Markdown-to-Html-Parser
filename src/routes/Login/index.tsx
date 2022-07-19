@@ -59,8 +59,7 @@ const Login: React.FC = () => {
     }
 
     if (error) {
-      alert('User not found');
-      console.log('error: ', error);
+      console.log('error: no user ', error);
     }
   }, [status]);
 

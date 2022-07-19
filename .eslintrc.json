@@ -56,6 +56,6 @@
         "jsx-a11y/no-noninteractive-element-interactions": 0,
         "jsx-a11y/label-has-associated-control": 0,
         "no-shadow":0,
-        "no-unused-expressions": 1
+        "no-console": 0
     }
 }
