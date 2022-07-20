@@ -1,16 +1,18 @@
 import { FaPaperPlane } from 'react-icons/fa';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
+import useLoggedUser from '../../stores/clientStores/loggedUser';
 import './home.scss';
 
 const Home: React.FC = () => {
-  console.log('Home');
+  const loggedUser = useLoggedUser((state) => state.loggedUser);
 
   return (
     <Layout>
       <div className="home">
         <div>
-          <span className="welcome">Welcome!</span> <FaPaperPlane className="icon" />
+          <span className="welcome">Welcome! {loggedUser?.firstName}</span>{' '}
+          <FaPaperPlane className="icon" />
           {/* <FaPlane />
         ·························································
         <FaPlane /> */}

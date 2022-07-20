@@ -1,10 +1,11 @@
 import { faker } from '@faker-js/faker';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
-import useUser from '../../stores/server/serverStores/userData';
+import useLoggedUser from '../../stores/clientStores/loggedUser';
+import { User } from '../../stores/server/serverData/users';
+import useServerUser from '../../stores/server/serverStores/userData';
 
 import './signup.scss';
 
@@ -29,25 +30,30 @@ const Signup: React.FC = () => {
     }
   });
 
-  const setUser = useUser((state) => state.setUser);
+  const setServerUser = useServerUser((state) => state.setServerUser);
+  const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
 
   const onSubmit = (data: any) => {
-    console.log(data);
-
-    // should be useQuery here to, send and wait for data that
-    // will be used as userData
-    setUser({
+    const userData: User = {
       id: faker.database.mongodbObjectId(),
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
       email: data.email
-    });
+    };
+
+    // should be useQuery here to, send and wait for data that
+    // will be used as userData
+    setServerUser(userData);
+    // user exists on server, then store it in local storage
+    localStorage.setItem('loggedUser', JSON.stringify(userData));
+
+    // hoisting user over to zustand for mock sake and application state
+    setLoggedUser(userData);
 
     navigate('/', { replace: true });
   };
 
-  console.log('sigup');
   return (
     <Layout>
       <div className="signUpPage">

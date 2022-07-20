@@ -15,14 +15,27 @@ import Payment from './routes/Payment';
 import NotFound from './routes/NotFound';
 import Logout from './routes/Logout';
 import Bookings from './routes/Bookings';
-import Signup from './routes/signup/Signup';
+import Signup from './routes/Signup';
 
 import './styles/App.scss';
+import useLoggedUser from './stores/clientStores/loggedUser';
+import { User } from './stores/server/serverData/users';
 
 const queryClient = new QueryClient();
 
 function App() {
   const location = useLocation();
+
+  // A way to remember the last route visited
+  // localStorage.setItem('lastLocation', location.pathname);
+  // localStorage.getItem('lastLocation');
+
+  const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
+
+  if (localStorage.getItem('loggedUser')) {
+    const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
+    setLoggedUser(user);
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

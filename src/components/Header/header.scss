@@ -61,21 +61,3 @@
 	font-weight: 900;
 	font-size: xx-large;
 }
-
-.c {
-	position: absolute;
-	top: 10rem;
-	left: 10rem;
-	Width: 20rem;
-	Height: 20rem;
-
-	&.a{
-		background-color: red;
-		z-index: 100;
-	}
-
-	&.b{
-		background-color: green;
-		z-index: 9999;
-	}
-}

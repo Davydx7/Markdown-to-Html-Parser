@@ -11,6 +11,8 @@
 		row-gap: 1.5rem;
 		column-gap: 3rem;
 
+
+
 		>label {
 			position: relative;
 			display: grid;
@@ -20,7 +22,7 @@
 				color: var(--error)
 			}
 
-			.label {
+			>.label {
 				padding: 0.5rem;
 			}
 
@@ -43,11 +45,26 @@
 		}
 
 		fieldset {
-			display: flex;
-			gap: 0;
-			justify-content: space-around;
-			align-items: center;
+			display: grid;
 			border: none;
+
+			>.label {
+				padding: 0.5rem;
+				font-size: small;
+
+				i {
+					color: var(--error)
+				}
+			}
+
+			.cards {
+				display: flex;
+				gap: 0;
+				justify-content: space-around;
+				align-items: center;
+				border: none;
+
+			}
 
 			label {
 				position: relative;

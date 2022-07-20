@@ -6,6 +6,7 @@ import { RgbaColorPicker } from 'react-colorful';
 
 import Button from '../Button';
 import './header.scss';
+import useLoggedUser from '../../stores/clientStores/loggedUser';
 
 type Props = {
   color?: string;
@@ -56,6 +57,8 @@ const Header: React.FC<Props> = () => {
     dragControls.start(event, { snapToCursor: true });
   }
 
+  const loggedUser = useLoggedUser((state) => state.loggedUser);
+
   return (
     <header className="pageHeader">
       <div className="logo">&lt;Chris /&gt;</div>
@@ -78,12 +81,20 @@ const Header: React.FC<Props> = () => {
       </div>
       <p>Current Theme: {theme}</p>
       <div className="buttons">
-        <Button type="button" goTo="/signup">
-          Sign Up
-        </Button>
-        <Button type="button" group="secondary" goTo="/login">
-          Login
-        </Button>
+        {loggedUser ? (
+          <Button type="button" group="secondary" goTo="/logout">
+            Log Out
+          </Button>
+        ) : (
+          <>
+            <Button type="button" goTo="/signup">
+              Sign Up
+            </Button>
+            <Button type="button" group="secondary" goTo="/login">
+              Login
+            </Button>
+          </>
+        )}
       </div>
 
       {(theme === 'lightRandom' || theme === 'darkRandom') && (
@@ -101,17 +112,6 @@ const Header: React.FC<Props> = () => {
           </div>
         </motion.div>
       )}
-
-      {/* <div className="c a" onClick={() => console.log('a')}>
-        <div
-          className="c b"
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log('b');
-          }}>
-          upper?
-        </div>
-      </div> */}
     </header>
   );
 };

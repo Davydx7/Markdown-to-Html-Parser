@@ -7,11 +7,17 @@ import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 
 import './login.scss';
-import useUser from '../../stores/server/serverStores/userData';
+import useServerUser from '../../stores/server/serverStores/userData';
+import useLoggedUser from '../../stores/clientStores/loggedUser';
+
+type LoginData = {
+  email: string;
+  password: string;
+};
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [loginData, setLoginData] = useState('');
+  const [loginData, setLoginData] = useState<LoginData | ''>('');
 
   console.log('useState: ', loginData);
 
@@ -29,16 +35,17 @@ const Login: React.FC = () => {
     }
   });
 
-  const getUser = useUser((state) => state.getUser);
+  const getServerUser = useServerUser((state) => state.getServerUser);
+  const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
 
   const {
-    data: user,
+    data: serverUser,
     error,
     status
   } = useQuery(
-    ['getUser'],
-    // a call to the data base to get the user wutg LoginData
-    getUser,
+    ['getServerUser'],
+    // a call to the data base to get the user with LoginData
+    getServerUser,
     // () => undefined,
     {
       enabled: !!loginData,
@@ -47,24 +54,34 @@ const Login: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log('status: ', status);
-    if (status === 'success') {
-      navigate('/', { replace: true });
-      console.log('navigating....');
-      console.log('userSuccess!!!!:', user);
-      setLoginData('');
+    console.log('firing useEffect');
+
+    if (status === 'success' && serverUser && loginData) {
+      if (loginData.email === serverUser.email && loginData.password === serverUser.password) {
+        localStorage.setItem('loggedUser', JSON.stringify(serverUser));
+        // hoisting user over to zustand for mock sake and application state
+        setLoggedUser(serverUser);
+
+        navigate('/', { replace: true });
+        // console.log('navigating....');
+      } else {
+        console.log('wrong details');
+        setError('email', { type: 'custom', message: 'Invalid Credentials' });
+        setError('password', { type: 'custom', message: 'Invalid Credentials' });
+      }
+      setLoginData(''); // disable query
     }
 
-    console.log('firing useEffect');
     if (status === 'error') {
-      setError('email', { type: 'custom', message: 'email and password does not match' });
-      setError('password', { type: 'custom', message: 'email and password does not match' });
-      console.log('error', error);
+      console.log('error-status ', error);
+      setError('email', { type: 'custom', message: 'Invalid Credentials' });
+      setError('password', { type: 'custom', message: 'Invalid Credentials' });
+      // console.log('error', error);
       setLoginData('');
     }
   }, [loginData, status, error]);
 
-  const onSubmit = (loginData: any) => {
+  const onSubmit = (loginData: LoginData) => {
     setLoginData(loginData);
     // console.log('loginData: ', loginData);
   };
