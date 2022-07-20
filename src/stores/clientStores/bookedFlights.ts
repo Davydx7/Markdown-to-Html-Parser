@@ -21,7 +21,7 @@ const useBookedFlights = create<BookedFlightsStore>((set, get) => ({
   bookedFlights: [
     {
       id: '3',
-      name: 'Ryanair',
+      name: 'Ryanair Airways',
       from: 'Madrid',
       to: 'New York',
       departureDate: new Date().toJSON(),
@@ -30,7 +30,7 @@ const useBookedFlights = create<BookedFlightsStore>((set, get) => ({
     },
     {
       id: '4',
-      name: 'Lufthansa',
+      name: 'Lufthansa Airways',
       from: 'Madrid',
       to: 'New York',
       departureDate: new Date().toJSON(),
