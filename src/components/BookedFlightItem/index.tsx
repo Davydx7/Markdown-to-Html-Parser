@@ -37,7 +37,7 @@ const BookedFlightItem: React.FC<Props> = ({
 
     <li className="flightItem">
       <div className="info one">
-        <div>
+        <div className="city">
           <span className="fi fi-at" /> {from} &rarr; <span className="fi fi-us" /> {to}
         </div>
         <h3 className="name">{name}</h3>

@@ -45,11 +45,11 @@ const Payment: React.FC = () => {
     addBookedFlight({
       id: faker.database.mongodbObjectId(),
       name: `${faker.name.firstName()} Airways`,
-      from: faker.address.city(),
-      to: faker.address.city(),
+      from: faker.address.state(),
+      to: faker.address.state(),
       departureDate: new Date().toJSON(),
       arrivalDate: addHours(new Date(), 12).toJSON(),
-      price: +faker.commerce.price()
+      price: faker.datatype.number({ min: 100, max: 900, precision: 0.01 })
     });
 
     console.log(data);
@@ -95,7 +95,10 @@ const Payment: React.FC = () => {
             <div className="cards">
               <label htmlFor="visa">
                 <input
-                  {...register('cardType', { required: 'required' })}
+                  {...register(
+                    'cardType'
+                    // { required: 'required' }
+                  )}
                   name="cardType"
                   type="radio"
                   id="visa"
@@ -106,7 +109,10 @@ const Payment: React.FC = () => {
 
               <label htmlFor="masterCard">
                 <input
-                  {...register('cardType', { required: 'required' })}
+                  {...register(
+                    'cardType'
+                    // { required: 'required' }
+                  )}
                   name="cardType"
                   type="radio"
                   id="masterCard"
@@ -117,7 +123,10 @@ const Payment: React.FC = () => {
 
               <label htmlFor="americanExpress">
                 <input
-                  {...register('cardType', { required: 'required' })}
+                  {...register(
+                    'cardType'
+                    // { required: 'required' }
+                  )}
                   name="cardType"
                   type="radio"
                   id="americanExpress"

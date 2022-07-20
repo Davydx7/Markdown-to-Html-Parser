@@ -1,3 +1,4 @@
+import { addHours } from 'date-fns';
 import create from 'zustand';
 
 interface BookedFlightItem {
@@ -17,7 +18,26 @@ interface BookedFlightsStore {
 }
 
 const useBookedFlights = create<BookedFlightsStore>((set, get) => ({
-  bookedFlights: [],
+  bookedFlights: [
+    {
+      id: '3',
+      name: 'Ryanair',
+      from: 'Madrid',
+      to: 'New York',
+      departureDate: new Date().toJSON(),
+      arrivalDate: addHours(new Date(), 12).toJSON(),
+      price: 732.49
+    },
+    {
+      id: '4',
+      name: 'Lufthansa',
+      from: 'Madrid',
+      to: 'New York',
+      departureDate: new Date().toJSON(),
+      arrivalDate: addHours(new Date(), 12).toJSON(),
+      price: 926.79
+    }
+  ],
   addBookedFlight: (bookedFlight: BookedFlightItem) =>
     set((state) => ({
       bookedFlights: [...state.bookedFlights, bookedFlight]

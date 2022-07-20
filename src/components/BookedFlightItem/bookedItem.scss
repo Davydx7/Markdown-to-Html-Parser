@@ -13,6 +13,10 @@
 	box-shadow: 0 0.2rem 0.4rem rgba(var(--primary), 0.1);
 	font-size: 1.25rem;
 
+	.city {
+		white-space: nowrap;
+	}
+
 	.info {
 		display: grid;
 		gap: 0.5rem	;
