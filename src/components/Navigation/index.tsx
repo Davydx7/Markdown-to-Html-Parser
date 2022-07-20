@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import Draggable from 'react-draggable';
+// import Draggable from 'react-draggable';
+import { motion } from 'framer-motion';
 
 import {
   FaHome,
@@ -87,20 +88,19 @@ const pages: page[] = [
 ];
 
 const Navigation = () => (
-  <Draggable>
-    <div id="navigation">
-      <div id="navigationheader">Drag around navigation</div>
-      <div className="pages">
-        {pages.map((pag) => (
-          <NavLink
-            className={({ isActive }) => (isActive ? 'active' : '')}
-            to={pag.path}
-            title={pag.title}>
-            {pag.icon} {pag.text}
-          </NavLink>
-        ))}
-      </div>
+  <motion.div id="navigation" drag dragMomentum={false}>
+    <div id="navigationheader">Drag around navigation</div>
+    <div className="pages">
+      {pages.map((page) => (
+        <NavLink
+          key={page.text}
+          className={({ isActive }) => (isActive ? 'active' : '')}
+          to={page.path}
+          title={page.title}>
+          {page.icon} {page.text}
+        </NavLink>
+      ))}
     </div>
-  </Draggable>
+  </motion.div>
 );
 export default Navigation;

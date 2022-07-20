@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, useState } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { FlightDetails } from '../../stores/clientStores/flightDetailsStore';
+import { FlightDetails } from '../../routes/Details';
 
 import './autocomplete.scss';
 
@@ -8,16 +8,6 @@ type Props = UseControllerProps<FlightDetails> & InputHTMLAttributes<HTMLInputEl
 
 const Autocomplete: React.FC<Props> = ({ placeholder, ...props }) => {
   const { field, fieldState } = useController(props);
-  // const {
-  //   field: { onChange, onBlur, name, value, ref },
-  //   fieldState: { invalid, isTouched, isDirty },
-  //   formState: { touchedFields, dirtyFields }
-  // } = useController({
-  //   name,
-  //   control,
-  //   rules: { required: true },
-  //   defaultValue: "",
-  // });
 
   const suggestions: string[] = ['Madrid', 'New york', 'Vienna'];
 

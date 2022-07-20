@@ -6,12 +6,11 @@
 	overflow: hidden;
 	transition: height 0.3s ease-in-out, width 0.3s ease-in-out;
 	cursor: move;
-	z-index: 999;
+	z-index: 99;
 	// height: 3.5rem;
 
 	&>#navigationheader{
 		background-color: rgba(var(--primary),0.6);
-		padding: 0.5rem;
 		color: rgba(var(--secondary),0.9);
 		font-size: 1.5rem;
 		font-weight: 500;

@@ -1,17 +1,24 @@
 import { useForm } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 
 import './login.scss';
+import useUser from '../../stores/server/serverStores/userData';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+  const [loginData, setLoginData] = useState('');
+
+  console.log('useState: ', loginData);
+
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isValid }
   } = useForm({
     mode: 'onBlur',
@@ -22,52 +29,43 @@ const Login: React.FC = () => {
     }
   });
 
-  const navigate = useNavigate();
+  const getUser = useUser((state) => state.getUser);
 
   const {
     data: user,
     error,
-    refetch,
     status
   } = useQuery(
     ['getUser'],
-    // a call to the data base to get the user
-    () => ({
-      id: 1,
-      title: 'Mr',
-      firstName: 'John',
-      lastName: 'Doe',
-      mobileNumber: '1234567890',
-      email: '',
-      password: '1234567890',
-      confirmPassword: '1234567890'
-    }),
-    // undefined,
+    // a call to the data base to get the user wutg LoginData
+    getUser,
+    // () => undefined,
     {
-      enabled: false,
-      cacheTime: 0,
-      refetchOnMount: false
-      // refetchOnReconnect,
-      // refetchOnWindowFocus,
+      enabled: !!loginData,
+      cacheTime: 0
     }
   );
 
   useEffect(() => {
-    if (user) {
-      navigate('/');
-      console.log('user:', user);
+    console.log('status: ', status);
+    if (status === 'success') {
+      navigate('/', { replace: true });
+      console.log('navigating....');
+      console.log('userSuccess!!!!:', user);
+      setLoginData('');
     }
 
-    if (error) {
-      console.log('error: no user ', error);
+    console.log('firing useEffect');
+    if (status === 'error') {
+      setError('email', { type: 'custom', message: 'email and password does not match' });
+      setError('password', { type: 'custom', message: 'email and password does not match' });
+      console.log('error', error);
+      setLoginData('');
     }
-  }, [status]);
-
-  console.log('status1: ', status);
+  }, [loginData, status, error]);
 
   const onSubmit = (loginData: any) => {
-    refetch();
-    console.log('statusPressed: ', status);
+    setLoginData(loginData);
     // console.log('loginData: ', loginData);
   };
 

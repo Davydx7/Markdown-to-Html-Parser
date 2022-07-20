@@ -1,11 +1,19 @@
 import { faker } from '@faker-js/faker';
 
-const users = [
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  email: string;
+};
+
+const users: User[] = [
   {
     id: faker.database.mongodbObjectId(),
-    FirstName: 'John',
-    LastName: 'Hathaway',
-    password: '1234567890',
+    firstName: 'John',
+    lastName: 'Hathaway',
+    password: 'abcd1234',
     email: 'you@example.com'
   }
 ];

@@ -1,8 +1,10 @@
+import { faker } from '@faker-js/faker';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Navigate, NavigateFunction, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
+import useUser from '../../stores/server/serverStores/userData';
 
 import './signup.scss';
 
@@ -27,8 +29,21 @@ const Signup: React.FC = () => {
     }
   });
 
+  const setUser = useUser((state) => state.setUser);
+
   const onSubmit = (data: any) => {
     console.log(data);
+
+    // should be useQuery here to, send and wait for data that
+    // will be used as userData
+    setUser({
+      id: faker.database.mongodbObjectId(),
+      firstName: data.firstName,
+      lastName: data.lastName,
+      password: data.password,
+      email: data.email
+    });
+
     navigate('/', { replace: true });
   };
 

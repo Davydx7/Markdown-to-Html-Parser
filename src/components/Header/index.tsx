@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import Draggable from 'react-draggable';
+import { motion, useDragControls } from 'framer-motion';
 import { FaMoon, FaRandom, FaSun } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 import { RgbaColorPicker } from 'react-colorful';
 
@@ -50,6 +49,13 @@ const Header: React.FC<Props> = () => {
         : 'light'
     );
   };
+
+  const dragControls = useDragControls();
+
+  function startDrag(event: any) {
+    dragControls.start(event, { snapToCursor: true });
+  }
+
   return (
     <header className="pageHeader">
       <div className="logo">&lt;Chris /&gt;</div>
@@ -81,10 +87,31 @@ const Header: React.FC<Props> = () => {
       </div>
 
       {(theme === 'lightRandom' || theme === 'darkRandom') && (
-        <Draggable>
-          <RgbaColorPicker className="colorPicker" color={color} onChange={setColor} />
-        </Draggable>
+        <motion.div
+          id="colorBox"
+          drag
+          dragMomentum={false}
+          dragControls={dragControls}
+          dragListener={false}>
+          <div className="dragHandle" onPointerDown={startDrag}>
+            + Move Box Here +
+          </div>
+          <div>
+            <RgbaColorPicker className="colorPicker" color={color} onChange={setColor} />
+          </div>
+        </motion.div>
       )}
+
+      {/* <div className="c a" onClick={() => console.log('a')}>
+        <div
+          className="c b"
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log('b');
+          }}>
+          upper?
+        </div>
+      </div> */}
     </header>
   );
 };

@@ -1,22 +1,24 @@
-import create from 'zustand';
+// import create from 'zustand';
 
-export type FlightDetails = {
-  from: string;
-  to: string;
-  departureDate: string;
-};
+// export type FlightDetails = {
+//   from: string;
+//   to: string;
+//   departureDate: string;
+// };
 
-type FlightDetailsStore = {
-  flightDetails: FlightDetails | {};
-  setFlightDetails: (flightDetails: FlightDetails) => void;
-};
+// type FlightDetailsStore = {
+//   flightDetails: FlightDetails | {};
+//   setFlightDetails: (flightDetails: FlightDetails) => void;
+// };
 
-const useFlightDetails = create<FlightDetailsStore>((set) => ({
-  flightDetails: {},
-  setFlightDetails: (flightDetails: FlightDetails): void =>
-    set((state) => ({
-      flightDetails
-    }))
-}));
+// const useFlightDetails = create<FlightDetailsStore>((set) => ({
+//   flightDetails: {},
+//   setFlightDetails: (flightDetails: FlightDetails): void =>
+//     set((state) => ({
+//       flightDetails
+//     }))
+// }));
 
-export default useFlightDetails;
+// export default useFlightDetails;
+
+export {};

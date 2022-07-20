@@ -6,7 +6,12 @@ import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 import Autocomplete from '../../components/Autocomplete';
 import './details.scss';
-import useFlightDetails, { FlightDetails } from '../../stores/clientStores/flightDetailsStore';
+
+export type FlightDetails = {
+  from: string;
+  to: string;
+  departureDate: string;
+};
 
 const Details: React.FC = () => {
   const {
@@ -24,13 +29,14 @@ const Details: React.FC = () => {
     }
   });
 
-  const setFlightDetails = useFlightDetails((store) => store.setFlightDetails);
-
   const navigate = useNavigate();
 
   const onSubmit = (data: FlightDetails) => {
-    // eslint-disable-next-line no-console
-    setFlightDetails(data);
+    // no next line, should be sent to api, result from api will be stored with react query itself
+    // by then the flights data call wwill be made and received here by react query before navigating, and not at
+    // the flights page itself as its currently at
+
+    // setFlightDetails(data); // no
     console.log(data);
 
     navigate('/flights');
