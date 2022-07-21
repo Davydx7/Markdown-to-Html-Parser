@@ -57,7 +57,7 @@ const Details: React.FC = () => {
             control={control}
             rules={{
               required: 'required',
-              validate: () => watch('from') !== watch('to') || 'Locations must be different'
+              validate: (v) => v !== watch('to') || 'Locations must be different'
             }}
           />
 
@@ -67,7 +67,7 @@ const Details: React.FC = () => {
             control={control}
             rules={{
               required: 'required',
-              validate: () => watch('from') !== watch('to') || 'Locations must be different'
+              validate: (v) => v !== watch('from') || 'Locations must be different'
             }}
           />
 

@@ -11,10 +11,12 @@ import './signup.scss';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
+  console.log('rerender!');
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid }
   } = useForm({
     mode: 'onBlur',
@@ -70,8 +72,7 @@ const Signup: React.FC = () => {
                 required: 'required',
                 minLength: { value: 2, message: 'min character length is 2' },
                 maxLength: { value: 15, message: 'max character length is 15' },
-                pattern: { value: /^[a-z]+$/i, message: 'Alphabelts only' },
-                shouldUnregister: true
+                pattern: { value: /^[a-z]+$/i, message: 'Alphabelts only' }
               })}
             />
             {errors.firstName && <span className="error">{errors.firstName.message}</span>}
@@ -88,8 +89,7 @@ const Signup: React.FC = () => {
                 required: 'required',
                 minLength: { value: 2, message: 'min character length is 2' },
                 maxLength: { value: 15, message: 'max character length is 15' },
-                pattern: { value: /^[a-z]+$/i, message: 'Alphabelts only' },
-                shouldUnregister: true
+                pattern: { value: /^[a-z]+$/i, message: 'Alphabelts only' }
               })}
             />
             {errors.lastName && <span className="error">{errors.lastName.message}</span>}
@@ -107,8 +107,7 @@ const Signup: React.FC = () => {
                   message: 'Invalid mobile number'
                 },
                 minLength: { value: 8, message: 'min character length is 8' },
-                maxLength: { value: 15, message: 'max character length is 15' },
-                shouldUnregister: true
+                maxLength: { value: 15, message: 'max character length is 15' }
               })}
             />
             {errors.mobileNumber && <span className="error">{errors.mobileNumber.message}</span>}
@@ -162,7 +161,10 @@ const Signup: React.FC = () => {
             <input
               type="password"
               placeholder="confirmPassword"
-              {...register('confirmPassword', { required: 'required', shouldUnregister: true })}
+              {...register('confirmPassword', {
+                required: 'required',
+                validate: (v) => v === watch('password') || 'Password mismatch'
+              })}
             />
             {errors.confirmPassword && (
               <span className="error">{errors.confirmPassword.message}</span>
