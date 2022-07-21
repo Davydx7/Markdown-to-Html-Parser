@@ -13,7 +13,7 @@ const Bookings = () => {
 
     <Layout>
       <div className="bookings">
-        <h1>Bookings</h1>
+        <h1 className="title">Bookings</h1>
 
         <ul>
           {bookedFlights.length ? (

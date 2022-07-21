@@ -89,9 +89,7 @@ const Payment: React.FC = () => {
           </label>
 
           <fieldset>
-            <span className="label">
-              Card Type:<i>*</i>
-            </span>
+            <span className="label">Card Type:</span>
             <div className="cards">
               <label htmlFor="visa">
                 <input
@@ -203,7 +201,7 @@ const Payment: React.FC = () => {
               placeholder="Input name"
               {...register('name', {
                 required: 'required',
-                pattern: { value: /^[a-zA-Z]*$/, message: 'Invalid name' }
+                pattern: { value: /^[a-zA-Z\s]{2,}$/, message: 'Invalid name' }
               })}
             />
             {errors.name && <span className="error">{errors.name.message}</span>}

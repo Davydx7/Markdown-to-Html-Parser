@@ -7,9 +7,12 @@ type Props = {
 };
 
 const transit = {
-  hidden: { opacity: 0, x: 25 },
-  visible: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -25 }
+  hidden: { opacity: 0, x: '-25%', y: '-50%' },
+  visible: {
+    opacity: 1,
+    x: '-50%'
+  },
+  exit: { opacity: 0, x: '-75%' }
 };
 
 const Layout: React.FC<Props> = ({ children }) => (
@@ -18,7 +21,7 @@ const Layout: React.FC<Props> = ({ children }) => (
     initial="hidden"
     animate="visible"
     exit="exit"
-    transition={{ type: 'spring', duration: 0.3 }}
+    transition={{ type: 'spring', duration: 0.6 }}
     className="layout">
     {children}
   </motion.div>

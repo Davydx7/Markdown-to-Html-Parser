@@ -20,6 +20,7 @@ import Signup from './routes/Signup';
 import './styles/App.scss';
 import useLoggedUser from './stores/clientStores/loggedUser';
 import { User } from './stores/server/serverData/users';
+import Layout from './components/Layout';
 
 const queryClient = new QueryClient();
 
@@ -42,22 +43,24 @@ function App() {
       <div className="App">
         <Header />
 
-        <AnimatePresence initial exitBeforeEnter>
-          <Routes location={location} key={location.pathname}>
-            <Route index element={<Home />} />
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="details" element={<Details />} />
-            <Route path="flights">
-              <Route index element={<Flights />} />
-              <Route path=":id" element={<Summary />} />
-            </Route>
-            <Route path="payment" element={<Payment />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="logout" element={<Logout />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AnimatePresence>
+        <div className="central">
+          <AnimatePresence initial>
+            <Routes location={location} key={location.pathname}>
+              <Route index element={<Home />} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="details" element={<Details />} />
+              <Route path="flights">
+                <Route index element={<Flights />} />
+                <Route path=":id" element={<Summary />} />
+              </Route>
+              <Route path="payment" element={<Payment />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="logout" element={<Logout />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AnimatePresence>
+        </div>
 
         <Footer />
         <Navigation />

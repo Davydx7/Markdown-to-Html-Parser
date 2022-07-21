@@ -18,7 +18,7 @@ const Logout = () => {
 
   return (
     <Layout>
-      <h1>Logging out</h1>
+      <h1 className="title">Logging out</h1>
       <p>Are you sure you want to log out?</p>
       <Button onClick={handleClick} type="button" group="secondary">
         Log out
