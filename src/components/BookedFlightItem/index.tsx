@@ -35,7 +35,7 @@ const BookedFlightItem: React.FC<Props> = ({
     //   navigate(`/flights/${id}`);
     // };
 
-    <li className="flightItem">
+    <li className="bookedFlightItem">
       <div className="info one">
         <div className="city">
           <span className="fi fi-at" /> {from} &rarr; <span className="fi fi-us" /> {to}
