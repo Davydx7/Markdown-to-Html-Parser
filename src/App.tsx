@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimatePresence } from 'framer-motion';
 
+import { useEffect } from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
@@ -33,10 +34,12 @@ function App() {
 
   const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
 
-  if (localStorage.getItem('loggedUser')) {
-    const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
-    setLoggedUser(user);
-  }
+  useEffect(() => {
+    if (localStorage.getItem('loggedUser')) {
+      const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
+      setLoggedUser(user);
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

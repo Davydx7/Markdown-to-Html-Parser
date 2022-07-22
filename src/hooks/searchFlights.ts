@@ -8,7 +8,8 @@ function useFetchFlights() {
   const fetchFlights = useFlights((state) => state.getAvailableFlights);
 
   return useQuery<FlightType[], Error>(['flights'], fetchFlights, {
-    staleTime: Infinity
+    staleTime: Infinity,
+    cacheTime: Infinity
   });
 }
 
