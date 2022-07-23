@@ -1,7 +1,7 @@
 import { addHours } from 'date-fns';
-import create from 'zustand';
+import create, { State } from 'zustand';
 
-interface BookedFlightItem {
+type BookedFlightItem = {
   id: string;
   name: string;
   from: string;
@@ -9,9 +9,9 @@ interface BookedFlightItem {
   departureDate: string /* Date */;
   arrivalDate: string;
   price: number;
-}
+};
 
-interface BookedFlightsStore {
+interface BookedFlightsStore extends State {
   bookedFlights: BookedFlightItem[];
   addBookedFlight: (bookedFlight: BookedFlightItem) => void;
   removeBookedFlight: (id: string) => void;

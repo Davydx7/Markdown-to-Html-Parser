@@ -1,9 +1,9 @@
-import create from 'zustand';
+import create, { State } from 'zustand';
 import flights, { FlightType } from '../serverData/flights';
 
 //  Flight Data original
 
-interface flightStore {
+interface flightStore extends State {
   availableFlights: FlightType[];
   getAvailableFlights: () => FlightType[];
 }

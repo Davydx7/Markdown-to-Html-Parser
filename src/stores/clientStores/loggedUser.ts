@@ -1,7 +1,7 @@
-import create from 'zustand';
+import create, { State } from 'zustand';
 import { User } from '../server/serverData/users';
 
-interface LoggedUser {
+interface LoggedUser extends State {
   loggedUser: User | undefined;
   setLoggedUser: (loggedUser: User | undefined) => void;
   getLoggedUser: () => User | undefined;

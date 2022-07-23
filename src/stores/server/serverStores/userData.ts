@@ -1,7 +1,7 @@
-import create from 'zustand';
+import create, { State } from 'zustand';
 import users, { User } from '../serverData/users';
 
-export interface UserStore {
+export interface UserStore extends State {
   serverUser: User | undefined;
   setServerUser: (serverUser: User) => void;
   getServerUser: () => User | undefined;
