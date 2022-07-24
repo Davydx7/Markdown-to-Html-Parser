@@ -38,6 +38,8 @@ const Summary: React.FC = () => {
 
   const flight = flights?.find((flight) => flight.id === id);
 
+  const onClickPayment = () => {};
+
   return (
     <Layout>
       {flight ? (
@@ -90,7 +92,7 @@ const Summary: React.FC = () => {
             <br />
             to secure seat
           </p>
-          <Button goTo="/payment" type="button" size="medium">
+          <Button goTo={`/payment/${id}`} type="button" size="medium">
             Pay 10% now
           </Button>
           <Button goTo="/flights" type="button" size="medium" group="secondary">

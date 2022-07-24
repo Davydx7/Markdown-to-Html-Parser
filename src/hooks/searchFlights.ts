@@ -9,7 +9,8 @@ function useFetchFlights() {
 
   return useQuery<FlightType[], Error>(['flights'], fetchFlights, {
     staleTime: Infinity,
-    cacheTime: Infinity
+    enabled: true,
+    refetchOnMount: true
   });
 }
 

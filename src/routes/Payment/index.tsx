@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { addHours } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
@@ -10,6 +10,7 @@ import americanExpress from '../../assets/png/americanExpress.png';
 import useBookedFlights from '../../stores/clientStores/bookedFlights';
 
 import './payment.scss';
+import useFetchFlights from '../../hooks/searchFlights';
 
 type PaymentDetails = {
   cardNumber: string;
@@ -41,16 +42,15 @@ const Payment: React.FC = () => {
 
   const addBookedFlight = useBookedFlights((state) => state.addBookedFlight);
 
+  const { data: flights } = useFetchFlights();
+  const { id } = useParams();
+
+  const flight = flights?.find((flight) => flight.id === id);
+
   const onSubmit = (data: any) => {
-    addBookedFlight({
-      id: faker.database.mongodbObjectId(),
-      name: `${faker.name.firstName()} Airways`,
-      from: faker.address.state(),
-      to: faker.address.state(),
-      departureDate: new Date().toJSON(),
-      arrivalDate: addHours(new Date(), 12).toJSON(),
-      price: faker.datatype.number({ min: 100, max: 900, precision: 0.01 })
-    });
+    if (flight) {
+      addBookedFlight(flight);
+    }
 
     console.log(data);
 

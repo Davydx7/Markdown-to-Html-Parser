@@ -76,7 +76,7 @@ const pages: page[] = [
   {
     text: 'Payment',
     title: 'Payment page',
-    path: '/payment',
+    path: '/payment/1',
     icon: <FaRegCreditCard className="icon" />
   },
   {

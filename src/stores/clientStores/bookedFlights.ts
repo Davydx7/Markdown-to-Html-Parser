@@ -1,19 +1,10 @@
 import { addHours } from 'date-fns';
 import create, { State } from 'zustand';
-
-type BookedFlightItem = {
-  id: string;
-  name: string;
-  from: string;
-  to: string;
-  departureDate: string /* Date */;
-  arrivalDate: string;
-  price: number;
-};
+import { FlightType } from '../server/serverData/flights';
 
 interface BookedFlightsStore extends State {
-  bookedFlights: BookedFlightItem[];
-  addBookedFlight: (bookedFlight: BookedFlightItem) => void;
+  bookedFlights: FlightType[];
+  addBookedFlight: (bookedFlight: FlightType) => void;
   removeBookedFlight: (id: string) => void;
 }
 
@@ -38,7 +29,7 @@ const useBookedFlights = create<BookedFlightsStore>((set, get) => ({
       price: 926.79
     }
   ],
-  addBookedFlight: (bookedFlight: BookedFlightItem) =>
+  addBookedFlight: (bookedFlight: FlightType) =>
     set((state) => ({
       bookedFlights: [...state.bookedFlights, bookedFlight]
     })),

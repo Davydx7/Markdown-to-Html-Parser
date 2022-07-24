@@ -28,6 +28,8 @@ const queryClient = new QueryClient();
 function App() {
   const location = useLocation();
 
+  console.warn('app rendered!');
+
   // A way to remember the last route visited
   // localStorage.setItem('lastLocation', location.pathname);
   // localStorage.getItem('lastLocation');
@@ -56,7 +58,7 @@ function App() {
                 <Route index element={<Flights />} />
                 <Route path=":id" element={<Summary />} />
               </Route>
-              <Route path="payment" element={<Payment />} />
+              <Route path="payment/:id" element={<Payment />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
               <Route path="logout" element={<Logout />} />
