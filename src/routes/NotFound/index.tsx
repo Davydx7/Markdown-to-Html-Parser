@@ -10,6 +10,9 @@ function NotFound() {
       <Button type="button" goTo="/details">
         Book a flight
       </Button>
+      <Button type="button" group="secondary" goTo="/">
+        Home
+      </Button>
     </div>
   );
 }

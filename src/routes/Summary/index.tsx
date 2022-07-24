@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 import './summary.scss';
 import useFetchFlights from '../../hooks/searchFlights';
+import PageHeader from '../../components/pageHeader';
 
 // type summary = {
 //   name: string;
@@ -44,10 +45,16 @@ const Summary: React.FC = () => {
     <Layout>
       {flight ? (
         <div className="summaryPage">
-          <h1 className="title">
-            <BiPlanet className="planet" />
-            {flight.name}
-          </h1>
+          <PageHeader
+            heading={
+              <>
+                <BiPlanet className="planet" />
+                {flight.name}
+              </>
+            }
+            backButton
+          />
+
           <div className="id">
             Flight ID: <span>{flight.id}</span>
           </div>
@@ -94,9 +101,6 @@ const Summary: React.FC = () => {
           </p>
           <Button goTo={`/payment/${id}`} type="button" size="medium">
             Pay 10% now
-          </Button>
-          <Button goTo="/flights" type="button" size="medium" group="secondary">
-            Go back
           </Button>
         </div>
       ) : (

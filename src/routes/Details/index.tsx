@@ -6,6 +6,7 @@ import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 import Autocomplete from '../../components/Autocomplete';
 import './details.scss';
+import PageHeader from '../../components/pageHeader';
 
 export type FlightDetails = {
   from: string;
@@ -49,7 +50,8 @@ const Details: React.FC = () => {
   return (
     <Layout>
       <div className="detailsPage">
-        <h2 className="title">Book your next flight!</h2>
+        <PageHeader heading="Book your next Flight" homeButton backButton />
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <Autocomplete
             placeholder="Departure location"

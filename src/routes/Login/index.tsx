@@ -9,6 +9,7 @@ import Layout from '../../components/Layout';
 import './login.scss';
 import useServerUser from '../../stores/server/serverStores/userData';
 import useLoggedUser from '../../stores/clientStores/loggedUser';
+import PageHeader from '../../components/pageHeader';
 
 type LoginData = {
   email: string;
@@ -89,7 +90,8 @@ const Login: React.FC = () => {
   return (
     <Layout>
       <div className="loginPage">
-        <h1 className="title">Login</h1>
+        <PageHeader heading="Login" homeButton backButton />
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>
             <span className="label">

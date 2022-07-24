@@ -8,6 +8,7 @@
 	font-weight: 500;
 	width: max-content;
 	height: fit-content;
+	cursor: pointer;
 
 	&:hover {
 		background-color: rgba(var(--primary),0.9);

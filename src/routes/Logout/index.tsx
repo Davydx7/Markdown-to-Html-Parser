@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
+import PageHeader from '../../components/pageHeader';
 import useLoggedUser from '../../stores/clientStores/loggedUser';
 import './logout.scss';
 
@@ -18,7 +19,7 @@ const Logout = () => {
 
   return (
     <Layout>
-      <h1 className="title">Logging out</h1>
+      <PageHeader heading="Log out?" homeButton />
       <p>Are you sure you want to log out?</p>
       <Button onClick={handleClick} type="button" group="secondary">
         Log out

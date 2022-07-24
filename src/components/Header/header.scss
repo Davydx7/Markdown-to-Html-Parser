@@ -1,4 +1,4 @@
-.pageHeader {
+.appHeader {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -8,10 +8,6 @@
 	background-color: rgb(var(--secondary));
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
-	>* {
-		width: 100%;
-	}
-
 	.buttons {
 		display: flex;
 		justify-content: flex-end;
@@ -19,6 +15,8 @@
 	}
 
 	.theme {
+		cursor: pointer;
+
 		.icon {
 			height: 3rem;
 			width: 3rem;
@@ -55,9 +53,14 @@
 		}
 	}
 
-}
+	.logo{
+		font-weight: 900;
+		font-size: xx-large;
+		cursor: pointer;
+		transition: all 0.3s ease-out;
 
-.logo{
-	font-weight: 900;
-	font-size: xx-large;
+		&:hover {
+			transform: scale(1.05);
+		}
+	}
 }

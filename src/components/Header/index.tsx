@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, useDragControls } from 'framer-motion';
 import { FaMoon, FaRandom, FaSun } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 import { RgbaColorPicker } from 'react-colorful';
 
@@ -59,9 +60,13 @@ const Header: React.FC<Props> = () => {
 
   const loggedUser = useLoggedUser((state) => state.loggedUser);
 
+  const navigate = useNavigate();
+
   return (
-    <header className="pageHeader">
-      <div className="logo">&lt;Chris /&gt;</div>
+    <header className="appHeader">
+      <div className="logo" onClick={() => navigate('/')}>
+        &lt;Chris/&gt;
+      </div>
       <div className="theme">
         {theme === 'light' ? (
           <FaMoon className="icon" onClick={handleClick} />

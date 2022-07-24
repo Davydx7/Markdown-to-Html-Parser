@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
+import PageHeader from '../../components/pageHeader';
 import useLoggedUser from '../../stores/clientStores/loggedUser';
 import { User } from '../../stores/server/serverData/users';
 import useServerUser from '../../stores/server/serverStores/userData';
@@ -59,7 +60,7 @@ const Signup: React.FC = () => {
   return (
     <Layout>
       <div className="signUpPage">
-        <h1 className="title">Sign Up</h1>
+        <PageHeader heading="Sign Up" homeButton backButton />
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>
             <span className="label">

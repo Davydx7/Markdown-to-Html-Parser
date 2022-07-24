@@ -1,6 +1,7 @@
 import BookedFlightItem from '../../components/BookedFlightItem';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
+import PageHeader from '../../components/pageHeader';
 import useBookedFlights from '../../stores/clientStores/bookedFlights';
 import './booking.scss';
 
@@ -13,7 +14,7 @@ const Bookings = () => {
 
     <Layout>
       <div className="bookings">
-        <h1 className="title">Bookings</h1>
+        <PageHeader heading="Bookings" homeButton backButton />
 
         <ul>
           {bookedFlights.length ? (
@@ -24,7 +25,6 @@ const Bookings = () => {
             <div>You have no available bookings</div>
           )}
         </ul>
-
         <Button type="button" group="primary" goTo="/details">
           Book a flight
         </Button>

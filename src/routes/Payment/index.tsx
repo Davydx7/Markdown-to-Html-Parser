@@ -11,6 +11,7 @@ import useBookedFlights from '../../stores/clientStores/bookedFlights';
 
 import './payment.scss';
 import useFetchFlights from '../../hooks/searchFlights';
+import PageHeader from '../../components/pageHeader';
 
 type PaymentDetails = {
   cardNumber: string;
@@ -60,7 +61,8 @@ const Payment: React.FC = () => {
   return (
     <Layout>
       <div className="paymentPage">
-        <h1 className="title">Check Out</h1>
+        <PageHeader heading="Checkout" backButton />
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>
             <span className="label">

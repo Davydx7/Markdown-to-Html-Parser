@@ -21,7 +21,6 @@ import Signup from './routes/Signup';
 import './styles/App.scss';
 import useLoggedUser from './stores/clientStores/loggedUser';
 import { User } from './stores/server/serverData/users';
-import Layout from './components/Layout';
 
 const queryClient = new QueryClient();
 
@@ -41,7 +40,7 @@ function App() {
       const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
       setLoggedUser(user);
     }
-  }, []);
+  }, [setLoggedUser]);
 
   return (
     <QueryClientProvider client={queryClient}>
