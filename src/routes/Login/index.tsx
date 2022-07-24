@@ -80,7 +80,7 @@ const Login: React.FC = () => {
       // console.log('error', error);
       setLoginData('');
     }
-  }, [loginData, status, error]);
+  }, [loginData, status, error, serverUser, setLoggedUser, navigate, setError]);
 
   const onSubmit = (loginData: LoginData) => {
     setLoginData(loginData);

@@ -24,23 +24,21 @@ import { User } from './stores/server/serverData/users';
 
 const queryClient = new QueryClient();
 
+const { setLoggedUser } = useLoggedUser.getState();
+
+if (localStorage.getItem('loggedUser')) {
+  const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
+  setLoggedUser(user);
+
+  console.log('setLoggeduser at root');
+}
+
 function App() {
   const location = useLocation();
-
-  console.warn('app rendered!');
 
   // A way to remember the last route visited
   // localStorage.setItem('lastLocation', location.pathname);
   // localStorage.getItem('lastLocation');
-
-  const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
-
-  useEffect(() => {
-    if (localStorage.getItem('loggedUser')) {
-      const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
-      setLoggedUser(user);
-    }
-  }, [setLoggedUser]);
 
   return (
     <QueryClientProvider client={queryClient}>

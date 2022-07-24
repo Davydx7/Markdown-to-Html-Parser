@@ -54,7 +54,7 @@ const Signup: React.FC = () => {
     // hoisting user over to zustand for mock sake and application state
     setLoggedUser(userData);
 
-    navigate('/', { replace: true });
+    navigate('/');
   };
 
   return (
