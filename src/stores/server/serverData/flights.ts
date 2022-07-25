@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { addHours } from 'date-fns/esm';
-// import { faker } from '@faker-js/faker';
+
+// Mocked flight Data
 
 export type FlightType = {
   id: string;

@@ -20,8 +20,6 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState<LoginData | ''>('');
 
-  console.log('useState: ', loginData);
-
   const {
     register,
     handleSubmit,
@@ -29,7 +27,6 @@ const Login: React.FC = () => {
     formState: { errors, isValid }
   } = useForm({
     mode: 'onBlur',
-    // reValidateMode: 'onBlur',
     defaultValues: {
       email: '',
       password: ''
@@ -56,8 +53,6 @@ const Login: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log('firing useEffect');
-
     if (status === 'success' && serverUser && loginData) {
       if (loginData.email === serverUser.email && loginData.password === serverUser.password) {
         localStorage.setItem('loggedUser', JSON.stringify(serverUser));
@@ -70,7 +65,6 @@ const Login: React.FC = () => {
           navigate('/', { replace: true });
         }
       } else {
-        console.log('wrong details');
         setError('email', { type: 'custom', message: 'Invalid Credentials' });
         setError('password', { type: 'custom', message: 'Invalid Credentials' });
       }
@@ -78,17 +72,14 @@ const Login: React.FC = () => {
     }
 
     if (status === 'error') {
-      console.log('error-status ', error);
       setError('email', { type: 'custom', message: 'Invalid Credentials' });
       setError('password', { type: 'custom', message: 'Invalid Credentials' });
-      // console.log('error', error);
       setLoginData('');
     }
   }, [loginData, status, error, serverUser, setLoggedUser, navigate, setError]);
 
   const onSubmit = (loginData: LoginData) => {
     setLoginData(loginData);
-    // console.log('loginData: ', loginData);
   };
 
   return (

@@ -1,6 +1,7 @@
 import create, { State } from 'zustand';
-import users, { User } from '../serverData/users';
+import { User } from '../serverData/users';
 
+// Mock data base of registered User
 export interface UserStore extends State {
   serverUser: User | undefined;
   setServerUser: (serverUser: User) => void;

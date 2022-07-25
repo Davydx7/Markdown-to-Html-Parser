@@ -12,7 +12,6 @@ import './signup.scss';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
-  console.log('rerender!');
 
   const {
     register,

@@ -3,6 +3,7 @@ import { addHours } from 'date-fns';
 import create, { State } from 'zustand';
 import { FlightType } from '../server/serverData/flights';
 
+// Booked flight Store
 interface BookedFlightsStore extends State {
   bookedFlights: FlightType[];
   addBookedFlight: (bookedFlight: FlightType) => void;

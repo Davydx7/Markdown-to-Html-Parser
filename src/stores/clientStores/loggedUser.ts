@@ -1,6 +1,7 @@
 import create, { State } from 'zustand';
 import { User } from '../server/serverData/users';
 
+// Logged in user store
 interface LoggedUser extends State {
   loggedUser: User | undefined;
   setLoggedUser: (loggedUser: User | undefined) => void;

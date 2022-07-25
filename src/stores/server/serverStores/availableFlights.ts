@@ -1,7 +1,7 @@
 import create, { State } from 'zustand';
 import flights, { FlightType } from '../serverData/flights';
 
-//  Flight Data original
+//  Flight Data , This mocks Data base of flight
 
 interface flightStore extends State {
   availableFlights: FlightType[];

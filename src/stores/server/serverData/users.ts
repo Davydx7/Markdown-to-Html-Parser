@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
 
+// Mocked User Data
+
 export type User = {
   id: string;
   firstName: string;

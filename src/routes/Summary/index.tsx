@@ -8,31 +8,6 @@ import Layout from '../../components/Layout';
 import './summary.scss';
 import useFetchFlights from '../../hooks/searchFlights';
 import PageHeader from '../../components/pageHeader';
-import useLoggedUser from '../../stores/clientStores/loggedUser';
-
-// type summary = {
-//   name: string;
-//   id: string;
-//   from: string;
-//   to: string;
-//   departureDate: string;
-//   departureTime: string;
-//   arrivalDate: string;
-//   arrivalTime: string;
-//   price: number;
-// };
-
-// const flight: summary = {
-//   name: 'Chris Airways',
-//   id: 'FLT1836',
-//   from: 'Vienna',
-//   to: 'New York',
-//   departureDate: 'Fri, Jul 22',
-//   departureTime: '15:30 UTC',
-//   arrivalDate: 'Tue, Jul 26',
-//   arrivalTime: '11:00 UTC',
-//   price: 100
-// };
 
 const Summary: React.FC = () => {
   const { data: flights } = useFetchFlights();
