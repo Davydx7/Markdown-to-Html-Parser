@@ -14,28 +14,29 @@ type Props = {
   children?: React.ReactNode;
 };
 
-const Header: React.FC<Props> = () => {
-  const [theme, setTheme] = useState('light');
-  const [color, setColor] = useState({ r: 174, g: 52, b: 217, a: 1 });
+const storedTheme = localStorage.getItem('theme');
+const initialTheme = storedTheme ?? 'light';
 
-  useEffect(() => {
-    document.body.classList.add('light');
-  }, []);
+const storedColor = JSON.parse(localStorage.getItem('color') as string);
+const intialColor = storedColor ?? { r: 174, g: 52, b: 217, a: 1 };
+
+const Header: React.FC<Props> = () => {
+  const [theme, setTheme] = useState<string>(initialTheme);
+  const [color, setColor] = useState(intialColor);
+
+  localStorage.setItem('theme', theme);
+  localStorage.setItem('color', JSON.stringify(color));
 
   if (theme === 'light') {
-    document.body.classList.replace('darkRandom', 'light');
     document.body.style.setProperty('--primary', '5,5,5');
     document.body.style.setProperty('--secondary', '255,255,255');
   } else if (theme === 'dark') {
-    document.body.classList.replace('light', 'dark');
     document.body.style.setProperty('--primary', '255,255,255');
     document.body.style.setProperty('--secondary', '5,5,5');
   } else if (theme === 'lightRandom') {
-    document.body.classList.replace('dark', 'lightRandom');
     document.body.style.setProperty('--primary', `${color.r},${color.g},${color.b}`);
     document.body.style.setProperty('--secondary', '255,255,255');
-  } else {
-    document.body.classList.replace('lightRandom', 'darkRandom');
+  } else if (theme === 'darkRandom') {
     document.body.style.setProperty('--primary', `${color.r},${color.g},${color.b}`);
     document.body.style.setProperty('--secondary', '5,5,5');
   }
@@ -52,6 +53,7 @@ const Header: React.FC<Props> = () => {
     );
   };
 
+  // Color Picker for custom theme using framer motion and react colorful
   const dragControls = useDragControls();
 
   function startDrag(event: any) {
@@ -92,16 +94,17 @@ const Header: React.FC<Props> = () => {
           </Button>
         ) : (
           <>
-            <Button type="button" goTo="/signup">
+            <Button type="button" goTo="/signup/1">
               Sign Up
             </Button>
-            <Button type="button" group="secondary" goTo="/login">
+            <Button type="button" group="secondary" goTo="/login/1">
               Login
             </Button>
           </>
         )}
       </div>
 
+      {/* conditionally show color picker */}
       {(theme === 'lightRandom' || theme === 'darkRandom') && (
         <motion.div
           id="colorBox"

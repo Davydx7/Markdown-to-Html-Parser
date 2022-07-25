@@ -24,19 +24,18 @@ import { User } from './stores/server/serverData/users';
 
 const queryClient = new QueryClient();
 
+// LoggedUser accessed once on initial app load
 const { setLoggedUser } = useLoggedUser.getState();
 
 if (localStorage.getItem('loggedUser')) {
   const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
   setLoggedUser(user);
-
-  console.log('setLoggeduser at root');
 }
 
 function App() {
   const location = useLocation();
 
-  // A way to remember the last route visited
+  // Remember the last route visited
   // localStorage.setItem('lastLocation', location.pathname);
   // localStorage.getItem('lastLocation');
 
@@ -55,9 +54,12 @@ function App() {
                 <Route index element={<Flights />} />
                 <Route path=":id" element={<Summary />} />
               </Route>
+
+              {/* id params is to track currently selected to-be-booked fligt
+              across route changes */}
               <Route path="payment/:id" element={<Payment />} />
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<Signup />} />
+              <Route path="login/:id" element={<Login />} />
+              <Route path="signup/:id" element={<Signup />} />
               <Route path="logout" element={<Logout />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -65,6 +67,7 @@ function App() {
         </div>
 
         <Footer />
+        {/* Drag around navigation widget */}
         <Navigation />
       </div>
       <ReactQueryDevtools initialIsOpen={false} />

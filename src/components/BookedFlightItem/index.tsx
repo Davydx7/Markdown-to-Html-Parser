@@ -30,11 +30,6 @@ const BookedFlightItem: React.FC<Props> = ({
   };
 
   return (
-    // const navigate = useNavigate();
-    // const handleClick = () => {
-    //   navigate(`/flights/${id}`);
-    // };
-
     <li className="bookedFlightItem">
       <div className="info one">
         <div className="city">

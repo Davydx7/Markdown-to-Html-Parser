@@ -10,7 +10,7 @@ const Bookings = () => {
 
   return (
     // useQuery call to get bookings based on Logged in user
-    // but current totally mocked by zustand
+    // but totally mocked by zustand for prototyping
 
     <Layout>
       <div className="bookings">

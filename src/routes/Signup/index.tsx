@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/pageHeader';
@@ -35,6 +35,7 @@ const Signup: React.FC = () => {
 
   const setServerUser = useServerUser((state) => state.setServerUser);
   const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
+  const { id } = useParams();
 
   const onSubmit = (data: any) => {
     const userData: User = {
@@ -54,7 +55,11 @@ const Signup: React.FC = () => {
     // hoisting user over to zustand for mock sake and application state
     setLoggedUser(userData);
 
-    navigate('/');
+    if (id !== '1') {
+      navigate(`/flights/${id}`);
+    } else {
+      navigate('/', { replace: true });
+    }
   };
 
   return (
@@ -185,7 +190,7 @@ const Signup: React.FC = () => {
           <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="google" />
           <img src="https://img.icons8.com/color/48/000000/twitter.png" alt="twitter" />
         </div>
-        <Button goTo="/login" type="button" group="tertiary" size="small">
+        <Button goTo={`/login/${id}`} type="button" group="tertiary" size="small">
           Existing User?
         </Button>
       </div>

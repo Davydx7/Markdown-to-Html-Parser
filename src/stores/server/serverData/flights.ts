@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { addHours } from 'date-fns/esm';
 // import { faker } from '@faker-js/faker';
 
@@ -11,152 +12,154 @@ export type FlightType = {
   price: number;
 };
 
-const date: string = new Date().toJSON();
-const arrival: string = addHours(new Date(), 12).toJSON();
+const closestDepature: Date = addHours(new Date(), 12);
+const farthestDepature: Date = addHours(new Date(), 36);
+const closestArrival: Date = addHours(new Date(), 48);
+const farthestArrival: Date = addHours(new Date(), 72);
 
 const flights: FlightType[] = [
   {
-    id: '1',
+    id: faker.database.mongodbObjectId(),
     name: 'Chris Airways',
     from: 'Vienna',
     to: 'New York',
-    departureDate: date,
-    arrivalDate: arrival,
+    departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+    arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 450.99
   },
   {
-    id: '2',
+    id: faker.database.mongodbObjectId(),
     name: 'Jumbo Airways',
     from: 'Vienna',
     to: 'New York',
-    departureDate: date,
-    arrivalDate: arrival,
+    departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+    arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 389.99
   },
   {
-    id: '3',
+    id: faker.database.mongodbObjectId(),
     name: 'Ryanair',
     from: 'Madrid',
     to: 'New York',
-    departureDate: date,
-    arrivalDate: arrival,
+    departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+    arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 732.49
   },
   {
-    id: '4',
+    id: faker.database.mongodbObjectId(),
     name: 'Lufthansa',
     from: 'Madrid',
     to: 'New York',
-    departureDate: date,
-    arrivalDate: arrival,
+    departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+    arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 926.79
   },
   {
-    id: '5',
+    id: faker.database.mongodbObjectId(),
     name: 'EasyJet',
     from: 'Vienna',
     to: 'Madrid',
-    departureDate: date,
-    arrivalDate: arrival,
-    price: 523.99
-  },
-  {
-    id: '6',
-    name: 'EasyJet',
-    from: 'Vienna',
-    to: 'Madrid',
-    departureDate: date,
-    arrivalDate: arrival,
+    departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+    arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 523.99
   }
   // {
-  //   id: '7',
-  //   name: 'Chris Airways',
-  //   from: 'New york',
-  //   to: 'Madrid',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
-  //   price: 450.99
-  // },
-  // {
-  //   id: '8',
-  //   name: 'Jumbo Airways',
-  //   from: 'New york',
-  //   to: 'Madrid',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
-  //   price: 389.99
-  // },
-  // {
-  //   id: '9',
-  //   name: 'Ryanair',
-  //   from: 'New york',
-  //   to: 'Vienna',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
-  //   price: 732.49
-  // },
-  // {
-  //   id: '10',
-  //   name: 'Lufthansa',
-  //   from: 'New york',
-  //   to: 'Vienna',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
-  //   price: 926.79
-  // },
-  // {
-  //   id: '11',
-  //   name: 'EasyJet',
-  //   from: 'Madrid',
-  //   to: 'Vienna',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
-  //   price: 523.99
-  // },
-  // {
-  //   id: '12',
-  //   name: 'EasyJet',
-  //   from: 'Madrid',
-  //   to: 'Vienna',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
-  //   price: 523.99
-  // },
-  // {
-  //   id: '13',
+  //   id: faker.database.mongodbObjectId(),
   //   name: 'EasyJet',
   //   from: 'Vienna',
   //   to: 'Madrid',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
   //   price: 523.99
-  // },
+  // }
   // {
-  //   id: '14',
+  //   id: faker.database.mongodbObjectId(),
   //   name: 'Chris Airways',
   //   from: 'New york',
   //   to: 'Madrid',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
   //   price: 450.99
   // },
   // {
-  //   id: '15',
+  //   id: faker.database.mongodbObjectId(),
+  //   name: 'Jumbo Airways',
+  //   from: 'New york',
+  //   to: 'Madrid',
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
+  //   price: 389.99
+  // },
+  // {
+  //   id: faker.database.mongodbObjectId(),
+  //   name: 'Ryanair',
+  //   from: 'New york',
+  //   to: 'Vienna',
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
+  //   price: 732.49
+  // },
+  // {
+  //   id: faker.database.mongodbObjectId(),
   //   name: 'Lufthansa',
   //   from: 'New york',
   //   to: 'Vienna',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
   //   price: 926.79
   // },
   // {
-  //   id: '16',
+  //   id: faker.database.mongodbObjectId(),
   //   name: 'EasyJet',
   //   from: 'Madrid',
   //   to: 'Vienna',
-  //   departureDate: date,
-  //   arrivalDate: arrival,
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
+  //   price: 523.99
+  // },
+  // {
+  //   id: faker.database.mongodbObjectId(),
+  //   name: 'EasyJet',
+  //   from: 'Madrid',
+  //   to: 'Vienna',
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
+  //   price: 523.99
+  // },
+  // {
+  //   id: faker.database.mongodbObjectId(),
+  //   name: 'EasyJet',
+  //   from: 'Vienna',
+  //   to: 'Madrid',
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
+  //   price: 523.99
+  // },
+  // {
+  //   id: faker.database.mongodbObjectId(),
+  //   name: 'Chris Airways',
+  //   from: 'New york',
+  //   to: 'Madrid',
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
+  //   price: 450.99
+  // },
+  // {
+  //   id: faker.database.mongodbObjectId(),
+  //   name: 'Lufthansa',
+  //   from: 'New york',
+  //   to: 'Vienna',
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
+  //   price: 926.79
+  // },
+  // {
+  //   id: faker.database.mongodbObjectId(),
+  //   name: 'EasyJet',
+  //   from: 'Madrid',
+  //   to: 'Vienna',
+  //   departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
+  //   arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
   //   price: 523.99
   // }
 ];

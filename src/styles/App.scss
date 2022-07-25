@@ -8,11 +8,15 @@
   // text-align: center;
 
   .central {
-    position: relative;
-    // background-color: palevioletred;
-    width: 100%;
     flex-grow: 1;
+    width: 100%;
     display: grid;
-    place-content: center;
+    place-items: center;
+    grid-template-areas: "centered";
+    // background-color: palevioletred;
+
+    >div {
+      grid-area: centered;
+    }
   }
 }

@@ -50,7 +50,7 @@ const Payment: React.FC = () => {
 
   const onSubmit = (data: any) => {
     if (flight) {
-      addBookedFlight(flight);
+      addBookedFlight({ ...flight, id: faker.database.mongodbObjectId() });
     }
 
     console.log(data);

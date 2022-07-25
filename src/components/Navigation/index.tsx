@@ -52,19 +52,19 @@ const pages: page[] = [
   {
     text: 'Flight Summary',
     title: 'summary of passenger flight booking',
-    path: '/flights/1', // let's see if it will work after summanry uses 'id'
+    path: '/flights/1',
     icon: <FaPlane className="icon" />
   },
   {
     text: 'Sign Up',
     title: 'Sign Up page',
-    path: '/signup',
+    path: '/signup/1',
     icon: <FaFileSignature className="icon" />
   },
   {
     text: 'Login',
     title: 'Login page',
-    path: '/login',
+    path: '/login/1',
     icon: <FaKey className="icon" />
   },
   {

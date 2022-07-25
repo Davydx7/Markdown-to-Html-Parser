@@ -5,7 +5,8 @@ import PageHeader from '../../components/pageHeader';
 import useFetchFlights from '../../hooks/searchFlights';
 import './flights.scss';
 
-function List() {
+// Available flights list
+const List: React.FC = () => {
   const { data: flights } = useFetchFlights();
 
   return (
@@ -24,5 +25,5 @@ function List() {
       </div>
     </Layout>
   );
-}
+};
 export default List;

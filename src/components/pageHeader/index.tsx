@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { BiArrowBack } from 'react-icons/bi';
-import { FaBackward, FaHome } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 import './pageHeader.scss';
@@ -11,6 +11,7 @@ type Props = {
   backButton?: boolean;
 };
 
+// page header for indiviadual page
 const PageHeader: React.FC<Props> = ({ heading, homeButton = false, backButton = false }) => {
   const navigate = useNavigate();
 

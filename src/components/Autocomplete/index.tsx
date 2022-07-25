@@ -6,9 +6,11 @@ import './autocomplete.scss';
 
 type Props = UseControllerProps<FlightDetails> & InputHTMLAttributes<HTMLInputElement>;
 
+// The dropdown input field and widget on details page
 const Autocomplete: React.FC<Props> = ({ placeholder, ...props }) => {
   const { field, fieldState } = useController(props);
 
+  // hardcoded options, could be made a prop for flexibility
   const suggestions: string[] = ['Madrid', 'New york', 'Vienna'];
 
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>(suggestions.slice(0, 5));

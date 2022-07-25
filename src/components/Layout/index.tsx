@@ -7,12 +7,12 @@ type Props = {
 };
 
 const transit = {
-  hidden: { opacity: 0, x: '-25%', y: '-50%' },
+  hidden: { opacity: 0, x: '25%' },
   visible: {
     opacity: 1,
-    x: '-50%'
+    x: 0
   },
-  exit: { opacity: 0, x: '-75%' }
+  exit: { opacity: 0, x: '-25%' }
 };
 
 const Layout: React.FC<Props> = ({ children }) => (

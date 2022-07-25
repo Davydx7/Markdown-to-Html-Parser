@@ -1,6 +1,6 @@
 import { FaPlaneArrival, FaPlaneDeparture } from 'react-icons/fa';
 import { BiPlanet } from 'react-icons/bi';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { format, parseJSON } from 'date-fns';
 
 import Button from '../../components/Button';
@@ -8,6 +8,7 @@ import Layout from '../../components/Layout';
 import './summary.scss';
 import useFetchFlights from '../../hooks/searchFlights';
 import PageHeader from '../../components/pageHeader';
+import useLoggedUser from '../../stores/clientStores/loggedUser';
 
 // type summary = {
 //   name: string;
@@ -38,8 +39,6 @@ const Summary: React.FC = () => {
   const { id } = useParams();
 
   const flight = flights?.find((flight) => flight.id === id);
-
-  const onClickPayment = () => {};
 
   return (
     <Layout>
@@ -104,7 +103,10 @@ const Summary: React.FC = () => {
           </Button>
         </div>
       ) : (
-        <p> No summary to display</p>
+        <>
+          <p> No summary to display</p>
+          <p> Select a flight to view summary</p>
+        </>
       )}
     </Layout>
   );

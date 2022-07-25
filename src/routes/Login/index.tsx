@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Button from '../../components/Button';
@@ -38,6 +38,7 @@ const Login: React.FC = () => {
 
   const getServerUser = useServerUser((state) => state.getServerUser);
   const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
+  const { id } = useParams();
 
   const {
     data: serverUser,
@@ -45,9 +46,9 @@ const Login: React.FC = () => {
     status
   } = useQuery(
     ['getServerUser'],
-    // a call to the data base to get the user with LoginData
+    // a GET request to the data base to searcg for
+    // the user with the LoginData provided
     getServerUser,
-    // () => undefined,
     {
       enabled: !!loginData,
       cacheTime: 0
@@ -63,8 +64,11 @@ const Login: React.FC = () => {
         // hoisting user over to zustand for mock sake and application state
         setLoggedUser(serverUser);
 
-        navigate('/', { replace: true });
-        // console.log('navigating....');
+        if (id !== '1') {
+          navigate(`/flights/${id}`);
+        } else {
+          navigate('/', { replace: true });
+        }
       } else {
         console.log('wrong details');
         setError('email', { type: 'custom', message: 'Invalid Credentials' });
@@ -150,7 +154,7 @@ const Login: React.FC = () => {
         <Button type="button" group="tertiary" size="small">
           Forgot Password?
         </Button>
-        <Button goTo="/signup" type="button" group="tertiary" size="small">
+        <Button goTo={`/signup/${id}`} type="button" group="tertiary" size="small">
           New User?
         </Button>
       </div>
