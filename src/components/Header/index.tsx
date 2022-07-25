@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, useDragControls } from 'framer-motion';
 import { FaMoon, FaRandom, FaSun } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';

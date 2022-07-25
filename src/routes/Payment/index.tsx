@@ -53,8 +53,6 @@ const Payment: React.FC = () => {
       addBookedFlight({ ...flight, id: faker.database.mongodbObjectId() });
     }
 
-    console.log(data);
-
     navigate('/bookings');
   };
 

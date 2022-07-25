@@ -76,7 +76,7 @@ const Login: React.FC = () => {
       setError('password', { type: 'custom', message: 'Invalid Credentials' });
       setLoginData('');
     }
-  }, [loginData, status, error, serverUser, setLoggedUser, navigate, setError]);
+  }, [loginData, status, error, serverUser, setLoggedUser, navigate, setError, id]);
 
   const onSubmit = (loginData: LoginData) => {
     setLoginData(loginData);

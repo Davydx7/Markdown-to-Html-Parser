@@ -38,7 +38,6 @@ const Details: React.FC = () => {
     // the flights page itself as its currently at
 
     // setFlightDetails(data); // no
-    console.log(data);
 
     navigate('/flights');
   };
