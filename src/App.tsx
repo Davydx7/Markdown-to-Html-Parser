@@ -21,14 +21,17 @@ import Signup from './routes/Signup';
 import './styles/App.scss';
 import useLoggedUser from './stores/clientStores/loggedUser';
 import { User } from './stores/server/serverData/users';
+import useServerUser from './stores/server/serverStores/userData';
 
 const queryClient = new QueryClient();
 
 // LoggedUser accessed once on initial app load
 const { setLoggedUser } = useLoggedUser.getState();
+const { setServerUser } = useServerUser.getState();
 
 if (localStorage.getItem('loggedUser')) {
   const user = JSON.parse(localStorage.getItem('loggedUser') as string) as User;
+  setServerUser(user);
   setLoggedUser(user);
 }
 

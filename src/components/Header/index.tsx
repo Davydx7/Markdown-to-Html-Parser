@@ -27,18 +27,19 @@ const Header: React.FC<Props> = () => {
   localStorage.setItem('theme', theme);
   localStorage.setItem('color', JSON.stringify(color));
 
+  function setBodyStyle(primary: string, secondary: string): void {
+    document.body.style.setProperty('--primary', primary);
+    document.body.style.setProperty('--secondary', secondary);
+  }
+
   if (theme === 'light') {
-    document.body.style.setProperty('--primary', '5,5,5');
-    document.body.style.setProperty('--secondary', '255,255,255');
+    setBodyStyle('5,5,5', '255,255,255');
   } else if (theme === 'dark') {
-    document.body.style.setProperty('--primary', '255,255,255');
-    document.body.style.setProperty('--secondary', '5,5,5');
+    setBodyStyle('255,255,255', '5,5,5');
   } else if (theme === 'lightRandom') {
-    document.body.style.setProperty('--primary', `${color.r},${color.g},${color.b}`);
-    document.body.style.setProperty('--secondary', '255,255,255');
+    setBodyStyle(`${color.r},${color.g},${color.b}`, '255,255,255');
   } else if (theme === 'darkRandom') {
-    document.body.style.setProperty('--primary', `${color.r},${color.g},${color.b}`);
-    document.body.style.setProperty('--secondary', '5,5,5');
+    setBodyStyle(`${color.r},${color.g},${color.b}`, '5,5,5');
   }
 
   const handleClick = () => {
