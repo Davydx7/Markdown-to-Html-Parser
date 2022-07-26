@@ -50,11 +50,6 @@
 			padding: 0.5rem 1rem 0.5rem;
 		}
 
-
-		&>div:nth-child(3n+2) {
-			// margin-left: -1rem;
-		}
-
 		.subtle {
 			color: rgb(var(--primary),.5);
 		}
@@ -83,9 +78,6 @@
 		padding: 1rem;
 		font-size: small;
 
-		>span:nth-child(2n+2) {
-			// justify-self: right;
-		}
 		>span:nth-child(n+5) {
 			font-weight: bold;
 		}
@@ -101,7 +93,7 @@
 	}
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
 	.summaryPage {
 		width: max-content;
 	}
