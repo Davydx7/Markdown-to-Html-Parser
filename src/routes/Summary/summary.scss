@@ -100,3 +100,9 @@
 		width: 100%;
 	}
 }
+
+@media (max-width: 768px) {
+	.summaryPage {
+		width: max-content;
+	}
+}

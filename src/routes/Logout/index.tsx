@@ -19,14 +19,16 @@ const Logout = () => {
 
   return (
     <Layout>
-      <PageHeader heading="Log out?" homeButton />
-      <p>Are you sure you want to log out?</p>
-      <Button onClick={handleClick} type="button" group="secondary">
-        Log out
-      </Button>
-      <Button goTo={-1} type="button" group="primary">
-        Go Back
-      </Button>
+      <div className="logOut">
+        <PageHeader heading="Log out?" homeButton />
+        <p>Are you sure you want to log out?</p>
+        <Button onClick={handleClick} type="button" group="secondary">
+          Log out
+        </Button>
+        <Button goTo={-1} type="button" group="primary">
+          Go Back
+        </Button>
+      </div>
     </Layout>
   );
 };

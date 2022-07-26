@@ -4,6 +4,7 @@
 	justify-content: space-around;
 	align-items: center;
 	height: 40rem;
+	text-align: center;
 
 	.welcome {
 			font-size: 5rem;
@@ -22,8 +23,32 @@
 
 	.buttons {
 		display: flex;
-		// align-items: center;
+		align-items: center;
 		justify-content: space-around;
 		gap: 3rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.home {
+		width: 90%;
+
+		.welcome{
+			font-size: 4rem;
+		}
+
+		.buttons {
+			flex-direction: column;
+			gap: 2rem;
+			width: 100%;
+
+			>*{
+				width: 100%;
+			}
+
+			>*:nth-child(2) {
+				order: -1;
+			}
+		}
 	}
 }

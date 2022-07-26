@@ -60,6 +60,7 @@ function App() {
 
               {/* id params is to track currently selected to-be-booked fligt
               across route changes */}
+
               <Route path="payment/:id" element={<Payment />} />
               <Route path="login/:id" element={<Login />} />
               <Route path="signup/:id" element={<Signup />} />
@@ -73,7 +74,7 @@ function App() {
         {/* Drag around navigation widget */}
         <Navigation />
       </div>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 }

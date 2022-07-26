@@ -20,6 +20,7 @@ const PageHeader: React.FC<Props> = ({ heading, homeButton = false, backButton =
       <div className="icons">
         {backButton && (
           <BiArrowBack
+            className="goBack"
             title="go back"
             onClick={() => {
               navigate(-1);

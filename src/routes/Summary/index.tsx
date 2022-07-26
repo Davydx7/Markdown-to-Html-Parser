@@ -78,10 +78,10 @@ const Summary: React.FC = () => {
           </Button>
         </div>
       ) : (
-        <>
+        <div className="summaryPage">
           <p> No summary to display</p>
           <p> Select a flight to view summary</p>
-        </>
+        </div>
       )}
     </Layout>
   );

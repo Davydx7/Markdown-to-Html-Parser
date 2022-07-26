@@ -24,3 +24,16 @@
 		white-space: nowrap;
 	}
 }
+
+@media (max-width: 768px) {
+	.pageHeader {
+		.icons >*{
+			display: none;
+		}
+		.title {
+			padding: 0.3rem 0;
+
+		}
+	}
+
+}

@@ -1,7 +1,7 @@
 .flightItem {
   display: flex;
 	align-items: center;
-	gap: 3rem;
+	gap: 2rem;
 	padding: 0.5rem;
 	border-radius: 0.5rem;
   background-color: rgba(var(--primary),0.05);
@@ -32,5 +32,17 @@
 	.fi {
 		border-radius: 0.5rem;
 		width: 1.25rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.flightItem {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+
+		button {
+			width: 100%;
+		}
 	}
 }

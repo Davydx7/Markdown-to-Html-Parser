@@ -34,3 +34,15 @@
 		width: 1.25rem;
 	}
 }
+
+@media (max-width: 768px) {
+	.bookedFlightItem {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+
+		button {
+			width: 100%;
+		}
+	}
+}

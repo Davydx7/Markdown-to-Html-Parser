@@ -63,3 +63,9 @@
 		pointer-events: none;
 	}
 }
+
+@media (max-width: 768px) {
+	.button {
+		padding: 0.5rem 1rem;
+	}
+}

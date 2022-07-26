@@ -111,3 +111,18 @@
 		}
 	}
 }
+
+@media (max-width: 768px) {
+	.paymentPage {
+		overflow-x: hidden;
+		form {
+			display: flex;
+			flex-direction: column;
+			column-gap: 1rem;
+			width: 90vw;
+			>* {
+				grid-column: auto;
+			}
+		}
+	}
+}

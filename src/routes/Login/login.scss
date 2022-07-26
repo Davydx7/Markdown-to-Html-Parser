@@ -49,3 +49,20 @@
 		}
 	}
 }
+
+@media (max-width: 768px) {
+	.loginPage {
+		width: 90%;
+		gap: 1rem;
+
+		form {
+			grid-template-columns: 1fr;
+			width: 100%;
+			row-gap: 1rem;
+
+			button {
+				grid-column: auto;
+			}
+		}
+	}
+}

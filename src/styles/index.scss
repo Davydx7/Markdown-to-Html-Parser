@@ -13,11 +13,12 @@ html {
 }
 
 body {
+  min-height: 100vh;
+  overflow-x: hidden;
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1.6rem;
-  min-height: 100vh;
   background-image: linear-gradient(to left bottom, #9b346f, #306cb4, #1b9991);
   color: rgb(var(--primary));
 }
@@ -55,3 +56,9 @@ select {
   }
 }
 
+// @media (max-width: 768px) {
+// 	input,select {
+//     width: 100%;
+
+//   }
+// }
