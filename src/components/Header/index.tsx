@@ -112,8 +112,12 @@ const Header: React.FC<Props> = () => {
           drag
           dragMomentum={false}
           dragControls={dragControls}
-          dragListener={false}>
-          <div className="dragHandle" onPointerDown={startDrag}>
+          // dragListener={false}
+        >
+          <div
+            className="dragHandle"
+            // onPointerDown={startDrag}
+          >
             + Move Box Here +
           </div>
           <div>
