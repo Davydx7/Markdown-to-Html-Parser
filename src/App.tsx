@@ -18,7 +18,7 @@ import Logout from './routes/Logout';
 import Bookings from './routes/Bookings';
 import Signup from './routes/Signup';
 
-import './styles/App.scss';
+import './App.scss';
 import useLoggedUser from './stores/clientStores/loggedUser';
 import { User } from './stores/server/serverData/users';
 import useServerUser from './stores/server/serverStores/userData';

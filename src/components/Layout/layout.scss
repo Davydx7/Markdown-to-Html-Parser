@@ -11,7 +11,7 @@
 		width: max-content;
 }
 
-@media (max-width: 768px) {
+@media (max-width: var(--tablet)) {
 	.layout {
 		width: 100%;
 		height: 100%;

@@ -93,7 +93,7 @@
 	}
 }
 
-@media (max-width: 600px) {
+@media (max-width: var(--mobile)) {
 	.summaryPage {
 		width: max-content;
 	}

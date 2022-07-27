@@ -1,3 +1,5 @@
+@use '../../styles' as v;
+
 .bookedFlightItem {
   display: flex;
 	align-items: center;
@@ -35,7 +37,7 @@
 	}
 }
 
-@media (max-width: 600px) {
+@media (max-width: v.$mobile) {
 	.bookedFlightItem {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

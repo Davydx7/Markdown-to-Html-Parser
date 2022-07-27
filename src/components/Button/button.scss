@@ -64,8 +64,8 @@
 	}
 }
 
-@media (max-width: 600px) {
+@media (max-width: var(--mobile)) {
 	.button {
-		padding: 0.5rem 1rem;
+		padding: 1rem;
 	}
 }

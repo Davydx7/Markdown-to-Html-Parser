@@ -35,7 +35,7 @@
 	}
 }
 
-@media (max-width: 600px) {
+@media (max-width: var(--mobile)) {
 	.flightItem {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

@@ -53,7 +53,7 @@
 	}
 }
 
-@media (max-width: 600px) {
+@media (max-width: var(--mobile)) {
 	.signUpPage {
 		width: 90%;
 		gap: 1rem;
