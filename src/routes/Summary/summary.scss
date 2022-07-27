@@ -1,3 +1,5 @@
+@use '../../styles' as s;
+
 .summaryPage {
 	display: flex;
 	flex-direction: column;
@@ -12,7 +14,7 @@
 	}
 
 	.id {
-		font-size: small;
+		font-size: s.$fs-sm;
 		font-weight: normal;
 		color: rgb(var(--primary));
 		align-self: start;
@@ -31,7 +33,7 @@
 		align-items: center;
 		row-gap: 1rem;
 		column-gap: 2rem;
-		font-size: var(--md);
+		font-size: s.$fs-md;
 		font-weight: var(--normal);
 		width: 100%;
 
@@ -40,13 +42,13 @@
 			flex-direction: column;
 			justify-content: center;
 			gap: .5rem;
-			font-size: var(--sm);
+			font-size: s.$fs-sm;
 			font-weight: var(--bold);
 		}
 
 		&>div:nth-child(3n+3) {
 			background-color: rgb(var(--primary),.05);
-			border-radius: .5rem;
+			border-radius: s.$br-sm;
 			padding: 0.5rem 1rem 0.5rem;
 		}
 
@@ -62,7 +64,7 @@
 		}
 
 		.fi {
-			border-radius: 0.3rem;
+			border-radius: s.$br-sm;
 			aspect-ratio: 4/3;
 			width: 1.5rem;
 			// overflow: hidden;
@@ -76,7 +78,7 @@
 		column-gap: 2rem;
 		row-gap: 1rem;
 		padding: 1rem;
-		font-size: small;
+		font-size: s.$fs-sm;
 
 		>span:nth-child(n+5) {
 			font-weight: bold;
@@ -84,7 +86,7 @@
 	}
 
 	>p {
-		font-size: small;
+		font-size: s.$fs-sm;
 		text-align: center;
 	}
 
@@ -93,7 +95,7 @@
 	}
 }
 
-@media (max-width: var(--mobile)) {
+@media (max-width: s.$breakpoint-mobile) {
 	.summaryPage {
 		width: max-content;
 	}

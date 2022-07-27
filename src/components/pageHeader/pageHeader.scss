@@ -1,3 +1,5 @@
+@use '../../styles' as s;
+
 .pageHeader {
 	display: grid;
 	align-items: center;
@@ -19,13 +21,13 @@
 
 	.title {
 		padding: 1rem 0;
-		font-size: 2rem;
+		font-size: s.$fs-xl;
 		border-bottom: 1px solid rgb(var(--primary));
 		white-space: nowrap;
 	}
 }
 
-@media (max-width: var(--mobile)) {
+@media (max-width: s.$breakpoint-mobile) {
 	.pageHeader {
 		.icons >*{
 			display: none;

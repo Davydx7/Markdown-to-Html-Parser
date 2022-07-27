@@ -1,3 +1,5 @@
+@use '../../styles' as s;
+
 .detailsPage {
 	display: flex;
 	flex-direction: column;
@@ -13,7 +15,7 @@
 		label {
 			position: relative;
 			display: grid;
-			font-size: small;
+			font-size: s.$fs-sm;
 
 			i {
 				color: var(--error)
@@ -27,7 +29,7 @@
 				position: absolute;
 				top: 100%;
 				left: 0;
-				font-size: x-small;
+				font-size: s.$fs-sm;
 				// color: rgb(var(--error));
 				color: var(--error)
 			}
@@ -48,7 +50,7 @@
 
 }
 
-@media (max-width: var(--mobile)) {
+@media (max-width: s.$breakpoint-mobile) {
 	.detailsPage{
 		width: 90%;
 		form {

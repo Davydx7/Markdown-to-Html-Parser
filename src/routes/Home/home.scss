@@ -1,3 +1,5 @@
+@use '../../styles' as s;
+
 .home {
 	display: flex;
 	flex-direction: column;
@@ -7,7 +9,7 @@
 	text-align: center;
 
 	.welcome {
-			font-size: 5rem;
+			font-size: s.$fs-xxxxl;
 			font-weight: 600;
 	}
 
@@ -29,12 +31,12 @@
 	}
 }
 
-@media (max-width: var(--mobile)) {
+@media (max-width: s.$breakpoint-mobile) {
 	.home {
 		width: 90%;
 
 		.welcome{
-			font-size: 4rem;
+			font-size: s.$fs-xxxl;
 		}
 
 		.buttons {

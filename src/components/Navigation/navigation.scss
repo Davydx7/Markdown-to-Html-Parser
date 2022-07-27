@@ -1,8 +1,10 @@
+@use '../../styles' as s;
+
 #navigation {
 	position: absolute;
 	background-color: rgba(var(--primary),0.5);
 	backdrop-filter: blur(5px);
-	border-radius: 1rem;
+	border-radius: s.$br-lg;
 	overflow: hidden;
 	transition: height 0.3s ease-in-out, width 0.3s ease-in-out;
 	cursor: move;
@@ -12,7 +14,7 @@
 	&>#navigationheader{
 		background-color: rgba(var(--primary),0.6);
 		color: rgba(var(--secondary),0.9);
-		font-size: 1.5rem;
+		font-size: s.$fs-md;
 		font-weight: 500;
 		// z-index: 10;
 		white-space: nowrap;
@@ -36,7 +38,7 @@
 		// justify-content: space-between;
 		gap: 1rem;
 		white-space: nowrap;
-		border-radius: 0.5rem;
+		border-radius: s.$br-sm;
 		color: rgba(var(--secondary),0.7);
 		padding: 0.5rem;
 		// width: 100%;
@@ -64,7 +66,7 @@
 	}
 }
 
-@media (max-width: var(mobile)) {
+@media (max-width: s.$breakpoint-mobile) {
 	#navigation {
 		display: none;
 	}

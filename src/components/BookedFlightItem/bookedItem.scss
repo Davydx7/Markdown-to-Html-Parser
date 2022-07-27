@@ -1,14 +1,14 @@
-@use '../../styles' as v;
+@use '../../styles' as s;
 
 .bookedFlightItem {
   display: flex;
 	align-items: center;
 	gap: 2rem;
 	padding: 0.5rem;
-	border-radius: 0.5rem;
+	border-radius: s.$br-sm;
   background-color: rgba(var(--primary),0.05);
 	box-shadow: 0 0.2rem 0.4rem rgba(var(--primary), 0.1);
-	font-size: 1.25rem;
+	font-size: s.$fs-sm;
 	width: 100%;
 
 	.info {
@@ -32,12 +32,12 @@
 	}
 
 	.fi {
-		border-radius: 0.5rem;
+		border-radius: s.$br-sm;
 		width: 1.25rem;
 	}
 }
 
-@media (max-width: v.$mobile) {
+@media (max-width: s.$breakpoint-mobile) {
 	.bookedFlightItem {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

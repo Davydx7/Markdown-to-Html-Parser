@@ -1,5 +1,4 @@
-@use './styles';
-// @import 'node_modules/modern-normalize/modern-normalize.css';
+@use './styles' as s;
 
 *, ::after, ::before {
   margin: 0;
@@ -14,7 +13,7 @@ html {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: 'Montserrat', sans-serif;
+  font-family: s.$ff-sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1.6rem;
@@ -39,11 +38,11 @@ a {
 
 input,select {
   border: none;
-  border-radius: 0.5rem;
+  border-radius: s.$br-sm;
   background-color: rgba(var(--primary),0.1);
   padding: 1rem 1.5rem;
   // width: 100%;
-  font-size: 1.25rem;
+  font-size: s.$fs-sm;
   color: rgb(var(--primary));
 
 }
