@@ -1,4 +1,4 @@
-import { FaPlane, FaSpinner } from 'react-icons/fa';
+import { FaPlane } from 'react-icons/fa';
 import Button from '../../components/Button';
 import FlightItem from '../../components/FlightItem';
 import Layout from '../../components/Layout';
@@ -10,8 +10,6 @@ import './flights.scss';
 const List: React.FC = () => {
   const { data: flights, isLoading, status } = useFetchFlights();
 
-  console.log('status: ', status);
-
   return (
     <Layout>
       <div className="flightList">
@@ -20,6 +18,8 @@ const List: React.FC = () => {
         <ul>
           {isLoading ? (
             <div className="loader">
+              <FaPlane className="loaderSpinner" />
+              <FaPlane className="loaderSpinner" />
               <FaPlane className="loaderSpinner" />
             </div>
           ) : (

@@ -22,9 +22,10 @@
 }
 
 .loader {
-	display: grid;
-	place-items: center;
-	padding: 10rem;
+	display: flex;
+	justify-content: space-between;
+	padding: 5rem;
+	gap: 2rem;
 
 	.loaderSpinner {
 		width: 5rem;

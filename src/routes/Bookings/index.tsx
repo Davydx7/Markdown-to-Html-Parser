@@ -4,13 +4,10 @@ import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/pageHeader';
 import useFetchBookedFlights from '../../hooks/bookedFlights';
-import useBookedFlights from '../../stores/clientStores/bookedFlights';
 import './booking.scss';
 
 const Bookings = () => {
   const { data: bookedFlights, isLoading, status } = useFetchBookedFlights();
-
-  console.log('status: ', status);
 
   return (
     // useQuery call to get bookings based on Logged in user
@@ -23,6 +20,8 @@ const Bookings = () => {
         <ul>
           {isLoading ? (
             <div className="loader">
+              <FaPlane className="loaderSpinner" />
+              <FaPlane className="loaderSpinner" />
               <FaPlane className="loaderSpinner" />
             </div>
           ) : bookedFlights ? (
