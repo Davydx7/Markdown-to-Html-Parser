@@ -7,6 +7,17 @@
 	align-items: center;
 	gap: 2rem;
 
+	.cardType {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		padding-bottom: 1rem ;
+		border-bottom: 1px solid #ccc;
+		font-size: s.$fs-md;
+	}
+
 	form {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -72,12 +83,12 @@
 				position: relative;
 			}
 
-			input {
-				position: absolute;
-				top: 40%;
-				left: 40%;
-				opacity: 0;
-			}
+			// input {
+			// 	position: absolute;
+			// 	top: 40%;
+			// 	left: 40%;
+			// 	opacity: 0;
+			// }
 
 			img {
 				width: 3rem;
@@ -96,6 +107,22 @@
 		>button:last-child{
 			grid-column: 2;
 			width: 100%;
+		}
+	}
+
+	form.wire {
+		grid-template-columns: 1fr;
+		width: max-content;
+		place-content: center;
+		column-gap: 0;
+
+		>label {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		>button {
+			grid-column: unset;
 		}
 	}
 

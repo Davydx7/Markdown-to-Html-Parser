@@ -65,7 +65,7 @@ const Payment: React.FC = () => {
       <div className="paymentPage">
         <PageHeader heading="Checkout" backButton />
 
-        <label htmlFor="cardNumber">
+        <label className="cardType">
           <span className="label">Change Payment Method:</span>
           <select
             onChange={(e) => {
@@ -238,7 +238,7 @@ const Payment: React.FC = () => {
             </Button>
           </form>
         ) : (
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className="wire" onSubmit={handleSubmit(onSubmit)}>
             <label>
               <span className="label">Choose Currency:</span>
               <select name="" id="">
