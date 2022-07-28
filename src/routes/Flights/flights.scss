@@ -20,3 +20,21 @@
 		// cursor: pointer;
 	}
 }
+
+.loader {
+	display: grid;
+	place-items: center;
+	padding: 10rem;
+
+	.loaderSpinner {
+		width: 5rem;
+		height: 5rem;
+		color: rgb(var(--tertiary));
+		animation: planeRotate 1s ease-in-out alternate infinite;
+	}
+}
+
+@keyframes planeRotate {
+  from {transform: rotate(-90deg);}
+  to {transform: rotate(270deg);}
+}

@@ -1,26 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
+import useBookedFlights from '../stores/clientStores/bookedFlights';
 import { FlightType } from '../stores/server/serverData/flights';
-import useFlights from '../stores/server/serverStores/availableFlights';
 
 // This Data will be gotten from server later;
 // Extract useQuery hook for mannaging Request
 // simulating fetch with a static store created using zustand
 
-function useFetchFlights() {
-  // const fetchFlights = useFlights((state) => state.getAvailableFlights);
-  const flights = useFlights((state) => state.availableFlights);
+function useFetchBookedFlights() {
+  const bookedFlights = useBookedFlights((state) => state.bookedFlights);
 
   return useQuery<FlightType[], Error>(
-    ['flights'],
+    ['bookedFlights'],
 
     () =>
       new Promise((resolve) => {
-        setTimeout(() => resolve(flights), 2000);
+        setTimeout(() => resolve(bookedFlights), 1500);
       }),
     {
-      staleTime: Infinity
+      staleTime: Infinity,
+      cacheTime: 0,
+      refetchOnMount: true
     }
   );
 }
 
-export default useFetchFlights;
+export default useFetchBookedFlights;

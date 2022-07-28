@@ -1,3 +1,4 @@
+import { FaPlane, FaSpinner } from 'react-icons/fa';
 import Button from '../../components/Button';
 import FlightItem from '../../components/FlightItem';
 import Layout from '../../components/Layout';
@@ -7,7 +8,9 @@ import './flights.scss';
 
 // Available flights list
 const List: React.FC = () => {
-  const { data: flights } = useFetchFlights();
+  const { data: flights, isLoading, status } = useFetchFlights();
+
+  console.log('status: ', status);
 
   return (
     <Layout>
@@ -15,10 +18,15 @@ const List: React.FC = () => {
         <PageHeader heading="Flights for you" homeButton backButton />
 
         <ul>
-          {flights?.map((flight) => (
-            <FlightItem key={flight.id} {...flight} />
-          ))}
+          {isLoading ? (
+            <div className="loader">
+              <FaPlane className="loaderSpinner" />
+            </div>
+          ) : (
+            flights?.map((flight) => <FlightItem key={flight.id} {...flight} />)
+          )}
         </ul>
+
         <Button type="button" group="primary" goTo="/bookings">
           Bookings
         </Button>

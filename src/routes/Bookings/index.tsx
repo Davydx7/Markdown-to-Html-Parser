@@ -1,12 +1,16 @@
+import { FaPlane } from 'react-icons/fa';
 import BookedFlightItem from '../../components/BookedFlightItem';
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/pageHeader';
+import useFetchBookedFlights from '../../hooks/bookedFlights';
 import useBookedFlights from '../../stores/clientStores/bookedFlights';
 import './booking.scss';
 
 const Bookings = () => {
-  const bookedFlights = useBookedFlights((state) => state.bookedFlights);
+  const { data: bookedFlights, isLoading, status } = useFetchBookedFlights();
+
+  console.log('status: ', status);
 
   return (
     // useQuery call to get bookings based on Logged in user
@@ -17,7 +21,11 @@ const Bookings = () => {
         <PageHeader heading="Bookings" homeButton backButton />
 
         <ul>
-          {bookedFlights.length ? (
+          {isLoading ? (
+            <div className="loader">
+              <FaPlane className="loaderSpinner" />
+            </div>
+          ) : bookedFlights ? (
             bookedFlights.map((bookedFlight) => (
               <BookedFlightItem key={bookedFlight.id} {...bookedFlight} />
             ))

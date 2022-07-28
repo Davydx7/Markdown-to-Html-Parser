@@ -8,12 +8,9 @@
 
 html {
   font-size: 62.5%;
-  overflow: scroll;
 }
 
 body {
-  position: relative;
-  overflow-y: scroll;
   min-height: 100vh;
   font-family: s.$ff-sans-serif;
   -webkit-font-smoothing: antialiased;
