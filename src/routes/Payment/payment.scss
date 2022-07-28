@@ -5,6 +5,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	padding: 0 1rem;
 	gap: 2rem;
 
 	.cardType {
@@ -117,8 +118,12 @@
 		column-gap: 0;
 
 		>label {
+			font-size: s.$fs-lg;
+			font-weight: 500;
 			display: flex;
 			justify-content: space-between;
+			gap: 2rem;
+			align-items: center;
 		}
 
 		>button {
