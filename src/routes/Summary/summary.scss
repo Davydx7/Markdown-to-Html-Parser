@@ -34,7 +34,7 @@
 		row-gap: 1rem;
 		column-gap: 2rem;
 		font-size: s.$fs-md;
-		font-weight: var(--normal);
+		font-weight: s.$fw-bold;
 		width: 100%;
 
 		&>div {
@@ -43,7 +43,7 @@
 			justify-content: center;
 			gap: .5rem;
 			font-size: s.$fs-sm;
-			font-weight: var(--bold);
+			font-weight: s.$fw-bold;
 		}
 
 		&>div:nth-child(3n+3) {

@@ -7,12 +7,12 @@ import useFetchBookedFlights from '../../hooks/bookedFlights';
 import './booking.scss';
 
 const Bookings = () => {
+  // fetch user's booked flights from server
   const { data: bookedFlights, isLoading, status } = useFetchBookedFlights();
 
-  return (
-    // useQuery call to get bookings based on Logged in user
-    // but totally mocked by zustand for prototyping
+  console.log('Bookings');
 
+  return (
     <Layout>
       <div className="bookings">
         <PageHeader heading="Bookings" homeButton backButton />

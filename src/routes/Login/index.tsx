@@ -52,6 +52,8 @@ const Login: React.FC = () => {
     }
   );
 
+  console.log('status: ', status);
+
   useEffect(() => {
     if (status === 'success' && serverUser && loginData) {
       if (loginData.email === serverUser.email && loginData.password === serverUser.password) {

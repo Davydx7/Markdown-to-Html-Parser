@@ -8,7 +8,10 @@ import './flights.scss';
 
 // Available flights list
 const List: React.FC = () => {
+  // Fetch available matching flights from server
   const { data: flights, isLoading, status } = useFetchFlights();
+
+  console.log('Flights');
 
   return (
     <Layout>

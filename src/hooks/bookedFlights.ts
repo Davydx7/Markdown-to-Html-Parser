@@ -17,9 +17,7 @@ function useFetchBookedFlights() {
         setTimeout(() => resolve(bookedFlights), 1500);
       }),
     {
-      staleTime: Infinity,
-      cacheTime: 0,
-      refetchOnMount: true
+      cacheTime: 0
     }
   );
 }

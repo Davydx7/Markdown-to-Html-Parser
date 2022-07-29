@@ -7,7 +7,6 @@ import useFlights from '../stores/server/serverStores/availableFlights';
 // simulating fetch with a static store created using zustand
 
 function useFetchFlights() {
-  // const fetchFlights = useFlights((state) => state.getAvailableFlights);
   const flights = useFlights((state) => state.availableFlights);
 
   return useQuery<FlightType[], Error>(
@@ -17,8 +16,9 @@ function useFetchFlights() {
       new Promise((resolve) => {
         setTimeout(() => resolve(flights), 2000);
       }),
+
     {
-      staleTime: Infinity
+      cacheTime: Infinity
     }
   );
 }
