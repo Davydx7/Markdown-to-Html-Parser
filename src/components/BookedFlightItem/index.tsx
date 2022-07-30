@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format, parseJSON } from 'date-fns';
 import useBookedFlights from '../../stores/clientStores/bookedFlights';
 import Button from '../Button';
@@ -25,9 +26,18 @@ const BookedFlightItem: React.FC<Props> = ({
 }) => {
   const removeBookedFlight = useBookedFlights((state) => state.removeBookedFlight);
 
-  const handleClick = () => {
-    removeBookedFlight(id);
-  };
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    (a) => {
+      const b = a;
+      removeBookedFlight(id);
+      return Promise.resolve('done');
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries(['bookedFlights'])
+    }
+  );
 
   return (
     <li className="bookedFlightItem">
@@ -51,7 +61,7 @@ const BookedFlightItem: React.FC<Props> = ({
           <span>${price}</span>
         </h3>
       </div>
-      <Button onClick={handleClick} type="button" size="medium">
+      <Button onClick={mutation.mutate} type="button" size="medium">
         Cancel
       </Button>
     </li>

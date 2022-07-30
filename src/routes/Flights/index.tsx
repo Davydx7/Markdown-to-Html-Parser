@@ -9,7 +9,7 @@ import './flights.scss';
 // Available flights list
 const List: React.FC = () => {
   // Fetch available matching flights from server
-  const { data: flights, isLoading, status } = useFetchFlights();
+  const { data: flights, isLoading, isError } = useFetchFlights();
 
   console.log('Flights');
 
@@ -25,6 +25,8 @@ const List: React.FC = () => {
               <FaPlane className="loaderSpinner" />
               <FaPlane className="loaderSpinner" />
             </div>
+          ) : isError ? (
+            <div className="error">Failed to load flights. Please try again.</div>
           ) : (
             flights?.map((flight) => <FlightItem key={flight.id} {...flight} />)
           )}

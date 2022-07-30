@@ -8,7 +8,7 @@ import './booking.scss';
 
 const Bookings = () => {
   // fetch user's booked flights from server
-  const { data: bookedFlights, isLoading, status } = useFetchBookedFlights();
+  const { data: bookedFlights, isLoading, isError } = useFetchBookedFlights();
 
   console.log('Bookings');
 
@@ -28,6 +28,8 @@ const Bookings = () => {
             bookedFlights.map((bookedFlight) => (
               <BookedFlightItem key={bookedFlight.id} {...bookedFlight} />
             ))
+          ) : isError ? (
+            <div className="error">Failed to load bookings. Please try again.</div>
           ) : (
             <div>You have no available bookings</div>
           )}

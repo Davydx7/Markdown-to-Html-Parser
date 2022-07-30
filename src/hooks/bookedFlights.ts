@@ -10,7 +10,7 @@ function useFetchBookedFlights() {
   const bookedFlights = useBookedFlights((state) => state.bookedFlights);
 
   return useQuery<FlightType[], Error>(
-    ['bookedFlights'],
+    ['bookedFlights', bookedFlights.length],
 
     () =>
       new Promise((resolve) => {

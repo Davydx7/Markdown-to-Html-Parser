@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
@@ -18,13 +17,12 @@ type LoginData = {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [loginData, setLoginData] = useState<LoginData | ''>('');
 
   const {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -33,55 +31,39 @@ const Login: React.FC = () => {
     }
   });
 
-  const getServerUser = useServerUser((state) => state.getServerUser);
+  const serverUser = useServerUser((state) => state.serverUser);
   const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
   const { id } = useParams();
 
-  const {
-    data: serverUser,
-    error,
-    status
-  } = useQuery(
-    ['getServerUser'],
-    // a GET request to the data base to searcg for
-    // the user with the LoginData provided
-    getServerUser,
+  const mutation = useMutation(
+    (loginData: LoginData) => {
+      if (loginData.email === serverUser?.email && loginData.password === serverUser?.password) {
+        return Promise.resolve(serverUser);
+      }
+      return Promise.reject(new Error('failed Credentials'));
+    },
     {
-      enabled: !!loginData,
-      cacheTime: 0
-    }
-  );
+      onSuccess: (serverUserData) => {
+        localStorage.setItem('loggedUser', JSON.stringify(serverUserData));
 
-  console.log('status: ', status);
-
-  useEffect(() => {
-    if (status === 'success' && serverUser && loginData) {
-      if (loginData.email === serverUser.email && loginData.password === serverUser.password) {
-        localStorage.setItem('loggedUser', JSON.stringify(serverUser));
         // hoisting user over to zustand for mock sake and application state
-        setLoggedUser(serverUser);
+        setLoggedUser(serverUserData);
 
         if (id !== '1') {
           navigate(`/flights/${id}`);
         } else {
           navigate('/', { replace: true });
         }
-      } else {
+      },
+      onError: () => {
         setError('email', { type: 'custom', message: 'Invalid Credentials' });
         setError('password', { type: 'custom', message: 'Invalid Credentials' });
       }
-      setLoginData(''); // disable query
     }
-
-    if (status === 'error') {
-      setError('email', { type: 'custom', message: 'Invalid Credentials' });
-      setError('password', { type: 'custom', message: 'Invalid Credentials' });
-      setLoginData('');
-    }
-  }, [loginData, status, error, serverUser, setLoggedUser, navigate, setError, id]);
+  );
 
   const onSubmit = (loginData: LoginData) => {
-    setLoginData(loginData);
+    mutation.mutate(loginData);
   };
 
   return (
