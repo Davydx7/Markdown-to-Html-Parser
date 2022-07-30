@@ -9,6 +9,7 @@ import './login.scss';
 import useServerUser from '../../stores/server/serverStores/userData';
 import useLoggedUser from '../../stores/clientStores/loggedUser';
 import PageHeader from '../../components/pageHeader';
+import { User } from '../../stores/server/serverData/users';
 
 type LoginData = {
   email: string;
@@ -38,7 +39,7 @@ const Login: React.FC = () => {
   const mutation = useMutation(
     (loginData: LoginData) => {
       if (loginData.email === serverUser?.email && loginData.password === serverUser?.password) {
-        return Promise.resolve(serverUser);
+        return Promise.resolve(serverUser as User);
       }
       return Promise.reject(new Error('failed Credentials'));
     },

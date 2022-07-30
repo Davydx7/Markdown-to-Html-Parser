@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/Button';
@@ -36,6 +37,27 @@ const Signup: React.FC = () => {
   const setLoggedUser = useLoggedUser((state) => state.setLoggedUser);
   const { id } = useParams();
 
+  const mutation = useMutation((userData: User) => Promise.resolve(userData), {
+    onSuccess: (serverUserData) => {
+      setServerUser(serverUserData);
+
+      // user exists on server, then store it in local storage
+      localStorage.setItem('loggedUser', JSON.stringify(serverUserData));
+
+      // hoisting user over to zustand for application state
+      setLoggedUser(serverUserData);
+
+      if (id !== '1') {
+        navigate(`/flights/${id}`);
+      } else {
+        navigate('/', { replace: true });
+      }
+    },
+    onError: () => {
+      alert('something went wrong');
+    }
+  });
+
   const onSubmit = (data: any) => {
     const userData: User = {
       id: faker.database.mongodbObjectId(),
@@ -45,20 +67,7 @@ const Signup: React.FC = () => {
       email: data.email
     };
 
-    // should be useQuery here to, send and wait for data that
-    // will be used as userData
-    setServerUser(userData);
-    // user exists on server, then store it in local storage
-    localStorage.setItem('loggedUser', JSON.stringify(userData));
-
-    // hoisting user over to zustand for mock sake and application state
-    setLoggedUser(userData);
-
-    if (id !== '1') {
-      navigate(`/flights/${id}`);
-    } else {
-      navigate('/', { replace: true });
-    }
+    mutation.mutate(userData);
   };
 
   return (
