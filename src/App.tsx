@@ -74,7 +74,7 @@ function App() {
         {/* Drag around navigation widget */}
         <Navigation />
       </div>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 }
