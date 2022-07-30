@@ -52,10 +52,10 @@ const Signup: React.FC = () => {
       } else {
         navigate('/', { replace: true });
       }
-    },
-    onError: () => {
-      alert('something went wrong');
     }
+    // onError: () => {
+    //   alert('something went wrong');
+    // }
   });
 
   const onSubmit = (data: any) => {
