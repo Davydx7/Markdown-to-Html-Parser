@@ -10,8 +10,6 @@ const Bookings = () => {
   // fetch user's booked flights from server
   const { data: bookedFlights, isLoading, isError } = useFetchBookedFlights();
 
-  console.log('Bookings');
-
   return (
     <Layout>
       <div className="bookings">
