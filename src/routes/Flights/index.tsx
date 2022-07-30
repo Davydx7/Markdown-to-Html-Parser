@@ -11,8 +11,6 @@ const List: React.FC = () => {
   // Fetch available matching flights from server
   const { data: flights, isLoading, isError } = useFetchFlights();
 
-  console.log('Flights');
-
   return (
     <Layout>
       <div className="flightList">
