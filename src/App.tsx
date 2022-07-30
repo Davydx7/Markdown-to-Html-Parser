@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimatePresence } from 'framer-motion';
 
-import { useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
