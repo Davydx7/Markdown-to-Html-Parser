@@ -13,6 +13,8 @@ specifiers:
   '@typescript-eslint/parser': ^5.30.5
   axios: ^0.27.2
   classnames: ^2.3.1
+  country-code-lookup: ^0.0.20
+  country-flag-icons: ^1.5.5
   date-fns: ^2.28.0
   eslint: ^7.32.0 || ^8.2.0
   eslint-config-airbnb: ^19.0.4
@@ -51,6 +53,8 @@ dependencies:
   '@types/react-dom': 18.0.6
   axios: 0.27.2
   classnames: 2.3.1
+  country-code-lookup: 0.0.20
+  country-flag-icons: 1.5.5
   date-fns: 2.28.0
   flag-icons: 6.6.4
   framer-motion: 6.4.3_biqbaboplfbrettd7655fr4n2y
@@ -3699,6 +3703,14 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
       yaml: 1.10.2
+    dev: false
+
+  /country-code-lookup/0.0.20:
+    resolution: {integrity: sha512-mcNlekdiVyiKO0lrjj3FrZ36vxlwjUwXTHpdRtVu9917SAYsHrlORmpHdPXeEXwTmw/yiKiTX4t6LC5uP5KVFg==}
+    dev: false
+
+  /country-flag-icons/1.5.5:
+    resolution: {integrity: sha512-k4WXZ/WvWOSiYXRG1n8EYHNr1m/IX0GffKqAidaet5DrJsDOmJ8Q/8JvvONhZNnKYg24s4lvsm+9og1HcuIU/g==}
     dev: false
 
   /cross-spawn/7.0.3:

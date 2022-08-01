@@ -3,7 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimatePresence } from 'framer-motion';
 
-import { lazy, Suspense } from 'react';
+import Signup from 'routes/Signup';
+import Bookings from 'routes/Bookings';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
@@ -15,8 +16,6 @@ import Login from './routes/Login';
 import Payment from './routes/Payment';
 import NotFound from './routes/NotFound';
 import Logout from './routes/Logout';
-import Bookings from './routes/Bookings';
-import Signup from './routes/Signup';
 
 import './app.scss';
 import useLoggedUser from './stores/clientStores/loggedUser';
@@ -37,14 +36,11 @@ if (localStorage.getItem('loggedUser')) {
 
 function App() {
   const location = useLocation();
-
-  // Remember the last route visited
-  // localStorage.setItem('lastLocation', location.pathname);
-  // localStorage.getItem('lastLocation');
-
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
+        {/* Drag around navigation widget */}
+        <Navigation />
         <Header />
 
         <div className="central">
@@ -71,8 +67,6 @@ function App() {
         </div>
 
         <Footer />
-        {/* Drag around navigation widget */}
-        <Navigation />
       </div>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>

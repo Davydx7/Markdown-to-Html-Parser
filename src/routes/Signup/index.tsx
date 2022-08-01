@@ -48,7 +48,7 @@ const Signup: React.FC = () => {
       setLoggedUser(serverUserData);
 
       if (id !== '1') {
-        navigate(`/flights/${id}`);
+        navigate(`/flights/${id}`, { replace: true });
       } else {
         navigate('/', { replace: true });
       }

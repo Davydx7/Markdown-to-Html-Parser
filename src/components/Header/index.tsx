@@ -1,18 +1,12 @@
 import { useState } from 'react';
-import { motion, useDragControls } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { FaMoon, FaRandom, FaSun } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
-import { RgbaColorPicker } from 'react-colorful';
 
 import Button from '../Button';
 import './header.scss';
 import useLoggedUser from '../../stores/clientStores/loggedUser';
-
-type Props = {
-  color?: string;
-  children?: React.ReactNode;
-};
+import ColorPicker from '../ColorPicker';
 
 const storedTheme = localStorage.getItem('theme');
 const initialTheme = storedTheme ?? 'light';
@@ -20,7 +14,7 @@ const initialTheme = storedTheme ?? 'light';
 const storedColor = JSON.parse(localStorage.getItem('color') as string);
 const intialColor = storedColor ?? { r: 174, g: 52, b: 217, a: 1 };
 
-const Header: React.FC<Props> = () => {
+const Header: React.FC = () => {
   const [theme, setTheme] = useState<string>(initialTheme);
   const [color, setColor] = useState(intialColor);
 
@@ -54,13 +48,6 @@ const Header: React.FC<Props> = () => {
     );
   };
 
-  // Color Picker for custom theme using framer motion and react colorful
-  const dragControls = useDragControls();
-
-  function startDrag(event: any) {
-    dragControls.start(event, { snapToCursor: true });
-  }
-
   const loggedUser = useLoggedUser((state) => state.loggedUser);
 
   const navigate = useNavigate();
@@ -70,6 +57,7 @@ const Header: React.FC<Props> = () => {
       <div className="logo" onClick={() => navigate('/')}>
         &lt;Chris/&gt;
       </div>
+
       <div className="theme">
         {theme === 'light' ? (
           <FaMoon className="icon" onClick={handleClick} />
@@ -87,7 +75,9 @@ const Header: React.FC<Props> = () => {
           <FaSun className="icon" onClick={handleClick} />
         )}
       </div>
+
       <p>Current Theme: {theme}</p>
+
       <div className="buttons">
         {loggedUser ? (
           <Button type="button" group="secondary" goTo="/logout">
@@ -105,26 +95,11 @@ const Header: React.FC<Props> = () => {
         )}
       </div>
 
-      {/* conditionally show color picker */}
-      {(theme === 'lightRandom' || theme === 'darkRandom') && (
-        <motion.div
-          id="colorBox"
-          drag
-          dragMomentum={false}
-          dragControls={dragControls}
-          // dragListener={false}
-        >
-          <div
-            className="dragHandle"
-            // onPointerDown={startDrag}
-          >
-            + Move Box Here +
-          </div>
-          <div>
-            <RgbaColorPicker className="colorPicker" color={color} onChange={setColor} />
-          </div>
-        </motion.div>
-      )}
+      <AnimatePresence initial>
+        {(theme === 'lightRandom' || theme === 'darkRandom') && (
+          <ColorPicker theme={theme} color={color} setColor={setColor} />
+        )}
+      </AnimatePresence>
     </header>
   );
 };

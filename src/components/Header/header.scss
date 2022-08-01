@@ -24,40 +24,11 @@
 		}
 	}
 
-	#colorBox {
-		position: absolute;
-		bottom: 10rem;
-		right: 10rem;
-		border-radius: s.$br-lg;
-		overflow: hidden;
-		width: 20rem;
-		background-color: rgba(var(--primary),0.6);
-		color: rgba(var(--secondary),1);
-		max-height: 21.7rem;
-		z-index: 2;
-
-		.dragHandle {
-			width: 100%;
-			text-align: center;
-			padding: 1.2rem;
-			font-size: s.$fs-md;
-			font-weight: 600;
-			cursor: move;
-			backdrop-filter: blur(5px);
-		}
-
-		.colorPicker {
-			// position: absolute;
-			top: 0;
-			left: 0;
-		}
-	}
-
 	.logo{
 		font-weight: 900;
 		font-size: s.$fs-xxl;
 		cursor: pointer;
-		transition: all 0.3s ease-out;
+		transition: transform 0.3s ease-out;
 
 		&:hover {
 			transform: scale(1.05);

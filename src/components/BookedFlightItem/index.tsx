@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format, parseJSON } from 'date-fns';
+import * as Flags from 'country-flag-icons/react/3x2';
 import useBookedFlights from '../../stores/clientStores/bookedFlights';
 import Button from '../Button';
+
 import './bookedItem.scss';
 
 type Props = {
@@ -29,8 +31,7 @@ const BookedFlightItem: React.FC<Props> = ({
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
-    (a) => {
-      const b = a;
+    () => {
       removeBookedFlight(id);
       return Promise.resolve('done');
     },
@@ -39,11 +40,16 @@ const BookedFlightItem: React.FC<Props> = ({
     }
   );
 
+  const fromm = 'ES';
+  const too = 'US';
+  const FlagFrom = Flags[fromm];
+  const FlagTo = Flags[too];
+
   return (
     <li className="bookedFlightItem">
       <div className="info one">
         <div className="city">
-          <span className="fi fi-at" /> {from} &rarr; <span className="fi fi-us" /> {to}
+          <FlagFrom className="flag" /> {from} &rarr; <FlagTo className="flag" /> {to}
         </div>
         <h3 className="name">{name}</h3>
       </div>

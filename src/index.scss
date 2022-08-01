@@ -55,7 +55,7 @@ select {
 
 @media (max-width: s.$breakpoint-tablet) {
 	body {
-    background-color: white;
+    background-color: rgb(var(--secondary));
     background-image: none;
   }
 }

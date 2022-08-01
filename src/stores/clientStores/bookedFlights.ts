@@ -15,8 +15,8 @@ const useBookedFlights = create<BookedFlightsStore>((set, get) => ({
     {
       id: faker.database.mongodbObjectId(),
       name: 'Ryanair Airways',
-      from: 'Madrid',
-      to: 'New York',
+      from: 'ES',
+      to: 'US',
       departureDate: addHours(new Date(), 18).toJSON(),
       arrivalDate: addHours(new Date(), 52).toJSON(),
       price: 732.49
@@ -24,8 +24,8 @@ const useBookedFlights = create<BookedFlightsStore>((set, get) => ({
     {
       id: faker.database.mongodbObjectId(),
       name: 'Lufthansa Airways',
-      from: 'Madrid',
-      to: 'New York',
+      from: 'AE',
+      to: 'AT',
       departureDate: addHours(new Date(), 14).toJSON(),
       arrivalDate: addHours(new Date(), 57).toJSON(),
       price: 926.79
