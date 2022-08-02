@@ -40,8 +40,7 @@ const FlightItem: React.FC<Props> = ({ id, name, from, to, departureDate, price,
     <li className="flightItem">
       <div className="info one">
         <div>
-          <FlagFrom className="flag" /> {byIso(from)?.country} &rarr; <FlagTo className="flag" />{' '}
-          {byIso(to)?.country}
+          <FlagFrom className="flag" /> {from} &rarr; <FlagTo className="flag" /> {to}
         </div>
         <h3 className="name">{name}</h3>
       </div>

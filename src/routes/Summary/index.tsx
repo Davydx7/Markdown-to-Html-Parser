@@ -44,7 +44,7 @@ const Summary: React.FC = () => {
             <div className="depArr">
               Departure:
               <span className="subtle">
-                <FlagFrom className="flag" /> {byIso(flight.from)?.country}
+                <FlagFrom className="flag" /> {flight.from}
               </span>
             </div>
             <div className="date">
@@ -58,7 +58,7 @@ const Summary: React.FC = () => {
             <div className="depArr">
               Arrival:
               <span className="subtle">
-                <FlagTo className="flag" /> {byIso(flight.to)?.country}
+                <FlagTo className="flag" /> {flight.to}
               </span>
             </div>
             <div className="date">
