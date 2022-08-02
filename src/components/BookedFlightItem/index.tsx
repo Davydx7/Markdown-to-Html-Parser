@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format, parseJSON } from 'date-fns';
 import * as Flags from 'country-flag-icons/react/3x2';
+import { byIso } from 'country-code-lookup';
 import useBookedFlights from '../../stores/clientStores/bookedFlights';
 import Button from '../Button';
 
@@ -40,16 +41,16 @@ const BookedFlightItem: React.FC<Props> = ({
     }
   );
 
-  const fromm = 'ES';
-  const too = 'US';
-  const FlagFrom = Flags[fromm];
-  const FlagTo = Flags[too];
+  const FlagFrom = Flags[from as keyof typeof Flags];
+
+  const FlagTo = Flags[to as keyof typeof Flags];
 
   return (
     <li className="bookedFlightItem">
       <div className="info one">
         <div className="city">
-          <FlagFrom className="flag" /> {from} &rarr; <FlagTo className="flag" /> {to}
+          <FlagFrom className="flag" /> {byIso(from)?.country} &rarr; <FlagTo className="flag" />{' '}
+          {byIso(to)?.country}
         </div>
         <h3 className="name">{name}</h3>
       </div>

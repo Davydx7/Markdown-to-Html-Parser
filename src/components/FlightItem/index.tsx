@@ -1,7 +1,10 @@
 import { format, parseJSON } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import * as Flags from 'country-flag-icons/react/3x2';
+import { byIso } from 'country-code-lookup';
 import useLoggedUser from '../../stores/clientStores/loggedUser';
 import Button from '../Button';
+
 import './flightItem.scss';
 
 type Props = {
@@ -29,11 +32,16 @@ const FlightItem: React.FC<Props> = ({ id, name, from, to, departureDate, price,
     }
   };
 
+  const FlagFrom = Flags[from as keyof typeof Flags];
+
+  const FlagTo = Flags[to as keyof typeof Flags];
+
   return (
     <li className="flightItem">
       <div className="info one">
         <div>
-          <span className="fi fi-at" /> {from} &rarr; <span className="fi fi-us" /> {to}
+          <FlagFrom className="flag" /> {byIso(from)?.country} &rarr; <FlagTo className="flag" />{' '}
+          {byIso(to)?.country}
         </div>
         <h3 className="name">{name}</h3>
       </div>

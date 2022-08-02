@@ -2,18 +2,24 @@ import { FaPlaneArrival, FaPlaneDeparture } from 'react-icons/fa';
 import { BiPlanet } from 'react-icons/bi';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { format, parseJSON } from 'date-fns';
+import * as Flags from 'country-flag-icons/react/3x2';
+import { byIso } from 'country-code-lookup';
 
 import Button from '../../components/Button';
 import Layout from '../../components/Layout';
-import './summary.scss';
 import useFetchFlights from '../../hooks/searchFlights';
 import PageHeader from '../../components/pageHeader';
+import './summary.scss';
 
 const Summary: React.FC = () => {
   const { data: flights } = useFetchFlights();
   const { id } = useParams();
 
   const flight = flights?.find((flight) => flight.id === id);
+
+  const FlagFrom = Flags[flight?.from as keyof typeof Flags];
+
+  const FlagTo = Flags[flight?.to as keyof typeof Flags];
 
   return (
     <Layout>
@@ -38,7 +44,7 @@ const Summary: React.FC = () => {
             <div className="depArr">
               Departure:
               <span className="subtle">
-                <span className="fi fi-at" /> {flight.from}
+                <FlagFrom className="flag" /> {byIso(flight.from)?.country}
               </span>
             </div>
             <div className="date">
@@ -52,7 +58,7 @@ const Summary: React.FC = () => {
             <div className="depArr">
               Arrival:
               <span className="subtle">
-                <span className="fi fi-us" /> {flight.to}
+                <FlagTo className="flag" /> {byIso(flight.to)?.country}
               </span>
             </div>
             <div className="date">

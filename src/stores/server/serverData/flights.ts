@@ -22,8 +22,8 @@ const flights: FlightType[] = [
   {
     id: faker.database.mongodbObjectId(),
     name: 'Chris Airways',
-    from: 'Vienna',
-    to: 'New York',
+    from: faker.address.countryCode(),
+    to: faker.address.countryCode(),
     departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
     arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 450.99
@@ -31,35 +31,35 @@ const flights: FlightType[] = [
   {
     id: faker.database.mongodbObjectId(),
     name: 'Jumbo Airways',
-    from: 'Vienna',
-    to: 'New York',
+    from: faker.address.countryCode(),
+    to: faker.address.countryCode(),
     departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
     arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 389.99
   },
   {
     id: faker.database.mongodbObjectId(),
-    name: 'Ryanair',
-    from: 'Madrid',
-    to: 'New York',
+    name: 'Ryanair Airbus',
+    from: faker.address.countryCode(),
+    to: faker.address.countryCode(),
     departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
     arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 732.49
   },
   {
     id: faker.database.mongodbObjectId(),
-    name: 'Lufthansa',
-    from: 'Madrid',
-    to: 'New York',
+    name: 'Lufthansa Airbus',
+    from: faker.address.countryCode(),
+    to: faker.address.countryCode(),
     departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
     arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 926.79
   },
   {
     id: faker.database.mongodbObjectId(),
-    name: 'EasyJet',
-    from: 'Vienna',
-    to: 'Madrid',
+    name: 'EasyJet Airbus',
+    from: faker.address.countryCode(),
+    to: faker.address.countryCode(),
     departureDate: faker.date.between(closestDepature, farthestDepature).toJSON(),
     arrivalDate: faker.date.between(closestArrival, farthestArrival).toJSON(),
     price: 523.99

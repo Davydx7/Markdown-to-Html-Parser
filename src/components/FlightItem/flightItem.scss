@@ -20,6 +20,11 @@
 		&.one {
 			width: max-content;
 			flex-grow: 1;
+
+			.flag {
+				width: 1.5rem;
+				border-radius: 0.2rem;
+			}
 		}
 
 		&.two {
