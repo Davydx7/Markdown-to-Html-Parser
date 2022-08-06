@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import parseMd from "../../helpers/parseMd";
 import DOMPurify from "dompurify";
 
@@ -14,11 +14,9 @@ type Props = {
 const RenderContent:React.FC<Props> = ({text, markdown = true}) => {
 	const ref = useRef<HTMLDivElement>(null);
 
+	const parsed = useMemo(() => DOMPurify.sanitize(parseMd(text)), [text]);
+
 	useEffect(() => {
-		const parsed = DOMPurify.sanitize(parseMd(text));
-
-		console.log('parsed\n',parsed)
-
 		if (ref.current) {
 			if (markdown) {
 				ref.current.innerHTML = parsed
@@ -27,7 +25,7 @@ const RenderContent:React.FC<Props> = ({text, markdown = true}) => {
 			}
 		}
 
-},[text, markdown]);
+	},[text, markdown]);
 
 	return (
 		<div className="output" ref={ref} />

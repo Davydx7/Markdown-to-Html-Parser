@@ -8,7 +8,7 @@
   /* white-space: pre-wrap; */
 }
 
-/* .output * {
-  margin: initial;
-  padding: initial;
-} */
+.output * {
+  margin: revert;
+  padding: revert;
+}
