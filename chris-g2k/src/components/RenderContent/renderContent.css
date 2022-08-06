@@ -1,0 +1,14 @@
+.output {
+	width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  border: 1px solid rgb(16, 226, 34);
+  border-radius: 4px;
+  padding: 1rem;
+  /* white-space: pre-wrap; */
+}
+
+/* .output * {
+  margin: initial;
+  padding: initial;
+} */
