@@ -10,12 +10,12 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 5rem;
+  gap: 1rem;
 }
 
 .boxes {
   flex-grow: 1;
-  min-height: 20rem;
+  min-height: 10rem;
   display: flex;
   justify-content: flex-start;
   gap: 2rem;
