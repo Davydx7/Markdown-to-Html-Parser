@@ -19,7 +19,6 @@ function App() {
   const pasteHandler: ClipboardEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     const text = e.clipboardData.getData('text');
-    console.log('text', text);
     const selection = window.getSelection();
     if (!selection?.rangeCount) return;
     selection.deleteFromDocument();
