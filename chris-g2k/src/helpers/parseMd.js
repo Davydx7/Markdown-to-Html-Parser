@@ -1,4 +1,9 @@
-function parseMd(md: string) {
+// @ts-nocheck
+// @ts-ignore
+function parseMd(
+  md
+  // : string
+) {
   // mitigate windows and linux line endings
   md = md.replace(/\r\n/gm, '\n');
 
@@ -14,16 +19,6 @@ function parseMd(md: string) {
   md = md.replace(/^(.+)\n=+$/gm, '<h1>$1</h1>');
   md = md.replace(/^(.+)\n-+$/gm, '<h2>$1</h2>');
 
-  // ul
-  md = md.replace(/^\*/gm, '\n<ul>\n*');
-  md = md.replace(/^(\*.+)\s*\n([^*])/gm, '$1\n</ul>\n\n$2');
-  md = md.replace(/^\*(.+)/gm, '<li>$1</li>');
-
-  // ol
-  md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
-  md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n\n$2');
-  md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
-
   // blockquote
   md = md.replace(/(^>(.+)(\n>.*)*)/gm, '<blockquote>$1</blockquote>');
 
@@ -37,9 +32,19 @@ function parseMd(md: string) {
   );
 
   // font styles
-  md = md.replace(/(\*|_){2}([ ^\1]+)\1{2}/g, '<b>$1</b>');
-  md = md.replace(/[*_]{1}([^*_]+)[*_]{1}/g, '<i>$1</i>');
+  md = md.replace(/[*_]{2}([^*_]+)[*_]{2}/g, '<strong>$1</strong>');
+  md = md.replace(/[*_]{1}([^*_]+)[*_]{1}/g, '<em>$1</em>');
   md = md.replace(/[~]{2}([^~]+)[~]{2}/g, '<del>$1</del>');
+
+  // ul
+  md = md.replace(/^\*/gm, '\n<ul>\n*');
+  md = md.replace(/^(\*.+)\s*\n([^*])/gm, '$1\n</ul>\n\n$2');
+  md = md.replace(/^\*(.+)/gm, '<li>$1</li>');
+
+  // ol
+  md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
+  md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n\n$2');
+  md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
 
   // pre
   md = md.replace(/^\s*\n```(([^\s]+))?/gm, '<pre class="$2">');
@@ -57,4 +62,5 @@ function parseMd(md: string) {
   return md;
 }
 
-export default parseMd;
+// export default parseMd;
+exports.parseMd = parseMd;
