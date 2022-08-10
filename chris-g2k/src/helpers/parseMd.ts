@@ -13,11 +13,15 @@ function parseMd(md: string) {
   md = md.replace(/#{1} +(.+)/g, '<h1>$1</h1>');
 
   // alt Heading h1 h2
-  md = md.replace(/^(.+)\n=+$/gm, '<h1>$1</h1>');
-  md = md.replace(/^(.+)\n-+$/gm, '<h2>$1</h2>');
-
-  // blockquote
-  md = md.replace(/(^>(.+)(\n>.*)*)/gm, '<blockquote>$1</blockquote>');
+  md = md.replace(
+    /^((.+\n)+)=+$/gm,
+    (m, g1) => `<h1>${g1.replace(/\n/g, '<br>').replace(/<br>=+<br>/g, '</h1>\n<h1>')}</h1>`
+  );
+  // alt h2
+  md = md.replace(
+    /^((.+\n)+)-+$/gm,
+    (m, g1) => `<h2>${g1.replace(/\n/g, '<br>').replace(/<br>-+<br>/g, '</h2>\n<h2>')}</h2>`
+  );
 
   // images
   md = md.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
@@ -42,6 +46,12 @@ function parseMd(md: string) {
   md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
   md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n$2');
   md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
+
+  // blockquote
+  md = md.replace(
+    /^>.+(\n>?.+)*/gm,
+    (m) => `<blockquote>${m.replace(/\n/g, '<br>').replace(/(?<!<\w+)>/g, '')}</blockquote>`
+  );
 
   // pre
   md = md.replace(/^\s*\n```(([^\s]+))?/gm, '<pre class="$2">');
