@@ -6,23 +6,14 @@ function App() {
   const [text, setText] = useState<string | undefined>('');
   const [showMarkdown, setShowMarkdown] = useState<boolean>(true);
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setText(ref.current?.innerText);
+    setText(ref.current?.value);
   };
 
   const handleShowMarkdown: MouseEventHandler<HTMLButtonElement> = (e) => {
     setShowMarkdown(!showMarkdown);
-  };
-
-  const pasteHandler: ClipboardEventHandler<HTMLDivElement> = (e) => {
-    e.preventDefault();
-    const text = e.clipboardData.getData('text');
-    const selection = window.getSelection();
-    if (!selection?.rangeCount) return;
-    selection.deleteFromDocument();
-    selection.getRangeAt(0).insertNode(document.createTextNode(text));
   };
 
   return (
@@ -36,9 +27,9 @@ function App() {
         </button>
       </div>
       <div className="boxes">
-        <div className="textArea" contentEditable="true" onPaste={pasteHandler} ref={ref}>
+        <textarea className="textArea" ref={ref}>
           # Markdown goes here
-        </div>
+        </textarea>
         <RenderContent text={text as string} markdown={showMarkdown} />
       </div>
     </div>

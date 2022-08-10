@@ -85,4 +85,67 @@ describe('Font styles', () => {
       expect(parseMd('~~strikethrough~~')).toBe('<del>strikethrough</del>');
     });
   });
+
+  describe('Code', () => {
+    test('transforms "`code`" to "<code>code</code>"', () => {
+      expect(parseMd('`code`')).toBe('<code>code</code>');
+    });
+  });
+});
+
+describe('Paragraphs', () => {
+  test('transforms "paragraph" to "<p>paragraph</p>"', () => {
+    expect(parseMd('paragraph')).toBe('<p>paragraph</p>');
+  });
+  test('transforms "paragraph\nparagraph" to "<p>paragraph\nparagraph</p>"', () => {
+    expect(parseMd('paragraph\nparagraph')).toBe('<p>paragraph\nparagraph</p>');
+  });
+  test('transforms "paragraph 1\n\nparagraph 2" to "<p>paragraph 1</p>\n\n<p>paragraph 2</p>"', () => {
+    expect(parseMd('paragraph 1\n\nparagraph 2')).toBe('<p>paragraph 1</p>\n\n<p>paragraph 2</p>');
+  });
+});
+
+describe('Links', () => {
+  test.todo('transforms "[text](url)" to "<a href="url">text</a>"');
+  test.todo('transforms "[text](url "title")" to "<a href="url" title="title">text</a>"');
+  test.todo('transforms "[text](url title)" to "<a href="url" title="title">text</a>"');
+});
+
+describe('Images', () => {
+  test.todo('transforms "![text](url)" to "<img src="url" alt="text">"');
+  test.todo('transforms "![text](url "title")" to "<img src="url" title="title" alt="text">"');
+  test.todo('transforms "![text](url title)" to "<img src="url" title="title" alt="text">"');
+});
+
+describe('Lists', () => {
+  describe('Unordered', () => {
+    test.todo("transforms '- item 1' to '<ul><li>item 1</li></ul>'");
+    // , () => {
+    //   expect(parseMd('- item 1')).toBe('<li>item 1</li>');
+    // });
+    test.todo("transforms '- item 1\n- item 2' to '<ul><li>item 1</li><li>item 2</li></ul>'");
+    // , () => {
+    //   expect(parseMd('- item 1\n- item 2')).toBe('<li>item 1</li><li>item 2</li>');
+    // });
+  });
+
+  describe('Ordered', () => {
+    test.todo("transforms '1. item 1' to '<ol><li>item 1</li></ol>'");
+    // , () => {
+    //   expect(parseMd('- item 1')).toBe('<li>item 1</li>');
+    // });
+    test.todo("transforms '1. item 1\n2. item 2' to '<ol><li>item 1</li><li>item 2</li></ol>'");
+    // , () => {
+    //   expect(parseMd('- item 1\n- item 2')).toBe('<li>item 1</li><li>item 2</li>');
+    // });
+  });
+});
+
+describe('Tables', () => {
+  test.todo(
+    'transforms "| header 1 | header 2 |" to "<table><thead><tr><th>header 1</th><th>header 2</th></tr></thead><tbody></tbody></table>"'
+  );
+  // , () => {
+  //   expect(parseMd('| header 1 | header 2 |')).toBe('<table><thead><tr><th>header 1</th><th>header 2</th></tr></thead><tbody></tbody></table>');
+  //
 });

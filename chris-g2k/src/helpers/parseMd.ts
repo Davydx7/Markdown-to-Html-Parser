@@ -1,11 +1,8 @@
-// @ts-nocheck
-// @ts-ignore
-function parseMd(
-  md
-  // : string
-) {
+function parseMd(md: string) {
   // mitigate windows and linux line endings
-  md = md.replace(/\r\n/gm, '\n');
+  md = md.replace(/\r\n|\r/gm, '\n');
+
+  // console.log('initial', md);
 
   // Headings
   md = md.replace(/#{6} +(.+)/g, '<h6>$1</h6>');
@@ -38,12 +35,12 @@ function parseMd(
 
   // ul
   md = md.replace(/^\*/gm, '\n<ul>\n*');
-  md = md.replace(/^(\*.+)\s*\n([^*])/gm, '$1\n</ul>\n\n$2');
+  md = md.replace(/^(\*.+)\s*\n([^*])/gm, '$1\n</ul>\n$2');
   md = md.replace(/^\*(.+)/gm, '<li>$1</li>');
 
   // ol
   md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
-  md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n\n$2');
+  md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n$2');
   md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
 
   // pre
@@ -62,5 +59,4 @@ function parseMd(
   return md;
 }
 
-// export default parseMd;
-exports.parseMd = parseMd;
+export default parseMd;
