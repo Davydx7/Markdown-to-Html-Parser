@@ -2,7 +2,7 @@
 // block level single line element syntax
 // - headings
 // Block level multiline element syntax that can contain other blocks (makes provision for next in hierachy)
-// - BlockQuotes
+// - BlockQuotes (recursion on the entire function)
 // Block level element syntax allowed in other blocks
 // Block level that can't contain other blocks
 // inline elements
