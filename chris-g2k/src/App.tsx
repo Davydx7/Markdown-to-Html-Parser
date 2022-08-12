@@ -29,7 +29,36 @@ function App() {
       </div>
       <div className="boxes">
         <textarea className="textArea" ref={ref}>
-          # Markdown goes here
+          {`# Heading 1 ✨
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6 ✨
+
+Regular paragraph
+as multiine 🧶
+
+This is **bold** , still works **bold*bold**
+
+This is *italic*
+
+This is ***bold and italic*** 🎃
+
+This is ~~striked through~~
+
+> 🎯A blockqoute here
+
+A \`Code\` 🧨 between texts
+
+\`\`\`javascript
+This is a code block 🎨
+formatted differently
+\`\`\`
+
+* Unordered Lists
+* Goes on and on
+* like i said it would`}
         </textarea>
         <RenderContent text={text as string} markdown={showMarkdown} />
       </div>

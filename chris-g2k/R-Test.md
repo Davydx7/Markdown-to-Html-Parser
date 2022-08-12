@@ -1,21 +1,10 @@
-> You don't need HTML:
-> - [ ] implement optional live parsing
->- [ ] support tables
->>- [x] support check lists
->- [ ] support code syntax highlighting
->   - [x] support lists
->   - [x] this
-> # a markdown
-> * list in quotes
-> * more stuffs
->    * more stuff
->    * more
-> > mores
-> > # some
-> Even with \**number*s:
->
-> 1. more
-> 2. less
+|tb|
+|-|
+
+dfg|sd|asd|sda|asdas|
+|asdas|asda|asda|asda|sd|
+
+
 
 Markdonasdf
 sdfsd

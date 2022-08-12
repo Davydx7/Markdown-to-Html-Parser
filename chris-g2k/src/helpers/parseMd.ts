@@ -1,11 +1,12 @@
 // IMPLEMENTATION HIERACHY
-// block level single line element syntax
+// 1.block level single line element syntax
 // - headings
-// Block level multiline element syntax that can contain other blocks (makes provision for next in hierachy)
+// 2.Block level multiline element syntax that can contain other blocks (makes provision for next in hierachy)
 // - BlockQuotes (recursion on the entire function)
-// Block level element syntax allowed in other blocks
-// Block level that can't contain other blocks
-// inline elements
+// - Table (only by HTML)
+// 3.Block level element syntax allowed in other blocks
+// 4.Block level that can't contain other blocks
+// 5.inline elements
 
 function parseMd(md: string): string {
   // mitigate windows and linux line endings
@@ -39,6 +40,10 @@ function parseMd(md: string): string {
   md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
   md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n$2');
   md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
+
+  // tables
+  // support without ending and starting "|" later on
+  md = md.replace(/^(\|(.*?\|)+)\n\|(:?-+:?\|)+(\n\1)/gm, (m) => '<table></table>');
 
   // blockquote
   md = md.replace(
