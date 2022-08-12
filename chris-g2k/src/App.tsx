@@ -10,7 +10,6 @@ function App() {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     setText(ref.current?.value);
-    console.log('setText', ref.current?.value);
   };
 
   const handleShowMarkdown: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -39,7 +38,16 @@ function App() {
 Regular paragraph
 as multiine 🧶
 
-This is **bold** , still works **bold*bold**
+**Tables! 🏓**
+| First |Second | Third | Fourth |
+|-|:----:|---|
+|\`code!\` | and| see | how |
+| **bold!!**| really| works | well |
+| *italics*| intentionally | |skipped |
+| ~~striked~~ | just |works||
+| go | on | and | on |
+
+This is **bold**, still works **bold*bold**
 
 This is *italic*
 
@@ -48,6 +56,9 @@ This is ***bold and italic*** 🎃
 This is ~~striked through~~
 
 > 🎯A blockqoute here
+Quite a site right?
+>
+> as much as would be enough
 
 A \`Code\` 🧨 between texts
 
@@ -55,10 +66,7 @@ A \`Code\` 🧨 between texts
 This is a code block 🎨
 formatted differently
 \`\`\`
-
-* Unordered Lists
-* Goes on and on
-* like i said it would`}
+`}
         </textarea>
         <RenderContent text={text as string} markdown={showMarkdown} />
       </div>

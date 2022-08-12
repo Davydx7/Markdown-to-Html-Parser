@@ -6,14 +6,14 @@
   border-radius: 4px;
   padding: 1.5rem;
   color: #c6bfff;
-  /* white-space: pre-wrap; */
+  // white-space: pre-wrap;
 
   * {
     margin: revert;
     padding: revert;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2 {
     text-decoration: underline;
     text-decoration-color: #c6bfffc9;
   }
@@ -35,5 +35,27 @@
     background-color: rgb(52, 53, 54);
     border-radius: 0.5rem;
     padding: 1rem;
+  }
+
+  table {
+    text-align: left;
+    border-collapse: collapse;
+    background-color: #1e1d27c9;
+    border-radius: 0.5rem;
+    border: 0.4rem solid #c6bfffc9;
+    overflow: hidden;
+  }
+
+  table, th, td {
+    border: 1px solid #c6bfff38;
+    padding: 1rem;
+  }
+
+  th {
+    background: rgb(37, 8, 70);
+  }
+
+  tbody > tr:nth-child(even) {
+    background-color: #333146c9;
   }
 }

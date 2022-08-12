@@ -4,9 +4,11 @@
 
 marked signals priority
 
-- [x] support tables
 - [x] support lists
 - [x] Write Tests
+- [ ] support table without enclosing '|'
+- [ ] support text aligns in table
+- [ ] support comfort space bars in table (e.g end of line)
 - [ ] implement optional live parsing
 - [ ] support check lists
 - [ ] support code syntax highlighting (separate module)
@@ -15,5 +17,10 @@ marked signals priority
 - [ ] support \<details>\</details>
 - [ ] Implement escaping characters (\\)
 
-
 ## Done
+
+- [x] support tables
+
+
+## Intensional Behaviours
+- table free support for uneven heading to body
