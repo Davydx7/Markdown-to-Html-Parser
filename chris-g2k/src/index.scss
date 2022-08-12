@@ -3,11 +3,17 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #05040a;
 }
 
-html, body {
+html{
   height: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  height: 100%;
+  font-size: 1.6rem;
 }
 
 #root {
@@ -37,6 +43,7 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
+  width: 19rem;
   transition: border-color 0.25s;
 }
 button:hover {

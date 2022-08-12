@@ -1,5 +1,5 @@
-import { ClipboardEventHandler, EventHandler, MouseEventHandler, useRef, useState } from 'react';
-import './App.css';
+import { MouseEventHandler, useRef, useState } from 'react';
+import './App.scss';
 import RenderContent from './components/RenderContent';
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     setText(ref.current?.value);
+    console.log('setText', ref.current?.value);
   };
 
   const handleShowMarkdown: MouseEventHandler<HTMLButtonElement> = (e) => {

@@ -46,6 +46,10 @@ describe('Headings', () => {
       expect(parseMd('heading 1\n=====')).toBe('<h1>heading 1</h1>');
     });
 
+    test('transforms  "heading 1\n=====" to "<h1>heading 1</h1>', () => {
+      expect(parseMd('\nheading 1\n=====\nheading 1\n=====')).toBe('<h1>heading 1</h1>');
+    });
+
     test('transforms  "heading 2\n-----" to "<h2>heading 2</h2>', () => {
       expect(parseMd('heading 2\n-----')).toBe('<h2>heading 2</h2>');
     });

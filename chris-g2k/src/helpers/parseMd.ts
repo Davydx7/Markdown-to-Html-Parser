@@ -1,16 +1,23 @@
-function parseMd(md: string) {
-  // mitigate windows and linux line endings
-  md = md.replace(/\r\n|\r/gm, '\n');
+// IMPLEMENTATION HIERACHY
+// block level single line element syntax
+// - headings
+// Block level multiline element syntax that can contain other blocks (makes provision for next in hierachy)
+// - BlockQuotes
+// Block level element syntax allowed in other blocks
+// Block level that can't contain other blocks
+// inline elements
 
-  // console.log('initial', md);
+function parseMd(md: string): string {
+  // mitigate windows and linux line endings
+  md = md.replace(/\r\n?/gm, '\n');
 
   // Headings
-  md = md.replace(/#{6} +(.+)/g, '<h6>$1</h6>');
-  md = md.replace(/#{5} +(.+)/g, '<h5>$1</h5>');
-  md = md.replace(/#{4} +(.+)/g, '<h4>$1</h4>');
-  md = md.replace(/#{3} +(.+)/g, '<h3>$1</h3>');
-  md = md.replace(/#{2} +(.+)/g, '<h2>$1</h2>');
-  md = md.replace(/#{1} +(.+)/g, '<h1>$1</h1>');
+  md = md.replace(/^#{6} +(.+)/gm, '<h6>$1</h6>');
+  md = md.replace(/^#{5} +(.+)/gm, '<h5>$1</h5>');
+  md = md.replace(/^#{4} +(.+)/gm, '<h4>$1</h4>');
+  md = md.replace(/^#{3} +(.+)/gm, '<h3>$1</h3>');
+  md = md.replace(/^#{2} +(.+)/gm, '<h2>$1</h2>');
+  md = md.replace(/^#{1} +(.+)/gm, '<h1>$1</h1>');
 
   // alt Heading h1 h2
   md = md.replace(
@@ -22,20 +29,6 @@ function parseMd(md: string) {
     /^((.+\n)+)-+$/gm,
     (m, g1) => `<h2>${g1.replace(/\n/g, '<br>').replace(/<br>-+<br>/g, '</h2>\n<h2>')}</h2>`
   );
-
-  // images
-  md = md.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
-
-  // links
-  md = md.replace(
-    /[[]{1}([^\]]+)[\]]{1}[(]{1}([^)"]+)("(.+)")?[)]{1}/g,
-    '<a href="$2" title="$4">$1</a>'
-  );
-
-  // font styles
-  md = md.replace(/[*_]{2}([^*_]+)[*_]{2}/g, '<strong>$1</strong>');
-  md = md.replace(/[*_]{1}([^*_]+)[*_]{1}/g, '<em>$1</em>');
-  md = md.replace(/[~]{2}([^~]+)[~]{2}/g, '<del>$1</del>');
 
   // ul
   md = md.replace(/^\*/gm, '\n<ul>\n*');
@@ -50,21 +43,38 @@ function parseMd(md: string) {
   // blockquote
   md = md.replace(
     /^>.+(\n>?.+)*/gm,
-    (m) => `<blockquote>${m.replace(/\n/g, '<br>').replace(/(?<!<\w+)>/g, '')}</blockquote>`
+    (m) => `<blockquote>${m.replace(/^> */gm, '').replace(/\n/g, '<br>')}</blockquote>`
   );
 
   // pre
-  md = md.replace(/^\s*\n```(([^\s]+))?/gm, '<pre class="$2">');
-  md = md.replace(/^```\s*\n/gm, '</pre>\n\n');
-
-  // code
-  md = md.replace(/[`]{1}([^`]+)[`]{1}/g, '<code>$1</code>');
+  md = md.replace(
+    /^(`{3,})([^`\n].*)?\n((^(?!\1).*\n)*)\1/gm,
+    (m, g1, g2, g3) => `<pre lang=${g2}>${g3.replace(/\n/g, '<br>')}</pre>`
+  );
 
   // p
-  md = md.replace(/((^[^<\n\d>].*)(\n[^<\n].*)*)/gm, '<p>$1</p>');
+  md = md.replace(/^[^<\n\d>].*(\n[^<\n].*)*/gm, (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`);
 
-  // strip p from pre
-  md = md.replace(/(<pre.+>)\s*\n<p>(.+)<\/p>/gm, '$1$2');
+  // INLINE TRANSFORMS hAPPENS AFTER ALL BLOCK TRANSFORMS
+
+  // images
+  md = md.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
+
+  // links
+  md = md.replace(
+    /[[]{1}([^\]]+)[\]]{1}[(]{1}([^)"]+)("(.+)")?[)]{1}/g,
+    '<a href="$2" title="$4">$1</a>'
+  );
+
+  // bold
+  md = md.replace(/([*_]{2})([^*_\n].*?)\1/g, '<strong>$2</strong>');
+  // italic
+  md = md.replace(/([*_])([^*_\n]+)\1/g, '<em>$2</em>');
+  // strikethrough
+  md = md.replace(/~~([^~\n].*?)~~/g, '<del>$1</del>');
+
+  // code
+  md = md.replace(/`([^`\n]+)`/g, '<code>$1</code>');
 
   return md;
 }

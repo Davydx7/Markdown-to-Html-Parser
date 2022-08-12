@@ -1,7 +1,14 @@
-# TODO
+# Custom full featured markdown parser
 
-- [ ] implement live parsing
+## TODO
+
+- [ ] implement optional live parsing
 - [ ] support tables
-- [ ] support code syntax highlighting
-- [ ] Write Tests
-- [ ] ug ty
+- [ ] support check lists
+- [ ] support code syntax highlighting (separate module)
+- [ ] support lists
+- [ ] support multilevel lists
+- [ ] support multilevel blockquotes (recurse the whole parsing function)
+- [ ] support \<details>\</details>
+- [x] Write Tests
+- [ ] Implement escaping characters (\\)

@@ -18,7 +18,7 @@
   min-height: 10rem;
   display: flex;
   justify-content: flex-start;
-  gap: 2rem;
+  gap: 1rem;
 }
 .textArea {
   width: 100%;
@@ -28,8 +28,10 @@
   /* overflow-y: scroll; */
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 1rem;
-  color: yellow;
+  padding: 1.5rem;
+  color: rgb(202, 227, 255);
+  // color: #c6bfff;
+  background-color: #111016;
   resize: none;
 }
 
