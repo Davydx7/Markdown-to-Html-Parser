@@ -12,6 +12,17 @@ function parseMd(md: string): string {
   // mitigate windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
 
+  // escape secial characters
+  md = md.replace(/\\(.)/g, (m, c) => {
+    if (c === '\\') return '&#92;';
+
+    const escapeable = '`*-{}[]<>()#+-.!|'.includes(c);
+
+    if (escapeable) return `&#${c.charCodeAt(0)};`;
+
+    return m;
+  });
+
   // Headings
   md = md.replace(/^#{6} +(.+)/gm, '<h6>$1</h6>');
   md = md.replace(/^#{5} +(.+)/gm, '<h5>$1</h5>');
@@ -44,7 +55,8 @@ function parseMd(md: string): string {
   // tables
   md = md.replace(/^\|(.*?\|)+\n\|(:?-+:?\|)+(\n\|(.*?\|)+)*/gm, (m) => {
     const lines = m.split('\n');
-    const valid = lines[0].split('|').length === lines[1].split('|').length;
+
+    // const valid = lines[0].split('|').length === lines[1].split('|').length;
 
     // if (!valid) return m;
 

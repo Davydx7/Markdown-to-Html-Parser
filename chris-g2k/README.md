@@ -7,6 +7,7 @@ marked signals priority
 - [x] support lists
 - [x] Write Tests
 - [ ] setup Jest with Vite
+- [ ] ctrl + s parses markdown
 - [ ] support table without enclosing '|'
 - [ ] support text aligns in table
 - [ ] support comfort space bars in table (e.g end of line)
@@ -16,11 +17,11 @@ marked signals priority
 - [ ] support multilevel lists
 - [ ] support multilevel blockquotes (recurse the whole parsing function)
 - [ ] support \<details>\</details>
-- [ ] Implement escaping characters (\\)
 
 ## Done
 
 - [x] support tables
+- [x] support escaping characters (\\)
 
 
 ## Intensional Behaviours

@@ -4,7 +4,7 @@
 dfg|sd|asd|sda|asdas|
 |asdas|asda|asda|asda|sd|
 
-
+`code`  \\\*italic*
 
 Markdonasdf
 sdfsd
