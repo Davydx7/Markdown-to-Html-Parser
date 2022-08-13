@@ -38,6 +38,8 @@ function App() {
 Regular paragraph
 as multiine 🧶
 
+I need H~2~O (H~water~) not H^2^O (H^~~not water~~^) ==hightlight this==
+
 **Tables! 🏓**
 | First |Second | Third | Fourth |
 |-|:----:|---|

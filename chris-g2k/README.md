@@ -6,6 +6,7 @@ marked signals priority
 
 - [x] support lists
 - [x] Write Tests
+- [ ] setup Jest with Vite
 - [ ] support table without enclosing '|'
 - [ ] support text aligns in table
 - [ ] support comfort space bars in table (e.g end of line)

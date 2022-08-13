@@ -58,4 +58,11 @@
   tbody > tr:nth-child(even) {
     background-color: #333146c9;
   }
+
+  mark {
+    color: rgb(52, 53, 54);
+    background-color: #c6bfff;
+    padding: .4rem 0;
+    font-weight: 500;
+  }
 }

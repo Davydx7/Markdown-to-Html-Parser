@@ -94,6 +94,14 @@ function parseMd(md: string): string {
   // strikethrough
   md = md.replace(/~~([^~\n].*?)~~/g, '<del>$1</del>');
 
+  // subscript
+  md = md.replace(/~([^~\n]+)~/g, '<sub>$1</sub>');
+  // superscript
+  md = md.replace(/\^([^^\n]+)\^/g, '<sup>$1</sup>');
+
+  // Highlighting
+  md = md.replace(/==([^=\n].*?)==/g, '<mark>$1</mark>');
+
   // code
   md = md.replace(/`([^`\n]+)`/g, '<code>$1</code>');
 
