@@ -1,5 +1,5 @@
 .output {
-	width: 100%;
+  width: 100%;
   height: 100%;
   overflow-y: auto;
   border: 1px solid rgb(16, 226, 34);
@@ -13,7 +13,8 @@
     padding: revert;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     text-decoration: underline;
     text-decoration-color: #c6bfffc9;
   }
@@ -38,16 +39,21 @@
   }
 
   table {
-    text-align: left;
+    // text-align: left;
     border-collapse: collapse;
     background-color: #1e1d27c9;
     border-radius: 0.5rem;
-    border: 0.4rem solid #c6bfffc9;
     overflow: hidden;
+    margin: 0.5rem 0;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
-  table, th, td {
-    border: 1px solid #c6bfff38;
+  th,
+  td {
+    border: 0.1rem solid #c6bfff38;
     padding: 1rem;
   }
 
@@ -62,7 +68,7 @@
   mark {
     color: rgb(52, 53, 54);
     background-color: #c6bfff;
-    padding: .4rem 0;
+    padding: 0.4rem 0;
     font-weight: 500;
   }
 }

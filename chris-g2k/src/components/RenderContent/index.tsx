@@ -12,9 +12,9 @@ type Props = {
 const RenderContent: React.FC<Props> = ({ text, markdown = true }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const parsed = useMemo(() => DOMPurify.sanitize(parseMd(text)), [text]);
+  // const parsed = useMemo(() => DOMPurify.sanitize(parseMd(text)), [text]);
 
-  // const parsed = useMemo(() => parseMd(text), [text]);
+  const parsed = useMemo(() => parseMd(text), [text]);
 
   useEffect(() => {
     if (ref.current) {

@@ -23,6 +23,6 @@ marked signals priority
 - [x] support tables
 - [x] support escaping characters (\\)
 
-
 ## Intensional Behaviours
+
 - table free support for uneven heading to body

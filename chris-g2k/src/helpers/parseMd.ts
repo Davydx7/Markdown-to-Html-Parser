@@ -8,6 +8,8 @@
 // 4.Block level that can't contain other blocks
 // 5.inline elements
 
+import { Console } from 'console';
+
 function parseMd(md: string): string {
   // mitigate windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
@@ -42,38 +44,61 @@ function parseMd(md: string): string {
     (m, g1) => `<h2>${g1.replace(/\n/g, '<br>').replace(/<br>-+<br>/g, '</h2>\n<h2>')}</h2>`
   );
 
-  // ul
-  // md = md.replace(/^\*/gm, '\n<ul>\n*');
-  // md = md.replace(/^(\*.+)\s*\n([^*])/gm, '$1\n</ul>\n$2');
-  // md = md.replace(/^\*(.+)/gm, '<li>$1</li>');
+  // markdown unordered list
 
-  // // ol
-  // md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
-  // md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n$2');
-  // md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
+  // ul
+  md = md.replace(/^\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
+  md = md.replace(/^\*\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
+  md = md.replace(/^\*\*\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
+  md = md.replace(/^\*\*\*\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
+
+  // ol
+  md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
+  md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n$2');
+  md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
 
   // tables
   md = md.replace(/^\|(.*?\|)+\n\|(:?-+:?\|)+(\n\|(.*?\|)+)*/gm, (m) => {
-    const lines = m.split('\n');
+    const rows = m.split('\n');
 
-    // const valid = lines[0].split('|').length === lines[1].split('|').length;
+    // const valid = rows[0].split('|').length === rows[1].split('|').length;
 
     // if (!valid) return m;
 
-    const headArr = lines[0].split('|').map((thItem) => `<th>${thItem.trim()}</th>`);
+    const alignment = rows[1].split('|').map((col) => {
+      const align = col.trim();
+      return /:-+:/.test(align)
+        ? 'align="center"'
+        : /^-+:/.test(align)
+        ? 'align="right"'
+        : /:-+$/.test(align)
+        ? 'align="left"'
+        : '';
+    });
 
-    const headings = headArr.join('').replace(/^<th><\/th>|<th><\/th>$/g, '');
+    console.log(alignment);
 
-    const body: string[] = [];
-    for (let i = 2; i < lines.length; i++) {
-      const currentRowArr = lines[i].split('|').map((tbItem) => `<td>${tbItem.trim()}</td>`);
+    const headingRow = rows
+      .shift()
+      ?.split('|')
+      .map((thCell, i) => `<th ${alignment[i] || ''}>${thCell.trim()}</th>`)
+      .join('')
+      .replace(/^<th ><\/th>|(<th ><\/th>$)/g, '');
 
-      const currentRow = currentRowArr.join('').replace(/^<td><\/td>|<td><\/td>$/g, '');
+    rows.shift();
 
-      body.push(`<tr>${currentRow}</tr>`);
-    }
+    const body = rows
+      .map((row) => {
+        const currentRow = row
+          .split('|')
+          .map((cell, i) => `<td ${alignment[i] || ''}>${cell.trim()}</td>`)
+          .join('')
+          .replace(/^<td ><\/td>|<td ><\/td>$/g, '');
+        return `<tr>\n${currentRow}\n</tr>`;
+      })
+      .join('');
 
-    return `<table><thead><tr>${headings}</tr></thead><tbody>${body.join('')}</tbody></table>`;
+    return `<table>\n<thead>\n<tr>\n${headingRow}\n</tr>\n</thead>\n\n<tbody>\n${body}\n</tbody>\n</table>`;
   });
 
   // blockquote
@@ -85,8 +110,11 @@ function parseMd(md: string): string {
   // pre
   md = md.replace(
     /^(`{3,})([^`\n].*)?\n((^(?!\1).*\n)*)\1/gm,
-    (m, g1, g2, g3) => `<pre lang=${g2}>${g3.replace(/\n/g, '<br>')}</pre>`
+    (m, g1, g2, g3) => `<pre lang="${g2}">${g3.replace(/\n/g, '<br>')}</pre>`
   );
+
+  // p
+  md = md.replace(/^((?![ \t]*[<\n]).+)(\n\1)*/gm, (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`);
 
   // INLINE TRANSFORMS hAPPENS AFTER ALL BLOCK TRANSFORMS
 
@@ -116,9 +144,6 @@ function parseMd(md: string): string {
 
   // code
   md = md.replace(/`([^`\n]+)`/g, '<code>$1</code>');
-
-  // p
-  md = md.replace(/^[^<\n\d>].*(\n[^<\n].*)*/gm, (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`);
 
   return md;
 }
