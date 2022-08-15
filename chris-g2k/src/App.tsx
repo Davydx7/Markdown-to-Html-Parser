@@ -40,9 +40,10 @@ as multiine 🧶
 
 I need H~2~O (H~water~) not H^2^O (H^~~not water~~^) ==hightlight this==
 
-**Tables! 🏓**
+**Tables!  supports alignment syntax🏓**
 | First |Second | Third | Fourth |
-|-|:----:|---|
+|:-|:----:|---:|
+|left aligned|center aligned|right aligned|no alignment|
 |\`code!\` | and| see | how |
 | **bold!!**| really| works | well |
 | *italics*| intentionally | |skipped |

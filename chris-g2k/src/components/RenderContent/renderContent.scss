@@ -13,6 +13,10 @@
     padding: revert;
   }
 
+  > *:first-child {
+    margin-top: 0;
+  }
+
   h1,
   h2 {
     text-decoration: underline;
