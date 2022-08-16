@@ -1,9 +1,8 @@
-| First        |    Second     |     Third | forth |
-| ------------ | :-----------: | --------: | :---- |
-| `code!`      |      and      |       see |
-| **bold!!**   |    really     | worksssss |
-| _italicssss_ | intentionally |           |
-| ~~striked~~  |     just      |     works |
+fgd/[ Duck Duck Go ](https://duckduckgo.com 'The best search engine for privacy')
+
+<a href = ' https://google.com"
+
+\*fgd
 
 Markdonasdf
 sdfsd

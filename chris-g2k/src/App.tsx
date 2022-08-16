@@ -38,6 +38,16 @@ function App() {
 Regular paragraph
 as multiine 🧶
 
+- **Unordered** list item 1
+- list item 2
+- list item 3
+
+6. **Ordered** list item 1, arbitrary start number support
+7. lis item 2
+8. list item 3
+
+**Link to [GOOGLE](https://www.google.com "link title") with title**
+
 I need H~2~O (H~water~) not H^2^O (H^~~not water~~^) ==hightlight this==
 
 **Tables!  supports alignment syntax🏓**

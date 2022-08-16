@@ -1,15 +1,3 @@
-// IMPLEMENTATION HIERACHY
-// 1.block level single line element syntax
-// - headings
-// 2.Block level multiline element syntax that can contain other blocks (makes provision for next in hierachy)
-// - BlockQuotes (recursion on the entire function)
-// - Table (only by HTML)
-// 3.Block level element syntax allowed in other blocks
-// 4.Block level that can't contain other blocks
-// 5.inline elements
-
-import { Console } from 'console';
-
 function parseMd(md: string): string {
   // mitigate windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
@@ -44,26 +32,27 @@ function parseMd(md: string): string {
     (m, g1) => `<h2>${g1.replace(/\n/g, '<br>').replace(/<br>-+<br>/g, '</h2>\n<h2>')}</h2>`
   );
 
-  // markdown unordered list
-
   // ul
-  md = md.replace(/^\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
-  md = md.replace(/^\*\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
-  md = md.replace(/^\*\*\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
-  md = md.replace(/^\*\*\*\* +(.+)/gm, '<ul>\n<li>$1</li>\n</ul>');
+  md = md.replace(/^ *([-+*] ).+(\n *\1.+)*/gm, (m, g1) => {
+    const list = m
+      .split('\n')
+      .map((l) => `<li>${l.replace(g1, '')}</li>`)
+      .join('\n');
+    return `<ul>\n${list}\n</ul>`;
+  });
 
   // ol
-  md.replace(/^\s*\n\d\./gm, '<ol>\n1.');
-  md = md.replace(/^(\d\..+)\s*\n([^\d.])/gm, '$1\n</ol>\n$2');
-  md = md.replace(/^\d\.(.+)/gm, '<li>$1</li>');
+  md = md.replace(/^ *(\d+)\. .*(\n *\d+\. .*)*/gm, (m, g1) => {
+    const li = m
+      .split('\n')
+      .map((l) => `<li>${l.replace(/^ *\d+\. /, '')}</li>`)
+      .join('\n');
+    return `<ol start=${g1}>\n${li}\n</ol>`;
+  });
 
   // tables
   md = md.replace(/^\|(.*?\|)+\n\|(:?-+:?\|)+(\n\|(.*?\|)+)*/gm, (m) => {
     const rows = m.split('\n');
-
-    // const valid = rows[0].split('|').length === rows[1].split('|').length;
-
-    // if (!valid) return m;
 
     const alignment = rows[1].split('|').map((col) => {
       const align = col.trim();
@@ -76,14 +65,12 @@ function parseMd(md: string): string {
         : '';
     });
 
-    console.log(alignment);
-
     const headingRow = rows
       .shift()
       ?.split('|')
+      .slice(1, -1)
       .map((thCell, i) => `<th ${alignment[i] || ''}>${thCell.trim()}</th>`)
-      .join('')
-      .replace(/^<th ><\/th>|(<th ><\/th>$)/g, '');
+      .join('');
 
     rows.shift();
 
@@ -91,9 +78,9 @@ function parseMd(md: string): string {
       .map((row) => {
         const currentRow = row
           .split('|')
+          .slice(1, -1)
           .map((cell, i) => `<td ${alignment[i] || ''}>${cell.trim()}</td>`)
-          .join('')
-          .replace(/^<td ><\/td>|<td ><\/td>$/g, '');
+          .join('');
         return `<tr>\n${currentRow}\n</tr>`;
       })
       .join('');
@@ -114,18 +101,26 @@ function parseMd(md: string): string {
   );
 
   // p
-  md = md.replace(/^((?![ \t]*[<\n]).+)(\n\1)*/gm, (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`);
+  md = md.replace(
+    /^(?![ \t]*[<\n]).+(\n(?![ \t]*[<\n]).+)*/gm,
+    (m) => `<p>${m.replace(/\n/g, '<br>')} </p>`
+  );
 
   // INLINE TRANSFORMS hAPPENS AFTER ALL BLOCK TRANSFORMS
 
   // images
-  md = md.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
+  // md = md.replace(/!\[([^\]]+)\]\(([^)]+)\)/gm, '<img src="$2" alt="$1" />');
 
   // links
-  md = md.replace(
-    /[[]{1}([^\]]+)[\]]{1}[(]{1}([^)"]+)("(.+)")?[)]{1}/g,
-    '<a href="$2" title="$4">$1</a>'
-  );
+  md = md.replace(/\[(.+?)\]\( *([^\s]+?)( (['"]).*?\4)? *\)/gm, '<a href="$2" title=$3>$1</a>');
+
+  // auto links
+  md = md.replace(/(?<!href=['"])<?\b(https?:\/\/[^\s>]+)>?/gm, '<a href="$1">$1</a>');
+  md = md.replace(/(?<!https?:\/\/)\b(www\.[^\s]+)/gm, '<a href="http://$1">$1</a>');
+  // md = md.replace(/\b(mailto:[^\s]+)/gm, '<a href="$1">$1</a>');
+  // md = md.replace(/\b(ftp:[^\s]+)/gm, '<a href="$1">$1</a>');
+  // md = md.replace(/\b(data:[^\s]+)/gm, '<a href="$1">$1</a>');
+  // md = md.replace(/\b(tel:[^\s]+)/gm, '<a href="$1">$1</a>');
 
   // bold
   md = md.replace(/([*_]{2})([^*_\n].*?)\1/g, '<strong>$2</strong>');
