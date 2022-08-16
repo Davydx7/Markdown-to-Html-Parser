@@ -48,6 +48,16 @@ as multiine 🧶
 
 **Link to [GOOGLE](https://www.google.com "link title") with title**
 
+Direct link: www.google.com
+
+**Email "mailto":** oludave0511@gmail.com
+
+**Images**
+![Ocean line](https://kids.kiddle.co/images/thumb/6/63/Nice-seafront.jpg/300px-Nice-seafront.jpg "image title")
+
+**relative path imgae**
+![Blue Butterflies](/butterflies.png "image title")
+
 I need H~2~O (H~water~) not H^2^O (H^~~not water~~^) ==hightlight this==
 
 **Tables!  supports alignment syntax🏓**

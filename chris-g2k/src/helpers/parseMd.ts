@@ -109,18 +109,20 @@ function parseMd(md: string): string {
   // INLINE TRANSFORMS hAPPENS AFTER ALL BLOCK TRANSFORMS
 
   // images
-  // md = md.replace(/!\[([^\]]+)\]\(([^)]+)\)/gm, '<img src="$2" alt="$1" />');
+  md = md.replace(
+    /!\[(.+?)\]\( *([^\s]+?)( (['"]).*?\4)? *\)/gm,
+    '<img src="$2" alt="$1" title=$3/>'
+  );
 
   // links
   md = md.replace(/\[(.+?)\]\( *([^\s]+?)( (['"]).*?\4)? *\)/gm, '<a href="$2" title=$3>$1</a>');
 
   // auto links
-  md = md.replace(/(?<!href=['"])<?\b(https?:\/\/[^\s>]+)>?/gm, '<a href="$1">$1</a>');
-  md = md.replace(/(?<!https?:\/\/)\b(www\.[^\s]+)/gm, '<a href="http://$1">$1</a>');
-  // md = md.replace(/\b(mailto:[^\s]+)/gm, '<a href="$1">$1</a>');
-  // md = md.replace(/\b(ftp:[^\s]+)/gm, '<a href="$1">$1</a>');
-  // md = md.replace(/\b(data:[^\s]+)/gm, '<a href="$1">$1</a>');
-  // md = md.replace(/\b(tel:[^\s]+)/gm, '<a href="$1">$1</a>');
+  md = md.replace(/(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s>]+)>?/gm, '<a href="$1">$1</a>');
+  // www. links
+  md = md.replace(/(?<!https?:\/\/)<?\b(www\.[^\s>]+)>?/gm, '<a href="http://$1">$1</a>');
+  // Emails
+  md = md.replace(/\b(\w+@\w+\.\w+)/gm, '<a href="mailto:$1">$1</a>');
 
   // bold
   md = md.replace(/([*_]{2})([^*_\n].*?)\1/g, '<strong>$2</strong>');
