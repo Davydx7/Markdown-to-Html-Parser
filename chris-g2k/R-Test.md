@@ -1,13 +1,23 @@
-fgd/[ Duck Duck Go ](https://duckduckgo.com 'The best search engine for privacy')
+```javascript
+let y = 10;
+```
 
-<a href = ' https://google.com"
+```python
+console.log('wow');
 
-\*fgd
+function test(one) {
+  const c = new Class();
+}
+```
 
 Markdonasdf
 sdfsd
 more
-=====
+=====90
+=
+
+dfg
+
 Markdonasdf
 sdfsd
 more

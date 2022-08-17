@@ -4,8 +4,8 @@
 
 marked signals priority
 
-- [x] support lists
 - [x] Write Tests
+- [ ] syntax highlighting
 - [ ] setup Jest with Vite
 - [ ] ctrl + s parses markdown
 - [ ] support table without enclosing '|'
@@ -22,7 +22,11 @@ marked signals priority
 
 - [x] support tables
 - [x] support escaping characters (\\)
+- [x] support lists
+- [x] support images
+- [x] support links
 
 ## Intensional Behaviours
 
 - table free support for uneven heading to body
+- inline stylings spanning multiple lines (e.g. _bold_ or _italic_) in the same paragraph

@@ -22,15 +22,9 @@ function parseMd(md: string): string {
   md = md.replace(/^#{1} +(.+)/gm, '<h1>$1</h1>');
 
   // alt Heading h1 h2
-  md = md.replace(
-    /^((.+\n)+)=+$/gm,
-    (m, g1) => `<h1>${g1.replace(/\n/g, '<br>').replace(/<br>=+<br>/g, '</h1>\n<h1>')}</h1>`
-  );
+  md = md.replace(/^((.+\n)+?)=+$/gm, (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`);
   // alt h2
-  md = md.replace(
-    /^((.+\n)+)-+$/gm,
-    (m, g1) => `<h2>${g1.replace(/\n/g, '<br>').replace(/<br>-+<br>/g, '</h2>\n<h2>')}</h2>`
-  );
+  md = md.replace(/^((.+\n)+?)-+$/gm, (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`);
 
   // ul
   md = md.replace(/^ *([-+*] ).+(\n *\1.+)*/gm, (m, g1) => {
@@ -94,11 +88,12 @@ function parseMd(md: string): string {
     (m) => `<blockquote>${m.replace(/^> */gm, '').replace(/\n/g, '<br>')}</blockquote>`
   );
 
-  // pre
-  md = md.replace(
-    /^(`{3,})([^`\n].*)?\n((^(?!\1).*\n)*)\1/gm,
-    (m, g1, g2, g3) => `<pre lang="${g2}">${g3.replace(/\n/g, '<br>')}</pre>`
-  );
+  // pre with syntax highlighting
+  md = md.replace(/^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, (m, g1, g2, g3) => {
+    const lang = g2.trim();
+    const code = g3.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+    return `<pre class="${lang}">${code}</pre>`;
+  });
 
   // p
   md = md.replace(
