@@ -94,7 +94,12 @@ function parseMd(md: string): string {
   md = md.replace(/^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, (m, g1, g2, g3) => {
     const lang = g2.trim();
     const code = g3.trim();
-    const highlightedCode = hljs.highlight(code, { language: lang }).value;
+    let highlightedCode = '';
+    try {
+      highlightedCode = hljs.highlight(code, { language: lang }).value as string;
+    } catch (e) {
+      highlightedCode = code;
+    }
     return `<pre>${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
     // return highlightedCode;
   });
