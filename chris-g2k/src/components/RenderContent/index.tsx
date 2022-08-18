@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import DOMPurify from 'dompurify';
+import 'highlight.js/styles/github.css';
+
 import parseMd from '../../helpers/parseMd';
 
 import './renderContent.scss';

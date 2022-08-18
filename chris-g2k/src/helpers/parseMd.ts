@@ -1,3 +1,4 @@
+import hljs from 'highlight.js';
 import synthax from './synthax';
 
 function parseMd(md: string): string {
@@ -93,8 +94,10 @@ function parseMd(md: string): string {
   // pre with syntax highlighting
   md = md.replace(/^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, (m, g1, g2, g3) => {
     const lang = g2.trim();
-    const code = synthax(g3.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')) || '';
-    return `<pre class="${lang}">${code}</pre>`;
+    const code = g3.trim();
+    const highlightedCode = hljs.highlight(code, { language: lang }).value;
+    return `<pre>${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+    // return highlightedCode;
   });
 
   // p
