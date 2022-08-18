@@ -88,15 +88,18 @@ A \`Code\` 🧨 between texts
 **Code block with synthax highlighting!**
 
 \`\`\`javascript
+// sample script
 let x = 5;
 var y = 'it works';
+const z = ['array', 4, {}, true]
+
+console.log(z.length); //4
 
 function add (a, b) {
   return a + b;
 }
 
-add(x,y);
-
+add(x,y);  // '5it works'
 \`\`\`
 `}
         </textarea>

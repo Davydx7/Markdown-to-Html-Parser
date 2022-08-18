@@ -73,6 +73,14 @@
     .string {
       color: #98c36e;
     }
+
+    .comment {
+      color: #5c5c5c !important;
+
+      * {
+        color: #5c5c5c !important;
+      }
+    }
   }
 
   table {

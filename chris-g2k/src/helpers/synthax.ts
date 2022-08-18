@@ -1,6 +1,7 @@
 function synthax(code: string): string {
   code = code
     .replace(/([`'"]).*?\1/g, '<span class="string" >$&</span>')
+    .replace(/\/\/.*$/gm, '<span class="comment" >$&</span>')
     .replace(
       /\b(await|break|case|catch|class(?! *=)|const|continue|debugger|default|delete|do|else|export|extends|finally|for|function|if|import|in|instanceof|let|new|null|return|super|switch|this|throw|try|typeof|var|void|while|with|yield)\b/g,
       '<span class="keyword" >$&</span>'
