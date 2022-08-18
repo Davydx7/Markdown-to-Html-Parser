@@ -37,9 +37,42 @@
   }
 
   pre {
-    background-color: rgb(52, 53, 54);
+    background-color: #050b18;
     border-radius: 0.5rem;
     padding: 1rem;
+
+    .keyword {
+      color: #b16ec7;
+    }
+
+    .value {
+      color: #d19a66;
+    }
+
+    .function {
+      color: #266ef2;
+    }
+
+    .property {
+      // color: #BE5046;
+      color: #e06c75;
+    }
+
+    .number {
+      color: #d19a66;
+    }
+
+    .bracket {
+      color: #c4ac13;
+    }
+
+    .operator {
+      color: #61afef;
+    }
+
+    .string {
+      color: #98c36e;
+    }
   }
 
   table {
@@ -74,121 +107,5 @@
     background-color: #c6bfff;
     padding: 0.4rem 0;
     font-weight: 500;
-  }
-
-  // syntax highlighting
-  .token.comment {
-    color: rgb(52, 53, 54);
-  }
-  .token.selector {
-    color: rgb(52, 53, 54);
-  }
-  .token.property {
-    color: rgb(52, 53, 54);
-  }
-  .token.punctuation {
-    color: rgb(52, 53, 54);
-  }
-  .token.function {
-    color: rgb(52, 53, 54);
-  }
-  .token.constant {
-    color: rgb(52, 53, 54);
-  }
-  .token.symbol {
-    color: rgb(52, 53, 54);
-  }
-  .token.deleted {
-    color: rgb(52, 53, 54);
-  }
-  .token.boolean {
-    color: rgb(52, 53, 54);
-  }
-  .token.number {
-    color: rgb(52, 53, 54);
-  }
-  .token.selector {
-    color: rgb(52, 53, 54);
-  }
-  .token.char {
-    color: rgb(52, 53, 54);
-  }
-  .token.attr-name {
-    color: rgb(52, 53, 54);
-  }
-  .token.string {
-    color: rgb(52, 53, 54);
-  }
-  .token.operator {
-    color: rgb(52, 53, 54);
-  }
-  .token.entity {
-    color: rgb(52, 53, 54);
-  }
-  .token.url {
-    color: rgb(52, 53, 54);
-  }
-  .token.variable {
-    color: rgb(52, 53, 54);
-  }
-  .token.keyword {
-    color: rgb(52, 53, 54);
-  }
-  .token.atrule {
-    color: rgb(52, 53, 54);
-  }
-  .token.class {
-    color: rgb(52, 53, 54);
-  }
-  .token.important {
-    color: rgb(52, 53, 54);
-  }
-  .token.bold {
-    font-weight: bold;
-  }
-  .token.italic {
-    font-style: italic;
-  }
-  .token.inserted {
-    color: rgb(52, 53, 54);
-  }
-  .token.namespace {
-    color: rgb(52, 53, 54);
-  }
-  .token.deleted {
-    color: rgb(52, 53, 54);
-  }
-  .token.tag {
-    color: rgb(52, 53, 54);
-  }
-  .token.selector {
-    color: rgb(52, 53, 54);
-  }
-  .token.keyword {
-    color: rgb(52, 53, 54);
-  }
-  .token.important {
-    color: rgb(52, 53, 54);
-  }
-  .token.atrule {
-    color: rgb(52, 53, 54);
-  }
-  .token.punctuation {
-    color: rgb(52, 53, 54);
-  }
-  .token.class {
-    color: rgb(52, 53, 54);
-  }
-  .token.tag {
-    color: rgb(52, 53, 54);
-  }
-  .token.boolean {
-    color: rgb(52, 53, 54);
-  }
-  .token.number {
-    color: rgb(52, 53, 54);
-  }
-  .token.function {
-    color: rgb(52, 53, 54);
   }
 }

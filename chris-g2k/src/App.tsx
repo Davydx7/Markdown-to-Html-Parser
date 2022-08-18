@@ -85,9 +85,18 @@ Quite a site right?
 
 A \`Code\` 🧨 between texts
 
+**Code block with synthax highlighting!**
+
 \`\`\`javascript
-This is a code block 🎨
-formatted differently
+let x = 5;
+var y = 'it works';
+
+function add (a, b) {
+  return a + b;
+}
+
+add(x,y);
+
 \`\`\`
 `}
         </textarea>

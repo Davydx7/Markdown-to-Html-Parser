@@ -1,3 +1,5 @@
+import synthax from './synthax';
+
 function parseMd(md: string): string {
   // mitigate windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
@@ -91,7 +93,7 @@ function parseMd(md: string): string {
   // pre with syntax highlighting
   md = md.replace(/^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, (m, g1, g2, g3) => {
     const lang = g2.trim();
-    const code = g3.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+    const code = synthax(g3.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')) || '';
     return `<pre class="${lang}">${code}</pre>`;
   });
 
