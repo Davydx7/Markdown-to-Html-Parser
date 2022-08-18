@@ -1,5 +1,4 @@
 import hljs from 'highlight.js';
-import synthax from './synthax';
 
 function parseMd(md: string): string {
   // mitigate windows and linux line endings
