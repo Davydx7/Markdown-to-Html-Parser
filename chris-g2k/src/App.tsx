@@ -91,7 +91,7 @@ A \`Code\` 🧨 between texts
 // sample script
 let x = 5;
 var y = 'it works';
-const z = ['array', 4, {}, true]
+const z = [\`arr\`, 4, {}, true]
 
 console.log(z.length); //4
 

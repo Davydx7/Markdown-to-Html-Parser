@@ -114,32 +114,41 @@ function parseMd(md: string): string {
   );
 
   // links
-  md = md.replace(/\[(.+?)\]\( *([^\s]+?)( (['"]).*?\4)? *\)/gm, '<a href="$2" title=$3>$1</a>');
+  md = md.replace(
+    /(?<!^<pre>.*)\[(.+?)\]\( *([^\s]+?)( (['"]).*?\4)? *\)/gm,
+    '<a href="$2" title=$3>$1</a>'
+  );
 
   // auto links
-  md = md.replace(/(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s>]+)>?/gm, '<a href="$1">$1</a>');
+  md = md.replace(
+    /(?<!^<pre>.*)(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s>]+)>?/gm,
+    '<a href="$1">$1</a>'
+  );
   // www. links
-  md = md.replace(/(?<!https?:\/\/)<?\b(www\.[^\s>]+)>?/gm, '<a href="http://$1">$1</a>');
+  md = md.replace(
+    /(?<!^<pre>.*)(?<!https?:\/\/)<?\b(www\.[^\s>]+)>?/gm,
+    '<a href="http://$1">$1</a>'
+  );
   // Emails
-  md = md.replace(/\b(\w+@\w+\.\w+)/gm, '<a href="mailto:$1">$1</a>');
+  md = md.replace(/(?<!^<pre>.*)\b(\w+@\w+\.\w+)/gm, '<a href="mailto:$1">$1</a>');
 
   // bold
-  md = md.replace(/([*_]{2})([^*_\n].*?)\1/g, '<strong>$2</strong>');
+  md = md.replace(/(?<!^<pre>.*)([*_]{2})([^*_\n].*?)\1/gm, '<strong>$2</strong>');
   // italic
-  md = md.replace(/([*_])([^*_\n]+)\1/g, '<em>$2</em>');
+  md = md.replace(/(?<!^<pre>.*)([*_])([^*_\n]+)\1/gm, '<em>$2</em>');
   // strikethrough
-  md = md.replace(/~~([^~\n].*?)~~/g, '<del>$1</del>');
+  md = md.replace(/(?<!^<pre>.*)~~([^~\n].*?)~~/gm, '<del>$1</del>');
 
   // subscript
-  md = md.replace(/~([^~\n]+)~/g, '<sub>$1</sub>');
+  md = md.replace(/(?<!^<pre>.*)~([^~\n]+)~/gm, '<sub>$1</sub>');
   // superscript
-  md = md.replace(/\^([^^\n]+)\^/g, '<sup>$1</sup>');
+  md = md.replace(/(?<!^<pre>.*)\^([^^\n]+)\^/gm, '<sup>$1</sup>');
 
   // Highlighting
-  md = md.replace(/==([^=\n].*?)==/g, '<mark>$1</mark>');
+  md = md.replace(/(?<!^<pre>.*)==([^=\n].*?)==/gm, '<mark>$1</mark>');
 
   // code
-  md = md.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  md = md.replace(/(?<!^<pre>.*)`([^`\n]+)`/gm, '<code>$1</code>');
 
   return md;
 }
