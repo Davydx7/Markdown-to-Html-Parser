@@ -9,7 +9,7 @@ export default defineConfig({
     prismjsPlugin({
       languages: 'all',
       plugins: ['line-numbers'],
-      theme: 'twilight',
+      theme: 'tomorrow',
       css: true
     })
   ]

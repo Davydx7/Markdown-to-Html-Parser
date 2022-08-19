@@ -28,6 +28,6 @@ const RenderContent: React.FC<Props> = ({ text, markdown = true }) => {
     }
   }, [markdown, parsed]);
 
-  return <div className="output" ref={ref} />;
+  return <div className="output line-numbers" ref={ref} />;
 };
 export default RenderContent;
