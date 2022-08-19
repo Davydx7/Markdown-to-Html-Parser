@@ -1,4 +1,4 @@
-import hljs from 'highlight.js';
+import Prism from 'prismjs';
 
 function parseMd(md: string): string {
   // mitigate windows and linux line endings
@@ -96,7 +96,7 @@ function parseMd(md: string): string {
     const code = g3.trim();
     let highlightedCode = '';
     try {
-      highlightedCode = hljs.highlight(code, { language: lang }).value as string;
+      highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
     } catch (e) {
       highlightedCode = code;
     }
