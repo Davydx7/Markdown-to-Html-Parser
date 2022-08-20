@@ -1,8 +1,6 @@
-// import parseMd from '../src/helpers/parseMd';
+import { test, describe, expect } from 'vitest';
 
-const parseMD = require('../src/helpers/parseMd.js');
-
-const { parseMd } = parseMD;
+import parseMd from '../src/helpers/parseMd';
 
 describe('Headings', () => {
   test("transforms '# heading 1' to '<h1>heading 1</h1>'", () => {

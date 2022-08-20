@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
 import DOMPurify from 'dompurify';
-import 'prismjs/themes/prism-tomorrow.css';
 
 import parseMd from '../../helpers/parseMd';
 

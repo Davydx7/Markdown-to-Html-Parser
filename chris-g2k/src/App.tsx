@@ -85,7 +85,7 @@ Quite a site right?
 
 A \`Code\` 🧨 between texts
 
-**Code block with synthax highlighting!**
+**Code block with syntax highlighting!**
 
 \`\`\`javascript
 // sample script

@@ -96,12 +96,14 @@ function parseMd(md: string): string {
     const code = g3.trim();
     let highlightedCode = '';
     try {
+      // const path = `prismjs/components/prism-${lang}`;
+      // console.log('path', path);
+      import(`../../node_modules/prismjs/components/prism-${lang}.js`);
       highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
     } catch (e) {
       highlightedCode = code;
     }
     return `<pre>${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
-    // return highlightedCode;
   });
 
   // p

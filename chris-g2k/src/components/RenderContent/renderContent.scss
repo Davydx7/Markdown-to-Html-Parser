@@ -17,6 +17,10 @@
     margin-top: 0;
   }
 
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
   h1,
   h2 {
     text-decoration: underline;
@@ -41,47 +45,6 @@
     border-radius: 0.5rem;
     border: 0.1rem solid #c6bfffc9;
     padding: 1rem;
-
-    // .keyword {
-    //   color: #b16ec7;
-    // }
-
-    // .value {
-    //   color: #d19a66;
-    // }
-
-    // .function {
-    //   color: #266ef2;
-    // }
-
-    // .property {
-    //   // color: #BE5046;
-    //   color: #e06c75;
-    // }
-
-    // .number {
-    //   color: #d19a66;
-    // }
-
-    // .bracket {
-    //   color: #c4ac13;
-    // }
-
-    // .operator {
-    //   color: #61afef;
-    // }
-
-    // .string {
-    //   color: #98c36e;
-    // }
-
-    // .comment {
-    //   color: #5c5c5c !important;
-
-    //   * {
-    //     color: #5c5c5c !important;
-    //   }
-    // }
   }
 
   table {

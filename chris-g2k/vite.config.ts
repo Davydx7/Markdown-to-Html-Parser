@@ -7,8 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     prismjsPlugin({
-      languages: 'all',
-      plugins: ['line-numbers'],
+      languages: ['typescript', 'javascript', 'css', 'markdown', 'cpp', 'html', 'json'],
       theme: 'tomorrow',
       css: true
     })
