@@ -6,7 +6,8 @@
   border-radius: 4px;
   padding: 1.5rem;
   color: #c6bfff;
-  // white-space: pre-wrap;
+  // word-break: break-all;
+  overflow-wrap: break-word;
 
   * {
     margin: revert;
@@ -52,7 +53,7 @@
     border-collapse: collapse;
     background-color: #1e1d27c9;
     border-radius: 0.5rem;
-    overflow: hidden;
+    // overflow: hidden;
     margin: 0.5rem 0;
     display: block;
     width: max-content;

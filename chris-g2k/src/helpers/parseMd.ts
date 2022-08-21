@@ -1,6 +1,8 @@
 import Prism from 'prismjs';
+import replaceAsync from 'string-replace-async';
 
-function parseMd(md: string): string {
+async function parseMd(md: string): Promise<string> {
+  console.log('parsing');
   // mitigate windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
 
@@ -91,19 +93,18 @@ function parseMd(md: string): string {
   );
 
   // pre with syntax highlighting
-  md = md.replace(/^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, (m, g1, g2, g3) => {
+  md = await replaceAsync(md, /^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, async (m, g1, g2, g3) => {
     const lang = g2.trim();
     const code = g3.trim();
     let highlightedCode = '';
-    try {
-      // const path = `prismjs/components/prism-${lang}`;
-      // console.log('path', path);
-      import(`../../node_modules/prismjs/components/prism-${lang}.js`);
-      highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
-    } catch (e) {
-      highlightedCode = code;
-    }
-    return `<pre>${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+    await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
+      .then(() => {
+        highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+      })
+      .catch((e) => {
+        highlightedCode = code;
+      });
+    return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
   });
 
   // p

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import DOMPurify from 'dompurify';
+import DOMPurify, { sanitize } from 'dompurify';
 
 import parseMd from '../../helpers/parseMd';
 
@@ -13,19 +13,17 @@ type Props = {
 const RenderContent: React.FC<Props> = ({ text, markdown = true }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const parsed = useMemo(() => DOMPurify.sanitize(parseMd(text)), [text]);
-
-  // const parsed = useMemo(() => parseMd(text), [text]);
-
-  useEffect(() => {
-    if (ref.current) {
-      if (markdown) {
-        ref.current.innerHTML = parsed;
-      } else {
-        ref.current.innerText = parsed;
+  parseMd(text)
+    .then((parsed) => DOMPurify.sanitize(parsed))
+    .then((sanitized) => {
+      if (ref.current) {
+        if (markdown) {
+          ref.current.innerHTML = sanitized;
+        } else {
+          ref.current.innerText = sanitized;
+        }
       }
-    }
-  }, [markdown, parsed]);
+    });
 
   return <div className="output line-numbers" ref={ref} />;
 };
