@@ -1,3 +1,5 @@
+@use 'styles' as s;
+
 .App {
   height: 100vh;
   display: flex;
@@ -25,15 +27,15 @@
   height: 100%;
   font-size: inherit;
   font-family: inherit;
-  border: 1px solid #ccc;
+  border: 1px solid var(--inputBorder);
   border-radius: 4px;
   padding: 1.5rem;
-  color: rgb(202, 227, 255);
-  background-color: #111016;
+  color: var(--inputColor);
+  background-color: var(--inputBackgroundColor);
   resize: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: s.$breakpoint-tablet) {
   .boxes {
     flex-direction: column;
   }

@@ -1,12 +1,14 @@
+@use 'styles' as s;
+
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: s.$ff-sans-serif;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #05040a;
 }
 
-html{
+html {
   height: 100%;
   font-size: 62.5%;
 }
@@ -19,7 +21,9 @@ body {
 #root {
   height: 100%;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -41,28 +45,16 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  color: var(--buttonColor);
+  background-color: var(--buttonBackgroundColor);
   cursor: pointer;
   width: 19rem;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--buttonColorHoverBorder);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

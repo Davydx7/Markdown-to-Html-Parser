@@ -1,11 +1,13 @@
+@use '../../styles/index.scss' as s;
+
 .output {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  border: 1px solid rgb(16, 226, 34);
+  border: 1px solid var(--mdBorder);
   border-radius: 4px;
   padding: 1.5rem;
-  color: #c6bfff;
+  color: var(--mdText);
   // word-break: break-all;
   overflow-wrap: break-word;
 
@@ -25,33 +27,33 @@
   h1,
   h2 {
     text-decoration: underline;
-    text-decoration-color: #c6bfffc9;
+    text-decoration-color: var(--mdTextDull);
   }
 
   blockquote {
     padding: 0 1rem;
-    border-left: 0.4rem solid #c6bfffc9;
-    color: #c6bfffc9;
+    border-left: 0.4rem solid var(--mdTextDull);
+    color: var(--mdTextDull);
     margin: 0;
   }
 
   code {
-    background-color: rgb(52, 53, 54);
+    background-color: var(--mdCodeBackground);
     padding: 0.2rem 0.3rem;
     border-radius: 0.4rem;
   }
 
   pre {
-    background-color: #02060f;
+    background-color: var(--mdCodeBackground);
     border-radius: 0.5rem;
-    border: 0.1rem solid #c6bfffc9;
+    border: 0.1rem solid var(--mdTextDull);
     padding: 1rem;
   }
 
   table {
     // text-align: left;
     border-collapse: collapse;
-    background-color: #1e1d27c9;
+    background-color: var(--mdTableBackground);
     border-radius: 0.5rem;
     // overflow: hidden;
     margin: 0.5rem 0;
@@ -63,21 +65,21 @@
 
   th,
   td {
-    border: 0.1rem solid #c6bfff38;
+    border: 0.1rem solid var(--mdTableBorders);
     padding: 1rem;
   }
 
   th {
-    background: rgb(37, 8, 70);
+    background: var(--mdThBackground);
   }
 
   tbody > tr:nth-child(even) {
-    background-color: #333146c9;
+    background-color: var(--mdTableBackgroundEven);
   }
 
   mark {
-    color: rgb(52, 53, 54);
-    background-color: #c6bfff;
+    color: var(--mdHighlightColor);
+    background-color: var(--mdHighlightBackgroundColor);
     padding: 0.4rem 0;
     font-weight: 500;
   }

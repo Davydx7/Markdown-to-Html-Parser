@@ -21,6 +21,7 @@ const RenderContent: React.FC<Props> = ({ text, markdown = true }) => {
 ```
 
 ```python
+dfg
 console.log('wow');
 
 function test(one) {

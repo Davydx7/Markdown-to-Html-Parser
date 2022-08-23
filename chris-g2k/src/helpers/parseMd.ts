@@ -96,6 +96,12 @@ async function parseMd(md: string): Promise<string> {
     const lang = g2.trim();
     const code = g3.trim();
     let highlightedCode = '';
+
+    if (lang.match(/typescript|javascript|css|markdown|cpp|html|json/)) {
+      highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+      return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+    }
     await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
       .then(() => {
         highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
