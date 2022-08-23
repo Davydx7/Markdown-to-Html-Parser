@@ -3,9 +3,10 @@ import { test, describe, expect } from 'vitest';
 import parseMd from '../src/helpers/parseMd';
 
 describe('Headings', () => {
-  test("transforms '# heading 1' to '<h1>heading 1</h1>'", () => {
-    expect(parseMd('# heading 1')).toBe('<h1>heading 1</h1>');
-  });
+  test("transforms '# heading 1' to '<h1>heading 1</h1>'", () =>
+    parseMd('# heading 1').then((html) => {
+      expect(html).toEqual('<h1>heading 1</h1>');
+    }));
 
   test("transforms '## heading 2' to '<h2>heading 2</h2>'", () => {
     expect(parseMd('## heading 2')).toBe('<h2>heading 2</h2>');
@@ -107,47 +108,47 @@ describe('Paragraphs', () => {
   });
 });
 
-describe('Links', () => {
-  test.todo('transforms "[text](url)" to "<a href="url">text</a>"');
-  test.todo('transforms "[text](url "title")" to "<a href="url" title="title">text</a>"');
-  test.todo('transforms "[text](url title)" to "<a href="url" title="title">text</a>"');
-});
+// describe('Links', () => {
+//   test.todo('transforms "[text](url)" to "<a href="url">text</a>"');
+//   test.todo('transforms "[text](url "title")" to "<a href="url" title="title">text</a>"');
+//   test.todo('transforms "[text](url title)" to "<a href="url" title="title">text</a>"');
+// });
 
-describe('Images', () => {
-  test.todo('transforms "![text](url)" to "<img src="url" alt="text">"');
-  test.todo('transforms "![text](url "title")" to "<img src="url" title="title" alt="text">"');
-  test.todo('transforms "![text](url title)" to "<img src="url" title="title" alt="text">"');
-});
+// describe('Images', () => {
+//   test.todo('transforms "![text](url)" to "<img src="url" alt="text">"');
+//   test.todo('transforms "![text](url "title")" to "<img src="url" title="title" alt="text">"');
+//   test.todo('transforms "![text](url title)" to "<img src="url" title="title" alt="text">"');
+// });
 
-describe('Lists', () => {
-  describe('Unordered', () => {
-    test.todo("transforms '- item 1' to '<ul><li>item 1</li></ul>'");
-    // , () => {
-    //   expect(parseMd('- item 1')).toBe('<li>item 1</li>');
-    // });
-    test.todo("transforms '- item 1\n- item 2' to '<ul><li>item 1</li><li>item 2</li></ul>'");
-    // , () => {
-    //   expect(parseMd('- item 1\n- item 2')).toBe('<li>item 1</li><li>item 2</li>');
-    // });
-  });
+// describe('Lists', () => {
+//   describe('Unordered', () => {
+//     test.todo("transforms '- item 1' to '<ul><li>item 1</li></ul>'");
+// , () => {
+//   expect(parseMd('- item 1')).toBe('<li>item 1</li>');
+// });
+// test.todo("transforms '- item 1\n- item 2' to '<ul><li>item 1</li><li>item 2</li></ul>'");
+// , () => {
+//   expect(parseMd('- item 1\n- item 2')).toBe('<li>item 1</li><li>item 2</li>');
+// });
+// });
 
-  describe('Ordered', () => {
-    test.todo("transforms '1. item 1' to '<ol><li>item 1</li></ol>'");
-    // , () => {
-    //   expect(parseMd('- item 1')).toBe('<li>item 1</li>');
-    // });
-    test.todo("transforms '1. item 1\n2. item 2' to '<ol><li>item 1</li><li>item 2</li></ol>'");
-    // , () => {
-    //   expect(parseMd('- item 1\n- item 2')).toBe('<li>item 1</li><li>item 2</li>');
-    // });
-  });
-});
+// describe('Ordered', () => {
+//   test.todo("transforms '1. item 1' to '<ol><li>item 1</li></ol>'");
+// , () => {
+//   expect(parseMd('- item 1')).toBe('<li>item 1</li>');
+// });
+// test.todo("transforms '1. item 1\n2. item 2' to '<ol><li>item 1</li><li>item 2</li></ol>'");
+// , () => {
+//   expect(parseMd('- item 1\n- item 2')).toBe('<li>item 1</li><li>item 2</li>');
+// });
+//   });
+// });
 
-describe('Tables', () => {
-  test.todo(
-    'transforms "| header 1 | header 2 |" to "<table><thead><tr><th>header 1</th><th>header 2</th></tr></thead><tbody></tbody></table>"'
-  );
-  // , () => {
-  //   expect(parseMd('| header 1 | header 2 |')).toBe('<table><thead><tr><th>header 1</th><th>header 2</th></tr></thead><tbody></tbody></table>');
-  //
-});
+// describe('Tables', () => {
+//   test.todo(
+//     'transforms "| header 1 | header 2 |" to "<table><thead><tr><th>header 1</th><th>header 2</th></tr></thead><tbody></tbody></table>"'
+//   );
+// , () => {
+//   expect(parseMd('| header 1 | header 2 |')).toBe('<table><thead><tr><th>header 1</th><th>header 2</th></tr></thead><tbody></tbody></table>');
+//
+// });
