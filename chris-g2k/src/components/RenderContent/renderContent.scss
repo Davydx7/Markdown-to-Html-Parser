@@ -30,6 +30,24 @@
     text-decoration-color: var(--mdTextDull);
   }
 
+  ul {
+    padding-left: 1rem;
+
+    &.top {
+      padding-left: 1.5rem;
+    }
+  }
+
+  ol {
+    padding-left: 1rem;
+
+    &.top {
+      padding-left: 1.5rem;
+    }
+  }
+
+
+
   blockquote {
     padding: 0 1rem;
     border-left: 0.4rem solid var(--mdTextDull);

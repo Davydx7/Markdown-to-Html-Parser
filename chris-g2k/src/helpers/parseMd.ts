@@ -15,7 +15,7 @@ function ul(m: string) {
 
     if (Number.isNaN(pushIn)) {
       // firs line
-      result += `<ul>\n<li>${line.replace(/^ *[-+*]/, '').trim()}`;
+      result += `<ul class='top'>\n<li>${line.replace(/^ *[-+*]/, '').trim()}`;
       console.log('first line works');
     } else if (pushIn === 0 || pushIn === 1) {
       // no nest change
@@ -48,10 +48,10 @@ function ul(m: string) {
   return result;
 }
 
-// ol
-function ol(m: string, g1: string) {
+// oul
+function oul(m: string) {
   const leadingSpaces: number[] = [];
-  const nestDepths: number[] = [];
+  const nestDepths: [string, number][] = [];
   let result = '';
 
   console.log('m\n', m);
@@ -60,42 +60,100 @@ function ol(m: string, g1: string) {
     leadingSpaces.push(line.length - line.trimStart().length);
     const pushIn = leadingSpaces[i] - leadingSpaces[i - 1];
 
+    const isUl = !!line.match(/^ *[-+*]/);
+    const isOl = !!line.match(/^ *\d/);
+
+    // let num = `start=${line.match(/\d+/)![0]}`
+    const lineNum = isOl ? `start=${line.match(/\d+/)![0]}` : '';
+
+    const ou = isUl ? 'ul' : 'ol';
+    const reg = isUl ? /^ *[-+*]/ : /^ *\d+\./;
+
     if (Number.isNaN(pushIn)) {
       // firs line
-      result += `<ol start=${g1}>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+      nestDepths.push([ou, leadingSpaces[i - 1]]);
+      result += `<${ou} class='top' ${lineNum}>\n<li>${line.replace(reg, '').trim()}`;
       console.log('first line works');
     } else if (pushIn === 0 || pushIn === 1) {
       // no nest change
-      result += `</li>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+      result += `</li>\n<li>${line.replace(reg, '').trim()}`;
     } else if (pushIn > 1) {
       // nestIn
-      nestDepths.push(leadingSpaces[i - 1]);
+      nestDepths.push([ou, leadingSpaces[i - 1]]);
       console.log(nestDepths);
 
-      const startNum = line.match(/\d+/)![0];
-
-      result += `\n<ol start=${startNum}>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+      result += `\n<${ou} ${lineNum}>\n<li>${line.replace(reg, '').trim()}`;
     } else if (pushIn < 0) {
       // pop out of nest as many times as we need to
-      while (nestDepths.length > 0 && leadingSpaces[i] - nestDepths[nestDepths.length - 1] < 2) {
-        result += `</li>\n</ol>`;
+      while (nestDepths.length > 1 && leadingSpaces[i] - nestDepths[nestDepths.length - 1][1] < 2) {
+        result += `</li>\n</${nestDepths[nestDepths.length - 1][0]}>`;
         nestDepths.pop();
         console.log(nestDepths);
       }
 
-      result += `</li>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+      result += `</li>\n<li>${line.replace(reg, '').trim()}`;
     } else {
       console.log(pushIn);
       alert('error, unhandled case');
     }
   });
 
-  for (let i = 0; i <= nestDepths.length; i++) {
-    result += `</li>\n</ol>`;
+  nestDepths.reverse();
+  for (let i = 0; i < nestDepths.length; i++) {
+    result += `</li>\n</${nestDepths[i][0]}>`;
   }
 
   return result;
 }
+
+// ol
+// function ol(m: string, g1: string) {
+//   const leadingSpaces: number[] = [];
+//   const nestDepths: number[] = [];
+//   let result = '';
+
+//   console.log('m\n', m);
+
+//   m.split('\n').forEach((line, i) => {
+//     leadingSpaces.push(line.length - line.trimStart().length);
+//     const pushIn = leadingSpaces[i] - leadingSpaces[i - 1];
+
+//     if (Number.isNaN(pushIn)) {
+//       // firs line
+//       result += `<ol class='top' start=${g1}>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+//       console.log('first line works');
+//     } else if (pushIn === 0 || pushIn === 1) {
+//       // no nest change
+//       result += `</li>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+//     } else if (pushIn > 1) {
+//       // nestIn
+//       nestDepths.push(leadingSpaces[i - 1]);
+//       console.log(nestDepths);
+
+//       const lineNum = line.match(/\d+/)![0];
+
+//       result += `\n<ol start=${lineNum}>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+//     } else if (pushIn < 0) {
+//       // pop out of nest as many times as we need to
+//       while (nestDepths.length > 0 && leadingSpaces[i] - nestDepths[nestDepths.length - 1] < 2) {
+//         result += `</li>\n</ol>`;
+//         nestDepths.pop();
+//         console.log(nestDepths);
+//       }
+
+//       result += `</li>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+//     } else {
+//       console.log(pushIn);
+//       alert('error, unhandled case');
+//     }
+//   });
+
+//   for (let i = 0; i <= nestDepths.length; i++) {
+//     result += `</li>\n</ol>`;
+//   }
+
+//   return result;
+// }
 
 // ol
 // md = md.replace(/^ *(\d+)\. .*(\n *\d+\. .*)*/gm, (m, g1) => {
@@ -135,10 +193,13 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/^((.+)(\n.+)*?)\n--+$/gm, (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`);
 
   // ul
-  md = md.replace(/^ *([-+*] ).+(?:\n *\1.+)*/gm, (m) => ul(m));
+  // md = md.replace(/^ *([-+*] ).+(?:\n *\1.+)*/gm, (m) => ul(m));
 
   // ol
-  md = md.replace(/^ *(\d+)\. .*(?:\n *\d+\. .*)*/gm, (m, g1) => ol(m, g1));
+  // md = md.replace(/^ *(\d+)\. .*(?:\n *\d+\. .*)*/gm, (m, g1) => ol(m, g1));
+
+  // ol&ul
+  md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => oul(m));
 
   // hr
   md = md.replace(/^ *-{3,} *$/gm, '<hr>');

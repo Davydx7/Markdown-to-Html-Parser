@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef } from 'react';
-import DOMPurify, { sanitize } from 'dompurify';
+import { useRef } from 'react';
+import DOMPurify from 'dompurify';
 
 import parseMd from '../../helpers/parseMd';
 
