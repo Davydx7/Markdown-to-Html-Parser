@@ -1,6 +1,111 @@
 import Prism from 'prismjs';
 import replaceAsync from 'string-replace-async';
 
+// ul
+function ul(m: string) {
+  const leadingSpaces: number[] = [];
+  const nestDepths: number[] = [];
+  let result = '';
+
+  console.log('m\n', m);
+
+  m.split('\n').forEach((line, i) => {
+    leadingSpaces.push(line.length - line.trimStart().length);
+    const pushIn = leadingSpaces[i] - leadingSpaces[i - 1];
+
+    if (Number.isNaN(pushIn)) {
+      // firs line
+      result += `<ul>\n<li>${line.replace(/^ *[-+*]/, '').trim()}`;
+      console.log('first line works');
+    } else if (pushIn === 0 || pushIn === 1) {
+      // no nest change
+      result += `</li>\n<li>${line.replace(/^ *[-+*]/, '').trim()}`;
+    } else if (pushIn > 1) {
+      // nestIn
+      nestDepths.push(leadingSpaces[i - 1]);
+      console.log(nestDepths);
+
+      result += `\n<ul>\n<li>${line.replace(/^ *[-+*]/, '').trim()}`;
+    } else if (pushIn < 0) {
+      // pop out of nest as many times as we need to
+      while (nestDepths.length > 0 && leadingSpaces[i] - nestDepths[nestDepths.length - 1] < 2) {
+        result += `</li>\n</ul>`;
+        nestDepths.pop();
+        console.log(nestDepths);
+      }
+
+      result += `</li>\n<li>${line.replace(/^ *[-+*]/, '').trim()}`;
+    } else {
+      console.log(pushIn);
+      alert('error, unhandled case');
+    }
+  });
+
+  for (let i = 0; i <= nestDepths.length; i++) {
+    result += `</li>\n</ul>`;
+  }
+
+  return result;
+}
+
+// ol
+function ol(m: string, g1: string) {
+  const leadingSpaces: number[] = [];
+  const nestDepths: number[] = [];
+  let result = '';
+
+  console.log('m\n', m);
+
+  m.split('\n').forEach((line, i) => {
+    leadingSpaces.push(line.length - line.trimStart().length);
+    const pushIn = leadingSpaces[i] - leadingSpaces[i - 1];
+
+    if (Number.isNaN(pushIn)) {
+      // firs line
+      result += `<ol start=${g1}>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+      console.log('first line works');
+    } else if (pushIn === 0 || pushIn === 1) {
+      // no nest change
+      result += `</li>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+    } else if (pushIn > 1) {
+      // nestIn
+      nestDepths.push(leadingSpaces[i - 1]);
+      console.log(nestDepths);
+
+      const startNum = line.match(/\d+/)![0];
+
+      result += `\n<ol start=${startNum}>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+    } else if (pushIn < 0) {
+      // pop out of nest as many times as we need to
+      while (nestDepths.length > 0 && leadingSpaces[i] - nestDepths[nestDepths.length - 1] < 2) {
+        result += `</li>\n</ol>`;
+        nestDepths.pop();
+        console.log(nestDepths);
+      }
+
+      result += `</li>\n<li>${line.replace(/^ *\d+\./, '').trim()}`;
+    } else {
+      console.log(pushIn);
+      alert('error, unhandled case');
+    }
+  });
+
+  for (let i = 0; i <= nestDepths.length; i++) {
+    result += `</li>\n</ol>`;
+  }
+
+  return result;
+}
+
+// ol
+// md = md.replace(/^ *(\d+)\. .*(\n *\d+\. .*)*/gm, (m, g1) => {
+//   const li = m
+//     .split('\n')
+//     .map((l) => `<li>${l.replace(/^ *\d+\./, '').trim()}</li>`)
+//     .join('\n');
+//   return `<ol start=${g1}>\n${li}\n</ol>`;
+// });
+
 async function parseMd(md: string): Promise<string> {
   // mitigate windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
@@ -25,48 +130,42 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/^#{1} +(.+)/gm, '<h1>$1</h1>');
 
   // alt Heading h1 h2
-  md = md.replace(/^((.+\n)+?)=+$/gm, (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`);
+  md = md.replace(/^((.+)(\n.+)*?)\n==+$/gm, (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`);
   // alt h2
-  md = md.replace(/^((.+\n)+?)-+$/gm, (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`);
+  md = md.replace(/^((.+)(\n.+)*?)\n--+$/gm, (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`);
 
   // ul
-  md = md.replace(/^ *([-+*] ).+(\n *\1.+)*/gm, (m, g1) => {
-    const list = m
-      .split('\n')
-      .map((l) => `<li>${l.replace(g1, '')}</li>`)
-      .join('\n');
-    return `<ul>\n${list}\n</ul>`;
-  });
+  md = md.replace(/^ *([-+*] ).+(?:\n *\1.+)*/gm, (m) => ul(m));
 
   // ol
-  md = md.replace(/^ *(\d+)\. .*(\n *\d+\. .*)*/gm, (m, g1) => {
-    const li = m
-      .split('\n')
-      .map((l) => `<li>${l.replace(/^ *\d+\. /, '')}</li>`)
-      .join('\n');
-    return `<ol start=${g1}>\n${li}\n</ol>`;
-  });
+  md = md.replace(/^ *(\d+)\. .*(?:\n *\d+\. .*)*/gm, (m, g1) => ol(m, g1));
+
+  // hr
+  md = md.replace(/^ *-{3,} *$/gm, '<hr>');
 
   // tables
   md = md.replace(/^\|(.*?\|)+\n\|(:?-+:?\|)+(\n\|(.*?\|)+)*/gm, (m) => {
     const rows = m.split('\n');
 
-    const alignment = rows[1].split('|').map((col) => {
-      const align = col.trim();
-      return /:-+:/.test(align)
-        ? 'align="center"'
-        : /^-+:/.test(align)
-        ? 'align="right"'
-        : /:-+$/.test(align)
-        ? 'align="left"'
-        : '';
-    });
+    const alignment = rows[1]
+      .split('|')
+      .slice(1, -1)
+      .map((col) => {
+        const align = col.trim();
+        return /:-+:/.test(align)
+          ? ' align="center"'
+          : /^-+:/.test(align)
+          ? ' align="right"'
+          : /:-+$/.test(align)
+          ? ' align="left"'
+          : '';
+      });
 
     const headingRow = rows
       .shift()
       ?.split('|')
       .slice(1, -1)
-      .map((thCell, i) => `<th ${alignment[i] || ''}>${thCell.trim()}</th>`)
+      .map((thCell, i) => `<th${alignment[i] || ''}>${thCell.trim()}</th>`)
       .join('');
 
     rows.shift();
@@ -76,11 +175,11 @@ async function parseMd(md: string): Promise<string> {
         const currentRow = row
           .split('|')
           .slice(1, -1)
-          .map((cell, i) => `<td ${alignment[i] || ''}>${cell.trim()}</td>`)
+          .map((cell, i) => `<td${alignment[i] || ''}>${cell.trim()}</td>`)
           .join('');
         return `<tr>\n${currentRow}\n</tr>`;
       })
-      .join('');
+      .join('\n');
 
     return `<table>\n<thead>\n<tr>\n${headingRow}\n</tr>\n</thead>\n\n<tbody>\n${body}\n</tbody>\n</table>`;
   });
@@ -93,11 +192,11 @@ async function parseMd(md: string): Promise<string> {
 
   // pre with syntax highlighting
   md = await replaceAsync(md, /^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, async (m, g1, g2, g3) => {
-    const lang = g2.trim();
-    const code = g3.trim();
+    const lang: string = g2.trim();
+    const code: string = g3.trim();
     let highlightedCode = '';
 
-    if (lang.match(/typescript|javascript|css|markdown|cpp|html|json/)) {
+    if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
       highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
 
       return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
@@ -115,31 +214,32 @@ async function parseMd(md: string): Promise<string> {
   // p
   md = md.replace(
     /^(?![ \t]*[<\n]).+(\n(?![ \t]*[<\n]).+)*/gm,
-    (m) => `<p>${m.replace(/\n/g, '<br>')} </p>`
+    (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`
   );
 
   // INLINE TRANSFORMS hAPPENS AFTER ALL BLOCK TRANSFORMS
 
   // images
   md = md.replace(
-    /!\[(.+?)\]\( *([^\s]+?)( (['"]).*?\4)? *\)/gm,
-    '<img src="$2" alt="$1" title=$3/>'
+    /!\[(.*?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm,
+    (m, g1, g2, g3, g4) =>
+      `<img src="${g2.trim()}" alt="${g1 ? g1.trim() : ''}" title="${g4 ? g4.trim() : ''}">`
   );
 
   // links
   md = md.replace(
-    /(?<!^<pre.*)\[(.+?)\]\( *([^\s]+?)( (['"]).*?\4)? *\)/gm,
-    '<a href="$2" title=$3>$1</a>'
+    /(?<!^<pre.*)\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm,
+    (m, g1, g2, g3, g4) => `<a href="${g2.trim()}" title="${g4 ? g4.trim() : ''}">${g1.trim()}</a>`
   );
 
   // auto links
   md = md.replace(
-    /(?<!^<pre.*)(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s>]+)>?/gm,
+    /(?<!^<pre.*)(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s<>]+)>?/gm,
     '<a href="$1">$1</a>'
   );
   // www. links
   md = md.replace(
-    /(?<!^<pre.*)(?<!https?:\/\/)<?\b(www\.[^\s>]+)>?/gm,
+    /(?<!^<pre.*)(?<!https?:\/\/)<?\b(www\.[^\s<>]+)>?/gm,
     '<a href="http://$1">$1</a>'
   );
   // Emails
