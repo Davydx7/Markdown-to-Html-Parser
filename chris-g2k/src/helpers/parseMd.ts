@@ -7,47 +7,48 @@ function oul(m: string) {
   const nestDepths: [string, number][] = [];
   let result = '';
 
-  console.log('m\n', m);
-
   m.split('\n').forEach((line, i) => {
     leadingSpaces.push(line.length - line.trimStart().length);
     const pushIn = leadingSpaces[i] - leadingSpaces[i - 1];
 
-    const isUl = !!line.match(/^ *[-+*]/);
     const isOl = !!line.match(/^ *\d/);
-
-    // let num = `start=${line.match(/\d+/)![0]}`
     const lineNum = isOl ? `start=${line.match(/\d+/)![0]}` : '';
+    const el = isOl ? 'ol' : 'ul';
 
-    const ou = isUl ? 'ul' : 'ol';
-    const reg = isUl ? /^ *[-+*]/ : /^ *\d+\./;
+    const isChecked = !!line.match(/^ *(\d+\.|[-+*]) +\[x\] /);
+    const isUnchecked = !!line.match(/^ *(\d+\.|[-+*]) +\[ \] /);
+
+    const input =
+      isChecked || isUnchecked
+        ? `<input type="checkbox" disabled class="item-checkbox" ${isChecked ? 'checked' : ''}>`
+        : '';
+
+    const classBox = isChecked || isUnchecked ? 'class="checkbox-item"' : '';
+
+    const reg = /^ *(?:\d+\.|[-+*]) +(?:\[[ x]\])?/;
 
     if (Number.isNaN(pushIn)) {
       // firs line
-      nestDepths.push([ou, leadingSpaces[i - 1]]);
-      result += `<${ou} class='top' ${lineNum}>\n<li>${line.replace(reg, '').trim()}`;
-      console.log('first line works');
+      nestDepths.push([el, leadingSpaces[i - 1]]);
+      result += `<${el} class='top' ${lineNum}>\n<li ${classBox}>${input} ${line
+        .replace(reg, '')
+        .trim()}`;
     } else if (pushIn === 0 || pushIn === 1) {
       // no nest change
-      result += `</li>\n<li>${line.replace(reg, '').trim()}`;
+      result += `</li>\n<li ${classBox}>${input} ${line.replace(reg, '').trim()}`;
     } else if (pushIn > 1) {
       // nestIn
-      nestDepths.push([ou, leadingSpaces[i - 1]]);
-      console.log(nestDepths);
+      nestDepths.push([el, leadingSpaces[i - 1]]);
 
-      result += `\n<${ou} ${lineNum}>\n<li>${line.replace(reg, '').trim()}`;
+      result += `\n<${el} ${lineNum}>\n<li ${classBox}>${input} ${line.replace(reg, '').trim()}`;
     } else if (pushIn < 0) {
       // pop out of nest as many times as we need to
       while (nestDepths.length > 1 && leadingSpaces[i] - nestDepths[nestDepths.length - 1][1] < 2) {
         result += `</li>\n</${nestDepths[nestDepths.length - 1][0]}>`;
         nestDepths.pop();
-        console.log(nestDepths);
       }
 
-      result += `</li>\n<li>${line.replace(reg, '').trim()}`;
-    } else {
-      console.log(pushIn);
-      alert('error, unhandled case');
+      result += `</li>\n<li ${classBox}>${input} ${line.replace(reg, '').trim()}`;
     }
   });
 

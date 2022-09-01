@@ -9,11 +9,13 @@ sdfsd
 
 _*_
 
-- sdjflksjdf
-2. sfjks
-- sfjksajdfds
-  1. kjsdkfj
-  * fdgdfg
-  5. hjf
-      * sdf
-- sdjfd
+- [x] sdfd j'
+- [ ] asdsd
+- [ ] asdas
+
+1. [x] sfjksajdfdslfjkdjfsdkfj
+2. [ ] sfjksajdfdslfjkdjfsdkfj
+3. [ ] hf
+4. [ ] tth
+5. [ ] fghtr
+6. [ ] fg

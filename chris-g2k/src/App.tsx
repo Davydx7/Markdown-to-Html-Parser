@@ -42,17 +42,19 @@ as multiine 🧶
 
 **NESTED LISTS**
 
-**Mixed UL and OL**
+**Mixed UL and OL and CheckBox**
 - list item
-- list item
+- [x] **Chekced** list item
+- [ ] **Unchecked** list item
+- list continues
   1. list item
   2. list item
-    - list item
-    - list item
+    - [x] list item
+    - [ ] list item
       1. list item
       2. list item
       3. list itme
-- list item
+- [ ] list item
 - list item
 
 **Unordered**
@@ -65,13 +67,21 @@ as multiine 🧶
 - list item
 
 **Ordered List**
-
 1. **Ordered** list item 1, arbitrary start number support
   1. sublist item
   2. sublist item
     1. more nesting
 2. list item
 3. list item
+
+**CheckBoxes**
+- [x] list item
+- [ ] list item
+  - [ ] list item
+  - [x] list item
+    - [ ] list item
+- [ ] list item
+- [x] list item
 
 **Link to [GOOGLE](https://www.google.com "link title") with title**
 
