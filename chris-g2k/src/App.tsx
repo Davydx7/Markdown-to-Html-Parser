@@ -49,11 +49,11 @@ as multiine 🧶
 - list continues
   1. list item
   2. list item
+  3. list item
     - [x] list item
     - [ ] list item
-      1. list item
-      2. list item
-      3. list itme
+      - list item
+      - list item
 - [ ] list item
 - list item
 
