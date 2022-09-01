@@ -15,8 +15,8 @@ function oul(m: string) {
     const lineNum = isOl ? `start=${line.match(/\d+/)![0]}` : '';
     const el = isOl ? 'ol' : 'ul';
 
-    const isChecked = !!line.match(/^ *(\d+\.|[-+*]) +\[x\] /);
-    const isUnchecked = !!line.match(/^ *(\d+\.|[-+*]) +\[ \] /);
+    const isChecked = !!line.match(/^ *(?:\d+\.|[-+*]) +\[x\] /i);
+    const isUnchecked = !!line.match(/^ *(?:\d+\.|[-+*]) +\[ \] /i);
 
     const input =
       isChecked || isUnchecked
@@ -25,7 +25,7 @@ function oul(m: string) {
 
     const classBox = isChecked || isUnchecked ? 'class="checkbox-item"' : '';
 
-    const reg = /^ *(?:\d+\.|[-+*]) +(?:\[[ x]\])?/;
+    const reg = /^ *(?:\d+\.|[-+*]) +(?:\[[ x]\])?/i;
 
     if (Number.isNaN(pushIn)) {
       // firs line
@@ -76,12 +76,12 @@ async function parseMd(md: string): Promise<string> {
   });
 
   // Headings
-  md = md.replace(/^#{6} +(.+)/gm, '<h6>$1</h6>');
-  md = md.replace(/^#{5} +(.+)/gm, '<h5>$1</h5>');
-  md = md.replace(/^#{4} +(.+)/gm, '<h4>$1</h4>');
-  md = md.replace(/^#{3} +(.+)/gm, '<h3>$1</h3>');
-  md = md.replace(/^#{2} +(.+)/gm, '<h2>$1</h2>');
-  md = md.replace(/^#{1} +(.+)/gm, '<h1>$1</h1>');
+  md = md.replace(/^ *#{6} +(.+)/gm, '<h6>$1</h6>');
+  md = md.replace(/^ *#{5} +(.+)/gm, '<h5>$1</h5>');
+  md = md.replace(/^ *#{4} +(.+)/gm, '<h4>$1</h4>');
+  md = md.replace(/^ *#{3} +(.+)/gm, '<h3>$1</h3>');
+  md = md.replace(/^ *#{2} +(.+)/gm, '<h2>$1</h2>');
+  md = md.replace(/^ *#{1} +(.+)/gm, '<h1>$1</h1>');
 
   // alt Heading h1 h2
   md = md.replace(/^((.+)(\n.+)*?)\n==+$/gm, (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`);
@@ -92,7 +92,7 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => oul(m));
 
   // tables
-  md = md.replace(/^\|(.*?\|)+\n\|(:?-+:?\|)+(\n\|(.*?\|)+)*/gm, (m) => {
+  md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (m) => {
     const rows = m.split('\n');
 
     const alignment = rows[1]
@@ -135,16 +135,10 @@ async function parseMd(md: string): Promise<string> {
   // hr
   md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
 
-  // blockquote
-  md = md.replace(
-    /^>.+(\n>?.+)*/gm,
-    (m) => `<blockquote>${m.replace(/^> */gm, '').replace(/\n/g, '<br>')}</blockquote>`
-  );
-
   // pre with syntax highlighting
-  md = await replaceAsync(md, /^(`{3,})(.*)\n((?:.*\n)*?)\1/gm, async (m, g1, g2, g3) => {
-    const lang: string = g2.trim();
-    const code: string = g3.trim();
+  md = await replaceAsync(md, /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm, async (m, g1, g2, g3) => {
+    const lang: string = g2.trim().toLowerCase();
+    const code: string = g3;
     let highlightedCode = '';
 
     if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
@@ -161,6 +155,13 @@ async function parseMd(md: string): Promise<string> {
       });
     return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
   });
+
+  // blockquote, nest capable
+  md = await replaceAsync(
+    md,
+    /^ *>.*(\n *>?.+)*/gm,
+    async (m) => `<blockquote>${await parseMd(m.replace(/^ *>/gm, ''))}</blockquote>`
+  );
 
   // p
   md = md.replace(
@@ -179,40 +180,40 @@ async function parseMd(md: string): Promise<string> {
 
   // links
   md = md.replace(
-    /(?<!^<pre.*)\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm,
+    /(?<!^<pre.*)\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim,
     (m, g1, g2, g3, g4) => `<a href="${g2.trim()}" title="${g4 ? g4.trim() : ''}">${g1.trim()}</a>`
   );
 
   // auto links
   md = md.replace(
-    /(?<!^<pre.*)(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s<>]+)>?/gm,
+    /(?<!^<pre.*)(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s<>]+)>?/gim,
     '<a href="$1">$1</a>'
   );
   // www. links
   md = md.replace(
-    /(?<!^<pre.*)(?<!https?:\/\/)<?\b(www\.[^\s<>]+)>?/gm,
+    /(?<!^<pre.*)(?<!https?:\/\/)<?\b(www\.[^\s<>]+)>?/gim,
     '<a href="http://$1">$1</a>'
   );
   // Emails
-  md = md.replace(/(?<!^<pre.*)\b(\w+@\w+\.\w+)/gm, '<a href="mailto:$1">$1</a>');
+  md = md.replace(/(?<!^<pre.*)\b(\w+@\w+\.\w+)/gim, '<a href="mailto:$1">$1</a>');
 
   // bold
-  md = md.replace(/(?<!^<pre.*)(\*\*|__)([^*_\n].*?)\1/gm, '<strong>$2</strong>');
+  md = md.replace(/(?<!^<pre.*)(\*\*|__)([^*_\n].*?)\1/gim, '<strong>$2</strong>');
   // italic
-  md = md.replace(/(?<!^<pre.*)([*_])([^*_\n]+)\1/gm, '<em>$2</em>');
+  md = md.replace(/(?<!^<pre.*)([*_])([^*_\n]+)\1/gim, '<em>$2</em>');
   // strikethrough
-  md = md.replace(/(?<!^<pre.*)~~([^~\n].*?)~~/gm, '<del>$1</del>');
+  md = md.replace(/(?<!^<pre.*)~~([^~\n].*?)~~/gim, '<del>$1</del>');
 
   // subscript
-  md = md.replace(/(?<!^<pre.*)~([^~\n]+)~/gm, '<sub>$1</sub>');
+  md = md.replace(/(?<!^<pre.*)~([^~\n]+)~/gim, '<sub>$1</sub>');
   // superscript
-  md = md.replace(/(?<!^<pre.*)\^([^^\n]+)\^/gm, '<sup>$1</sup>');
+  md = md.replace(/(?<!^<pre.*)\^([^^\n]+)\^/gim, '<sup>$1</sup>');
 
   // Highlighting
-  md = md.replace(/(?<!^<pre.*)==([^=\n].*?)==/gm, '<mark>$1</mark>');
+  md = md.replace(/(?<!^<pre.*)==([^=\n].*?)==/gim, '<mark>$1</mark>');
 
   // code
-  md = md.replace(/(?<!^<pre.*)`([^`\n]+)`/gm, '<code>$1</code>');
+  md = md.replace(/(?<!^<pre.*)`([^`\n]+)`/gim, '<code>$1</code>');
 
   return md;
 }

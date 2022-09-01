@@ -8,7 +8,16 @@ function App() {
 
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+      // Prevent the Save dialog to open
+      e.preventDefault();
+
+      setText(ref.current?.value);
+    }
+  });
+
+  const handleParse: MouseEventHandler<HTMLButtonElement> = (e) => {
     setText(ref.current?.value);
   };
 
@@ -19,8 +28,8 @@ function App() {
   return (
     <div className="App">
       <div className="toggles">
-        <button className="button" onClick={handleClick}>
-          Parse
+        <button className="button" onClick={handleParse}>
+          Parse (ctrl/cmd + S)
         </button>
         <button className="button" onClick={handleShowMarkdown}>
           Show {showMarkdown ? 'raw HTML' : 'parsed output'}
@@ -116,9 +125,24 @@ This is ***bold and italic*** 🎃
 This is ~~striked through~~
 
 > 🎯A blockqoute here
-Quite a site right?
->
-> as much as would be enough
+>> can be nested
+>> Quite a site ^right?^
+>> - list item
+>> - list item
+>>   1. list item
+>>     - [ ] sdfsdf
+>>     - [x] sdfsdf
+>> - list item
+>> **Anything!!, even tables!!**
+>> |see| this | work |
+>> |:---|:--:|--:|
+>> | first|row right |here|
+>> |second|row|right here|
+>>> as much as *would* be **enough**
+>>> \`\`\`javascript
+>>> let works = 'it Works!'
+>>> console.log('awesome')
+>>> \`\`\`
 
 A \`Code\` 🧨 between texts
 
