@@ -46,7 +46,9 @@
     }
   }
 
-
+  hr {
+    border: 0.1rem solid var(--mdTextDull);
+  }
 
   blockquote {
     padding: 0 1rem;

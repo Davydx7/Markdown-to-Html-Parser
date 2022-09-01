@@ -38,24 +38,40 @@ function App() {
 Regular paragraph
 as multiine 🧶
 
+-------------------
+
 **NESTED LISTS**
 
-- **Unordered** list item 1
-- list item 2
-  - list item 3
-  - list item 4
-    - list item 5
-- list item 6
-- list item 7
+**Mixed UL and OL**
+- list item
+- list item
+  1. list item
+  2. list item
+    - list item
+    - list item
+      1. list item
+      2. list item
+      3. list itme
+- list item
+- list item
+
+**Unordered**
+-  list item
+- list item
+  - list item
+  - list item
+    - list item
+- list item
+- list item
 
 **Ordered List**
 
 1. **Ordered** list item 1, arbitrary start number support
-  1. sublist item 1
-  2. sublist item 2
+  1. sublist item
+  2. sublist item
     1. more nesting
-2. list item 2
-3. list item 3
+2. list item
+3. list item
 
 **Link to [GOOGLE](https://www.google.com "link title") with title**
 
