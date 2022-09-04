@@ -2,7 +2,7 @@ import Prism from 'prismjs';
 import replaceAsync from 'string-replace-async';
 
 // oul
-function oul(m: string) {
+function lists(m: string) {
   const leadingSpaces: number[] = [];
   const nestDepths: [string, number][] = [];
   let result = '';
@@ -89,7 +89,7 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/^((.+)(\n.+)*?)\n--+$/gm, (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`);
 
   // lists
-  md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => oul(m));
+  md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => lists(m));
 
   // tables
   md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (m) => {
