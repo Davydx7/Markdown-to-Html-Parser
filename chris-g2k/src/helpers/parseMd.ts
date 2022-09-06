@@ -1,23 +1,26 @@
-import Prism from 'prismjs';
+import Prism from 'prismjs'; // code syntax highlight library
 import replaceAsync from './replaceAsync';
 
-// oul
+// lists (unordered, ordered, task)
 function lists(m: string) {
-  const leadingSpaces: number[] = [];
-  const nestDepths: [string, number][] = [];
-  let result = '';
+  const leadingSpaces: number[] = []; // spaces each before list item
+  const nestDepths: [string, number][] = []; // array of [ul/ol, depth(leading space for the element)]
+
+  let result = ''; // final html output
 
   m.split('\n').forEach((line, i) => {
     leadingSpaces.push(line.length - line.trimStart().length);
-    const pushIn = leadingSpaces[i] - leadingSpaces[i - 1];
+    const pushIn = leadingSpaces[i] - leadingSpaces[i - 1]; // leading space diff
 
     const isOl = !!line.match(/^ *\d/);
     const lineNum = isOl ? `start=${line.match(/\d+/)![0]}` : '';
     const el = isOl ? 'ol' : 'ul';
 
+    // task checkbox
     const isChecked = !!line.match(/^ *(?:\d+\.|[-+*]) +\[x\] /i);
     const isUnchecked = !!line.match(/^ *(?:\d+\.|[-+*]) +\[ \] /i);
 
+    // checbox
     const input =
       isChecked || isUnchecked
         ? `<input type="checkbox" disabled class="item-checkbox" ${isChecked ? 'checked' : ''}>`
@@ -25,6 +28,7 @@ function lists(m: string) {
 
     const classBox = isChecked || isUnchecked ? 'class="checkbox-item"' : '';
 
+    // regex to trim off markdown syntax from list text
     const reg = /^ *(?:\d+\.|[-+*]) +(?:\[[ x]\])?/i;
 
     if (Number.isNaN(pushIn)) {
@@ -42,6 +46,7 @@ function lists(m: string) {
 
       result += `\n<${el} ${lineNum}>\n<li ${classBox}>${input} ${line.replace(reg, '').trim()}`;
     } else if (pushIn < 0) {
+      // nestOut
       // pop out of nest as many times as we need to
       while (nestDepths.length > 1 && leadingSpaces[i] - nestDepths[nestDepths.length - 1][1] < 2) {
         result += `</li>\n</${nestDepths[nestDepths.length - 1][0]}>`;
@@ -60,15 +65,16 @@ function lists(m: string) {
   return result;
 }
 
+// asynchroneous for the case of fetching non-default language syntax highlighting module
 async function parseMd(md: string): Promise<string> {
-  // mitigate windows and linux line endings
+  // mitigate difference in windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
 
   // escape secial characters
   md = md.replace(/\\(.)/g, (m, c) => {
-    if (c === '\\') return '&#92;';
+    if (c === '\\') return '&#92;'; // escape backslash itself
 
-    const escapeable = '`*-{}[]<>()#+-.!|'.includes(c);
+    const escapeable = '`*-{}[]<>()#+-.!|'.includes(c); // escapeable characters
 
     if (escapeable) return `&#${c.charCodeAt(0)};`;
 
@@ -93,9 +99,11 @@ async function parseMd(md: string): Promise<string> {
 
   // tables
   md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (m) => {
-    const rows = m.split('\n');
+    const rows = m.split('\n'); // all table row
 
-    const alignment = rows[1]
+    // store each column's alignment
+    // e.g alignment = [ 'align="center"', 'align="left"', 'align="right"', '', .. ]
+    const alignment: string[] = rows[1]
       .split('|')
       .slice(1, -1)
       .map((col) => {
@@ -109,16 +117,16 @@ async function parseMd(md: string): Promise<string> {
           : '';
       });
 
-    const headingRow = rows
-      .shift()
+    const headingRow: string = rows
+      .shift() // remove first row (heading)
       ?.split('|')
       .slice(1, -1)
       .map((thCell, i) => `<th${alignment[i] || ''}>${thCell.trim()}</th>`)
-      .join('');
+      .join('')!;
 
-    rows.shift();
+    rows.shift(); // remove second row (alignment)
 
-    const body = rows
+    const body: string = rows
       .map((row) => {
         const currentRow = row
           .split('|')
@@ -132,20 +140,23 @@ async function parseMd(md: string): Promise<string> {
     return `<table>\n<thead>\n<tr>\n${headingRow}\n</tr>\n</thead>\n\n<tbody>\n${body}\n</tbody>\n</table>`;
   });
 
-  // hr
+  // hr - horizontal rule
   md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
 
   // pre with syntax highlighting
   md = await replaceAsync(md, /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm, async (m, g1, g2, g3) => {
-    const lang: string = g2.trim().toLowerCase();
+    const lang: string = g2.trim().toLowerCase(); // guard against case sensitivity
     const code: string = g3;
     let highlightedCode = '';
 
+    // default languages confiuqred in prismjs (vite.config.ts)
     if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
       highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
 
       return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
     }
+
+    // else import(bundled to fetch) the language and highlight
     await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
       .then(() => {
         highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
@@ -156,20 +167,21 @@ async function parseMd(md: string): Promise<string> {
     return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
   });
 
-  // blockquote, nest capable
+  // blockquote, nesting capable through simple recursion
   md = await replaceAsync(
     md,
-    /^ *>.*(\n *>?.+)*/gm,
+    /^ *>.*(\n *>?.+)*/gm, // match, auto guard against infinite recursion
+    // function not called if no match
     async (m) => `<blockquote>${await parseMd(m.replace(/^ *>/gm, ''))}</blockquote>`
   );
 
-  // p
+  // paragraph p
   md = md.replace(
     /^(?![ \t]*[<\n]).+(\n(?![ \t]*[<\n]).+)*/gm,
     (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`
   );
 
-  // INLINE TRANSFORMS hAPPENS AFTER ALL BLOCK TRANSFORMS
+  // INLINE TRANSFORMATIONS hAPPENS AFTER ALL BLOCK LEVEL TRANSFORMS
 
   // images
   md = md.replace(

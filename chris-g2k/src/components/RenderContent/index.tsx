@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify'; // mitigate against XSS attacks
 
 import parseMd from '../../helpers/parseMd';
 

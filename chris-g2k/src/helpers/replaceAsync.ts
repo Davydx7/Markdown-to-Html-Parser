@@ -1,3 +1,5 @@
+// asynchroneous string replace function
+
 async function replaceAsync(
   string: string,
   searchValue: string | RegExp,
@@ -5,17 +7,18 @@ async function replaceAsync(
 ) {
   try {
     if (typeof replacer === 'function') {
-      // 1. Run fake pass of `replace`, collect values from `replacer` calls
-      // 2. Resolve them with `Promise.all`
-      // 3. Run `replace` with resolved values
+      // 1. Run fake pass of `replace`,
+      // collect promise objects into values from `replacer` calls
       const values: any[] = [];
 
       string.replace(searchValue, (match, ...args: any[]) => {
         values.push(replacer(match, ...args));
-        return match;
+        return '';
       });
 
+      // 2. Resolve them with `Promise.all`
       return Promise.all(values).then((resolvedValues) =>
+        // 3. Run `replace` with resolved values
         string.replace(searchValue, () => resolvedValues.shift())
       );
     }

@@ -8,6 +8,7 @@ function App() {
 
   const ref = useRef<HTMLTextAreaElement>(null);
 
+  // ctrl/cmd + s to save and parse text
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 's') {
       // Prevent the Save dialog to open
@@ -17,10 +18,12 @@ function App() {
     }
   });
 
+  // parse text on button click
   const handleParse: MouseEventHandler<HTMLButtonElement> = (e) => {
     setText(ref.current?.value);
   };
 
+  // toggle browser rendered vs raw html
   const handleShowMarkdown: MouseEventHandler<HTMLButtonElement> = (e) => {
     setShowMarkdown(!showMarkdown);
   };
@@ -37,6 +40,7 @@ function App() {
       </div>
       <div className="boxes">
         <textarea className="textArea" ref={ref}>
+          {/* initial text */}
           {`# Heading 1 ✨
 ## Heading 2
 ### Heading 3
