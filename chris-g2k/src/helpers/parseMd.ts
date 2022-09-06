@@ -1,5 +1,5 @@
 import Prism from 'prismjs';
-import replaceAsync from 'string-replace-async';
+import replaceAsync from './replaceAsync';
 
 // oul
 function lists(m: string) {
