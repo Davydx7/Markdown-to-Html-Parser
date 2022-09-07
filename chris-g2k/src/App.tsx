@@ -105,8 +105,11 @@ Direct link: www.google.com
 **Images**
 ![Ocean line](https://kids.kiddle.co/images/thumb/6/63/Nice-seafront.jpg/300px-Nice-seafront.jpg "image title")
 
-**relative path imgae**
+**resize image**
 ![Blue Butterflies](/butterflies.png "image title")
+![Blue Butterflies](/butterflies.png "image title width=50%")
+![Blue Butterflies](/butterflies.png "image title width=50")
+![Blue Butterflies](/butterflies.png "image title width=100% height=100")
 
 I need H~2~O (H~water~) not H^2^O (H^~~not water~~^) ==hightlight this==
 
