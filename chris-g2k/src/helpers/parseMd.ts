@@ -184,14 +184,24 @@ async function parseMd(md: string): Promise<string> {
   // INLINE TRANSFORMATIONS hAPPENS AFTER ALL BLOCK LEVEL TRANSFORMS
 
   // images
-  md = md.replace(/!\[(.*?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm, (m, g1, g2, g3, g4) => {
-    const height: string | undefined = g4.match(/\bheight *= *(\d+(?:px|%)?)/)?.[1];
-    const width: string | undefined = g4.match(/\bwidth *= *(\d+(?:px|%)?)/)?.[1];
-    const align: string | undefined = g4.match(/\balign *= *(\w+)/)?.[1];
-
-    return `<img src="${g2.trim()}" alt="${g1 ? g1.trim() : ''}" title="${
-      g4 ? g4.trim() : ''
-    }" width="${width || ''}" height="${height || ''}" align="${align || ''}">`;
+  md = md.replace(/!\[(.*?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm, (m, alt, src, g3, title) => {
+    let props = '';
+    if (title) {
+      title = title
+        .trim()
+        .split(' ')
+        .filter((s: string) => {
+          if (s.match(/^(?:height|width)=\d+(?:px|%)?$|^align=(?:left|right)$/)) {
+            props += `${s} `;
+            return false;
+          }
+          return true;
+        })
+        .join(' ');
+    }
+    return `<img src="${src.trim()}" alt="${alt ? alt.trim() : ''}" title="${
+      title ? title.trim() : ''
+    }" ${props}>`;
   });
 
   // links
