@@ -89,13 +89,57 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/^ *#{2} +(.+)/gm, '<h2>$1</h2>');
   md = md.replace(/^ *#{1} +(.+)/gm, '<h1>$1</h1>');
 
-  // alt Heading h1 h2
-  md = md.replace(/^((.+)(\n.+)*?)\n==+$/gm, (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`);
-  // alt h2
-  md = md.replace(/^((.+)(\n.+)*?)\n--+$/gm, (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`);
+  // alt Heading h1
+
+  // RegExp lookbehind not supported in safari (ios)
+  // const trackH1: [string, string][] = [];
+  // md.replace(/(?<=((?: *\S.*\n)+))==+$/gm, (m, g1) => {
+  //   const literalMatch = g1 + m;
+  //   const replacement = `<h1>${g1.splice(0, -1).replace(/\n/g, '<br>')}</h1>`;
+  //   trackH1.push([literalMatch, replacement]);
+  //   return '';
+  // });
+  // trackH1.forEach(([literalMatch, replacement]) => {
+  //   md = md.replace(literalMatch, replacement);
+  // });
+
+  // heavy regex action to replace alt h2 and support ios
+  md = md.replace(
+    /^((?: *\S.*)(?:\n *\S.*)*?)\n==+$/gm,
+    (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`
+  );
+
+  // alt heading h2
+
+  // RegExp lookbehind not supported in safari (ios)
+  const trackH2: [string, string][] = [];
+  md.replace(/(?<=((?: *\S.*\n)+))--+$/gm, (m, g1) => {
+    const literalMatch = g1 + m;
+    const replacement = `<h2>${g1.slice(0, -1).replace(/\n/g, '<br>')}</h2>`; // slice to remove last \n
+    trackH2.push([literalMatch, replacement]);
+    return '';
+  });
+  trackH2.forEach(([literalMatch, replacement]) => {
+    md = md.replace(literalMatch, replacement);
+  });
+
+  // heavy regex action to replace alt h2 and support ios
+  // md = md.replace(
+  //   /^((?: *\S.*)(?:\n *\S.*)*?)\n--+$/gm,
+  //   (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`
+  // );
 
   // lists
   md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => lists(m));
+
+  // definition lists
+  md = md.replace(
+    /^ *\S.*(?:\n *: .+)*(?:(?:\n *)?\n *\S.*(?:\n *: .+)*)*/gm,
+    (m) =>
+      `<dl>\n${m
+        .replace(/^ *([^ :\n].*)/gm, '<dt><strong>$1</strong></dt>')
+        .replace(/^ *: (.*)/gm, '<dd>$1</dd>')}\n</dl>`
+  );
 
   // tables
   md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (m) => {
@@ -149,9 +193,12 @@ async function parseMd(md: string): Promise<string> {
     const code: string = g3;
     let highlightedCode = '';
 
-    // default languages confiuqred in prismjs (vite.config.ts)
+    // for default languages confiuqred in prismjs (vite.config.ts)
     if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
       highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+      // stop formating markdown syntaxes in <pre>
+      highlightedCode = highlightedCode.replace(/[()*_^~`]/gm, (m) => `&#${m.charCodeAt(0)};`);
 
       return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
     }
@@ -160,17 +207,21 @@ async function parseMd(md: string): Promise<string> {
     await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
       .then(() => {
         highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+        // stop formating markdown syntaxes in <pre>
+        highlightedCode = highlightedCode.replace(/[()*_^~`]/gm, (m) => `&#${m.charCodeAt(0)};`);
       })
       .catch((e) => {
         highlightedCode = code;
       });
+
     return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
   });
 
   // blockquote, nesting capable through simple recursion
   md = await replaceAsync(
     md,
-    /^ *>.*(\n *>?.+)*/gm, // match, auto guard against infinite recursion
+    /^ *>.*(\n *[^<\s].*)*/gm, // match, auto guard against infinite recursion
     // function not called if no match
     async (m) => `<blockquote>${await parseMd(m.replace(/^ *>/gm, ''))}</blockquote>`
   );
@@ -206,40 +257,36 @@ async function parseMd(md: string): Promise<string> {
 
   // links
   md = md.replace(
-    /(?<!^<pre.*)\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim,
+    /\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim,
     (m, g1, g2, g3, g4) => `<a href="${g2.trim()}" title="${g4 ? g4.trim() : ''}">${g1.trim()}</a>`
   );
 
+  // combine autolinks and www. links and remove need for lookbehind
+
   // auto links
-  md = md.replace(
-    /(?<!^<pre.*)(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s<>]+)>?/gim,
-    '<a href="$1">$1</a>'
-  );
+  md = md.replace(/(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s<>]+)>?/gim, '<a href="$1">$1</a>');
   // www. links
-  md = md.replace(
-    /(?<!^<pre.*)(?<!https?:\/\/)<?\b(www\.[^\s<>]+)>?/gim,
-    '<a href="http://$1">$1</a>'
-  );
+  md = md.replace(/(?<!https?:\/\/)<?\b(www\.[^\s<>]+)>?/gim, '<a href="http://$1">$1</a>');
   // Emails
-  md = md.replace(/(?<!^<pre.*)\b(\w+@\w+\.\w+)/gim, '<a href="mailto:$1">$1</a>');
+  md = md.replace(/\b(\w+@\w+\.\w+)/gim, '<a href="mailto:$1">$1</a>');
 
   // bold
-  md = md.replace(/(?<!^<pre.*)(\*\*|__)([^*_\n].*?)\1/gim, '<strong>$2</strong>');
+  md = md.replace(/(\*\*|__)([^*_\n].*?)\1/gim, '<strong>$2</strong>');
   // italic
-  md = md.replace(/(?<!^<pre.*)([*_])([^*_\n]+)\1/gim, '<em>$2</em>');
+  md = md.replace(/([*_])([^*_\n]+)\1/gim, '<em>$2</em>');
   // strikethrough
-  md = md.replace(/(?<!^<pre.*)~~([^~\n].*?)~~/gim, '<del>$1</del>');
+  md = md.replace(/~~([^~\n].*?)~~/gim, '<del>$1</del>');
 
   // subscript
-  md = md.replace(/(?<!^<pre.*)~([^~\n]+)~/gim, '<sub>$1</sub>');
+  md = md.replace(/~([^~\n]+)~/gim, '<sub>$1</sub>');
   // superscript
-  md = md.replace(/(?<!^<pre.*)\^([^^\n]+)\^/gim, '<sup>$1</sup>');
+  md = md.replace(/\^([^^\n]+)\^/gim, '<sup>$1</sup>');
 
   // Highlighting
-  md = md.replace(/(?<!^<pre.*)==([^=\n].*?)==/gim, '<mark>$1</mark>');
+  md = md.replace(/==([^=\n].*?)==/gim, '<mark>$1</mark>');
 
   // code
-  md = md.replace(/(?<!^<pre.*)`([^`\n]+)`/gim, '<code>$1</code>');
+  md = md.replace(/`([^`\n]+)`/gim, '<code>$1</code>');
 
   return md;
 }
