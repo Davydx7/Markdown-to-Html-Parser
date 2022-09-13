@@ -112,29 +112,29 @@ async function parseMd(md: string): Promise<string> {
   // alt heading h2
 
   // RegExp lookbehind not supported in safari (ios)
-  const trackH2: [string, string][] = [];
-  md.replace(/(?<=((?: *\S.*\n)+))--+$/gm, (m, g1) => {
-    const literalMatch = g1 + m;
-    const replacement = `<h2>${g1.slice(0, -1).replace(/\n/g, '<br>')}</h2>`; // slice to remove last \n
-    trackH2.push([literalMatch, replacement]);
-    return '';
-  });
-  trackH2.forEach(([literalMatch, replacement]) => {
-    md = md.replace(literalMatch, replacement);
-  });
+  // const trackH2: [string, string][] = [];
+  // md.replace(/(?<=((?: *\S.*\n)+))--+$/gm, (m, g1) => {
+  //   const literalMatch = g1 + m;
+  //   const replacement = `<h2>${g1.slice(0, -1).replace(/\n/g, '<br>')}</h2>`; // slice to remove last \n
+  //   trackH2.push([literalMatch, replacement]);
+  //   return '';
+  // });
+  // trackH2.forEach(([literalMatch, replacement]) => {
+  //   md = md.replace(literalMatch, replacement);
+  // });
 
   // heavy regex action to replace alt h2 and support ios
-  // md = md.replace(
-  //   /^((?: *\S.*)(?:\n *\S.*)*?)\n--+$/gm,
-  //   (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`
-  // );
+  md = md.replace(
+    /^((?: *\S.*)(?:\n *\S.*)*?)\n--+$/gm,
+    (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`
+  );
 
   // lists
   md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => lists(m));
 
   // definition lists
   md = md.replace(
-    /^ *\S.*(?:\n *: .+)*(?:(?:\n *)?\n *\S.*(?:\n *: .+)*)*/gm,
+    /^ *\S.*\n *: .+(?:\n *: .+)*(?:(?:\n *)?\n *\S.*(?:\n *: .+)+)*/gm,
     (m) =>
       `<dl>\n${m
         .replace(/^ *([^ :\n].*)/gm, '<dt><strong>$1</strong></dt>')

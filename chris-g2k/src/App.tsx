@@ -42,7 +42,15 @@ function App() {
         <textarea className="textArea" ref={ref}>
           {/* initial text */}
           {`# Heading 1 ✨
+
+Alt Heading 1
+===
+
 ## Heading 2
+
+Alt Heading 2
+---
+
 ### Heading 3
 #### Heading 4
 ##### Heading 5
@@ -50,6 +58,8 @@ function App() {
 
 Regular paragraph
 as multiine 🧶
+
+horizontal rule
 
 -------------------
 
@@ -95,6 +105,14 @@ as multiine 🧶
     - [ ] list item
 - [ ] list item
 - [x] list item
+
+**Definition List**
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
 
 **Link to [GOOGLE](https://www.google.com "link title") with title**
 

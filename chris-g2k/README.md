@@ -16,7 +16,7 @@ marked signals priority
 - [x] support code syntax highlighting (separate module)
 - [x] support multilevel lists
 - [x] support multilevel blockquotes (recurse the whole parsing function)
-- [ ] support \<details>\</details>
+- [x] support definition lists
 
 ## Done
 
