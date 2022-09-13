@@ -81,7 +81,7 @@ async function parseMd(md: string): Promise<string> {
     return m;
   });
 
-  // Headings
+  // HEADINGS
   md = md.replace(/^ *#{6} +(.+)/gm, '<h6>$1</h6>');
   md = md.replace(/^ *#{5} +(.+)/gm, '<h5>$1</h5>');
   md = md.replace(/^ *#{4} +(.+)/gm, '<h4>$1</h4>');
@@ -91,19 +91,17 @@ async function parseMd(md: string): Promise<string> {
 
   // alt Heading h1
 
-  // RegExp lookbehind not supported in safari (ios)
-  // const trackH1: [string, string][] = [];
-  // md.replace(/(?<=((?: *\S.*\n)+))==+$/gm, (m, g1) => {
-  //   const literalMatch = g1 + m;
-  //   const replacement = `<h1>${g1.splice(0, -1).replace(/\n/g, '<br>')}</h1>`;
-  //   trackH1.push([literalMatch, replacement]);
-  //   return '';
+  // Way more efficient RegExp lookbehind not supported in safari (ios)
+  // const trackH1: string[] = []; // captures by lookbehind
+  // md = md.replace(/(?<=((?: *\S.*\n)+))==+$/gm, (m, text: string) => {
+  //   trackH1.push(`${text}!#!#!`); //! #!#! added for uniqueness
+  //   return `!#!#!<h1>${text.slice(0, -1).replace(/\n/g, '<br>')}</h1>`; // slice to remove last \n
   // });
-  // trackH1.forEach(([literalMatch, replacement]) => {
-  //   md = md.replace(literalMatch, replacement);
+  // trackH1.forEach((lookedBehind) => {
+  //   md = md.replace(lookedBehind, ''); // clean up unique duplicates
   // });
 
-  // heavy regex action to replace alt h2 and support ios
+  // heavy regex action to replace alt h2 and support safari (ios)
   md = md.replace(
     /^((?: *\S.*)(?:\n *\S.*)*?)\n==+$/gm,
     (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`
@@ -111,28 +109,43 @@ async function parseMd(md: string): Promise<string> {
 
   // alt heading h2
 
-  // RegExp lookbehind not supported in safari (ios)
-  // const trackH2: [string, string][] = [];
-  // md.replace(/(?<=((?: *\S.*\n)+))--+$/gm, (m, g1) => {
-  //   const literalMatch = g1 + m;
-  //   const replacement = `<h2>${g1.slice(0, -1).replace(/\n/g, '<br>')}</h2>`; // slice to remove last \n
-  //   trackH2.push([literalMatch, replacement]);
-  //   return '';
+  // Way more efficient RegExp lookbehind not supported in safari (ios)
+  // const trackH2: string[] = []; // captures by lookbehind
+  // md = md.replace(/(?<=((?: *\S.*\n)+))--+$/gm, (m, text: string) => {
+  //   trackH2.push(`${text}!#!#!`); //! #!#! added for uniqueness
+  //   return `!#!#!<h2>${text.slice(0, -1).replace(/\n/g, '<br>')}</h2>`; // slice to remove last \n
   // });
-  // trackH2.forEach(([literalMatch, replacement]) => {
-  //   md = md.replace(literalMatch, replacement);
+  // trackH2.forEach((lookedBehind) => {
+  //   md = md.replace(lookedBehind, ''); // clean up unique duplicates
   // });
 
-  // heavy regex action to replace alt h2 and support ios
+  // heavy regex action to replace alt h2 and support safari (ios)
   md = md.replace(
     /^((?: *\S.*)(?:\n *\S.*)*?)\n--+$/gm,
     (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`
   );
 
-  // lists
+  // LISTS - ordered, unordered and checklist(tasks)
   md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => lists(m));
 
-  // definition lists
+  // DEFINITION LIST
+
+  // Way more efficient RegExp lookbehind not supported in safari (ios)
+  // const trackFirstLines: string[] = []; // captures by lookbehind
+  // md = md.replace(
+  //   /(?<=( *\S.*\n *)): .+(?:\n *: .+)*(?:(?:\n *)?\n *\S.*(?:\n *: .+)+)*/gm,
+  //   (m, firstLine) => {
+  //     trackFirstLines.push(`${firstLine}!#!#!`); //! #!#! added for uniqueness
+  //     return `!#!#!<dl>\n<dt><strong>${firstLine.trim()}</strong></dt>\n${m
+  //       .replace(/^ *([^ :\n].*)/gm, '<dt><strong>$1</strong></dt>')
+  //       .replace(/^ *: (.*)/gm, '<dd>$1</dd>')}\n</dl>`;
+  //   }
+  // );
+  // trackFirstLines.forEach((line) => {
+  //   md = md.replace(line, ''); // clean up unique duplicates
+  // });
+
+  // heavy regex action to replace 'definition list' and support safari (ios)
   md = md.replace(
     /^ *\S.*\n *: .+(?:\n *: .+)*(?:(?:\n *)?\n *\S.*(?:\n *: .+)+)*/gm,
     (m) =>
@@ -141,7 +154,7 @@ async function parseMd(md: string): Promise<string> {
         .replace(/^ *: (.*)/gm, '<dd>$1</dd>')}\n</dl>`
   );
 
-  // tables
+  // TABLES
   md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (m) => {
     const rows = m.split('\n'); // all table row
 
@@ -184,10 +197,10 @@ async function parseMd(md: string): Promise<string> {
     return `<table>\n<thead>\n<tr>\n${headingRow}\n</tr>\n</thead>\n\n<tbody>\n${body}\n</tbody>\n</table>`;
   });
 
-  // hr - horizontal rule
+  // HR - horizontal rule
   md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
 
-  // pre with syntax highlighting
+  // PRE with syntax highlighting
   md = await replaceAsync(md, /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm, async (m, g1, g2, g3) => {
     const lang: string = g2.trim().toLowerCase(); // guard against case sensitivity
     const code: string = g3;
@@ -218,7 +231,7 @@ async function parseMd(md: string): Promise<string> {
     return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
   });
 
-  // blockquote, nesting capable through simple recursion
+  // BLOCKQUOTE, nesting capable through simple recursion
   md = await replaceAsync(
     md,
     /^ *>.*(\n *[^<\s].*)*/gm, // match, auto guard against infinite recursion
@@ -226,7 +239,7 @@ async function parseMd(md: string): Promise<string> {
     async (m) => `<blockquote>${await parseMd(m.replace(/^ *>/gm, ''))}</blockquote>`
   );
 
-  // paragraph p
+  // PARAGRAPH p
   md = md.replace(
     /^(?![ \t]*[<\n]).+(\n(?![ \t]*[<\n]).+)*/gm,
     (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`
@@ -234,7 +247,7 @@ async function parseMd(md: string): Promise<string> {
 
   // INLINE TRANSFORMATIONS hAPPENS AFTER ALL BLOCK LEVEL TRANSFORMS
 
-  // images
+  // IMAGES
   md = md.replace(/!\[(.*?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm, (m, alt, src, g3, title) => {
     let props = '';
     if (title) {
@@ -250,23 +263,24 @@ async function parseMd(md: string): Promise<string> {
         })
         .join(' ');
     }
+    // prevent "auto links and www. links" below from capturing this
+    src = src.replace(/[htpsw]/gm, (m: string) => `&#${m.charCodeAt(0)};`);
     return `<img src="${src.trim()}" alt="${alt ? alt.trim() : ''}" title="${
       title ? title.trim() : ''
     }" ${props}>`;
   });
 
-  // links
-  md = md.replace(
-    /\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim,
-    (m, g1, g2, g3, g4) => `<a href="${g2.trim()}" title="${g4 ? g4.trim() : ''}">${g1.trim()}</a>`
-  );
-
-  // combine autolinks and www. links and remove need for lookbehind
+  // LINKS
+  md = md.replace(/\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim, (m, text, href, g3, title) => {
+    // prevent "auto links and www. links" below from capturing this
+    href = href.replace(/[htpsw]/gm, (m: string) => `&#${m.charCodeAt(0)};`);
+    return `<a href="${href}" title="${title ? title.trim() : ''}">${text.trim()}</a>`;
+  });
 
   // auto links
-  md = md.replace(/(?<!href=['"]|src=['"])<?\b(https?:\/\/[^\s<>]+)>?/gim, '<a href="$1">$1</a>');
+  md = md.replace(/<?\b(https?:\/\/[^\s<>]+)>?/gim, '<a href="$1">$1</a>');
   // www. links
-  md = md.replace(/(?<!https?:\/\/)<?\b(www\.[^\s<>]+)>?/gim, '<a href="http://$1">$1</a>');
+  md = md.replace(/<?\b(www\.[^\s<>]+)>?/gim, '<a href="http://$1">$1</a>');
   // Emails
   md = md.replace(/\b(\w+@\w+\.\w+)/gim, '<a href="mailto:$1">$1</a>');
 
