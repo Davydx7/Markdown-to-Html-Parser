@@ -2,13 +2,13 @@ import Prism from 'prismjs'; // code syntax highlight library
 import replaceAsync from './replaceAsync';
 
 // lists (unordered, ordered, task)
-function lists(m: string) {
+function lists(match: string) {
   const leadingSpaces: number[] = []; // spaces each before list item
   const nestDepths: [string, number][] = []; // array of [ul/ol, depth(leading space for the element)]
 
   let result = ''; // final html output
 
-  m.split('\n').forEach((line, i) => {
+  match.split('\n').forEach((line, i) => {
     leadingSpaces.push(line.length - line.trimStart().length);
     const pushIn = leadingSpaces[i] - leadingSpaces[i - 1]; // leading space diff
 
@@ -71,14 +71,14 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/\r\n?/gm, '\n');
 
   // escape secial characters
-  md = md.replace(/\\(.)/g, (m, c) => {
+  md = md.replace(/\\(.)/g, (match, c) => {
     if (c === '\\') return '&#92;'; // escape backslash itself
 
     const escapeable = '`*-{}[]<>()#+-.!|'.includes(c); // escapeable characters
 
     if (escapeable) return `&#${c.charCodeAt(0)};`;
 
-    return m;
+    return match;
   });
 
   // HEADINGS
@@ -93,7 +93,7 @@ async function parseMd(md: string): Promise<string> {
 
   // Way more efficient RegExp lookbehind not supported in safari (ios)
   // const trackH1: string[] = []; // captures by lookbehind
-  // md = md.replace(/(?<=((?: *\S.*\n)+))==+$/gm, (m, text: string) => {
+  // md = md.replace(/(?<=((?: *\S.*\n)+))==+$/gm, (match, text: string) => {
   //   trackH1.push(`${text}!#!#!`); //! #!#! added for uniqueness
   //   return `!#!#!<h1>${text.slice(0, -1).replace(/\n/g, '<br>')}</h1>`; // slice to remove last \n
   // });
@@ -104,14 +104,14 @@ async function parseMd(md: string): Promise<string> {
   // heavy regex action to replace alt h2 and support safari (ios)
   md = md.replace(
     /^((?: *\S.*)(?:\n *\S.*)*?)\n==+$/gm,
-    (m, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`
+    (match, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`
   );
 
   // alt heading h2
 
   // Way more efficient RegExp lookbehind not supported in safari (ios)
   // const trackH2: string[] = []; // captures by lookbehind
-  // md = md.replace(/(?<=((?: *\S.*\n)+))--+$/gm, (m, text: string) => {
+  // md = md.replace(/(?<=((?: *\S.*\n)+))--+$/gm, (match, text: string) => {
   //   trackH2.push(`${text}!#!#!`); //! #!#! added for uniqueness
   //   return `!#!#!<h2>${text.slice(0, -1).replace(/\n/g, '<br>')}</h2>`; // slice to remove last \n
   // });
@@ -122,11 +122,11 @@ async function parseMd(md: string): Promise<string> {
   // heavy regex action to replace alt h2 and support safari (ios)
   md = md.replace(
     /^((?: *\S.*)(?:\n *\S.*)*?)\n--+$/gm,
-    (m, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`
+    (match, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`
   );
 
   // LISTS - ordered, unordered and checklist(tasks)
-  md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (m) => lists(m));
+  md = md.replace(/^ *(?:\d+\.|[-+*]) .*(?:\n *(?:\d+\.|[-+*]) .*)*/gm, (match) => lists(match));
 
   // DEFINITION LIST
 
@@ -134,9 +134,9 @@ async function parseMd(md: string): Promise<string> {
   // const trackFirstLines: string[] = []; // captures by lookbehind
   // md = md.replace(
   //   /(?<=( *\S.*\n *)): .+(?:\n *: .+)*(?:(?:\n *)?\n *\S.*(?:\n *: .+)+)*/gm,
-  //   (m, firstLine) => {
+  //   (match, firstLine) => {
   //     trackFirstLines.push(`${firstLine}!#!#!`); //! #!#! added for uniqueness
-  //     return `!#!#!<dl>\n<dt><strong>${firstLine.trim()}</strong></dt>\n${m
+  //     return `!#!#!<dl>\n<dt><strong>${firstLine.trim()}</strong></dt>\n${match
   //       .replace(/^ *([^ :\n].*)/gm, '<dt><strong>$1</strong></dt>')
   //       .replace(/^ *: (.*)/gm, '<dd>$1</dd>')}\n</dl>`;
   //   }
@@ -148,15 +148,15 @@ async function parseMd(md: string): Promise<string> {
   // heavy regex action to replace 'definition list' and support safari (ios)
   md = md.replace(
     /^ *\S.*\n *: .+(?:\n *: .+)*(?:(?:\n *)?\n *\S.*(?:\n *: .+)+)*/gm,
-    (m) =>
-      `<dl>\n${m
+    (match) =>
+      `<dl>\n${match
         .replace(/^ *([^ :\n].*)/gm, '<dt><strong>$1</strong></dt>')
         .replace(/^ *: (.*)/gm, '<dd>$1</dd>')}\n</dl>`
   );
 
   // TABLES
-  md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (m) => {
-    const rows = m.split('\n'); // all table row
+  md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (match) => {
+    const rows = match.split('\n'); // all table row
 
     // store each column's alignment
     // e.g alignment = [ 'align="center"', 'align="left"', 'align="right"', '', .. ]
@@ -201,54 +201,63 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
 
   // PRE with syntax highlighting
-  md = await replaceAsync(md, /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm, async (m, g1, g2, g3) => {
-    const lang: string = g2.trim().toLowerCase(); // guard against case sensitivity
-    const code: string = g3;
-    let highlightedCode = '';
+  md = await replaceAsync(
+    md,
+    /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm,
+    async (match, g1, lang, code) => {
+      lang = lang.trim().toLowerCase(); // guard against case sensitivity
+      let highlightedCode = '';
 
-    // for default languages confiuqred in prismjs (vite.config.ts)
-    if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
-      highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
-
-      // stop formating markdown syntaxes in <pre>
-      highlightedCode = highlightedCode.replace(/[()*_^~`]/gm, (m) => `&#${m.charCodeAt(0)};`);
-
-      return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
-    }
-
-    // else import(bundled to fetch) the language and highlight
-    await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
-      .then(() => {
+      // for default languages confiuqred in prismjs (vite.config.ts)
+      if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
         highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
 
         // stop formating markdown syntaxes in <pre>
-        highlightedCode = highlightedCode.replace(/[()*_^~`]/gm, (m) => `&#${m.charCodeAt(0)};`);
-      })
-      .catch((e) => {
-        highlightedCode = code;
-      });
+        highlightedCode = highlightedCode.replace(
+          /[()*_^~`]/gm,
+          (match) => `&#${match.charCodeAt(0)};`
+        );
 
-    return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
-  });
+        return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+      }
+
+      // else import(bundled to fetch) the language and highlight
+      await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
+        .then(() => {
+          highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+          // stop formating markdown syntaxes in <pre>
+          highlightedCode = highlightedCode.replace(
+            /[()*_^~`]/gm,
+            (match) => `&#${match.charCodeAt(0)};`
+          );
+        })
+        .catch((e) => {
+          highlightedCode = code;
+        });
+
+      return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+    }
+  );
 
   // BLOCKQUOTE, nesting capable through simple recursion
   md = await replaceAsync(
     md,
     /^ *>.*(\n *[^<\s].*)*/gm, // match, auto guard against infinite recursion
     // function not called if no match
-    async (m) => `<blockquote>${await parseMd(m.replace(/^ *>/gm, ''))}</blockquote>`
+    async (match) => `<blockquote>${await parseMd(match.replace(/^ *>/gm, ''))}</blockquote>`
   );
 
   // PARAGRAPH p
   md = md.replace(
     /^(?![ \t]*[<\n]).+(\n(?![ \t]*[<\n]).+)*/gm,
-    (m) => `<p>${m.replace(/\n/g, '<br>')}</p>`
+    (match) => `<p>${match.replace(/\n/g, '<br>')}</p>`
   );
 
   // INLINE TRANSFORMATIONS hAPPENS AFTER ALL BLOCK LEVEL TRANSFORMS
 
   // IMAGES
-  md = md.replace(/!\[(.*?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm, (m, alt, src, g3, title) => {
+  md = md.replace(/!\[(.*?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm, (match, alt, src, g3, title) => {
     let props = '';
     if (title) {
       title = title
@@ -264,18 +273,21 @@ async function parseMd(md: string): Promise<string> {
         .join(' ');
     }
     // prevent "auto links and www. links" below from capturing this
-    src = src.replace(/[htpsw]/gm, (m: string) => `&#${m.charCodeAt(0)};`);
+    src = src.replace(/[htpsw]/gm, (match: string) => `&#${match.charCodeAt(0)};`);
     return `<img src="${src.trim()}" alt="${alt ? alt.trim() : ''}" title="${
       title ? title.trim() : ''
     }" ${props}>`;
   });
 
   // LINKS
-  md = md.replace(/\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim, (m, text, href, g3, title) => {
-    // prevent "auto links and www. links" below from capturing this
-    href = href.replace(/[htpsw]/gm, (m: string) => `&#${m.charCodeAt(0)};`);
-    return `<a href="${href}" title="${title ? title.trim() : ''}">${text.trim()}</a>`;
-  });
+  md = md.replace(
+    /\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim,
+    (match, text, href, g3, title) => {
+      // prevent "auto links and www. links" below from capturing this
+      href = href.replace(/[htpsw]/gm, (match: string) => `&#${match.charCodeAt(0)};`);
+      return `<a href="${href}" title="${title ? title.trim() : ''}">${text.trim()}</a>`;
+    }
+  );
 
   // auto links
   md = md.replace(/<?\b(https?:\/\/[^\s<>]+)>?/gim, '<a href="$1">$1</a>');
