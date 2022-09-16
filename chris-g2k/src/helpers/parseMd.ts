@@ -71,12 +71,12 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/\r\n?/gm, '\n');
 
   // escape secial characters
-  md = md.replace(/\\(.)/g, (match, c) => {
-    if (c === '\\') return '&#92;'; // escape backslash itself
+  md = md.replace(/\\(.)/g, (match, character) => {
+    if (character === '\\') return '&#92;'; // escape backslash itself
 
-    const escapeable = '`*-{}[]<>()#+-.!|'.includes(c); // escapeable characters
+    const escapeable = '`*{}[]<>()#+-.!|'.includes(character); // escapeable characters
 
-    if (escapeable) return `&#${c.charCodeAt(0)};`;
+    if (escapeable) return `&#${character.charCodeAt(0)};`;
 
     return match;
   });
@@ -104,7 +104,7 @@ async function parseMd(md: string): Promise<string> {
   // heavy regex action to replace alt h2 and support safari (ios)
   md = md.replace(
     /^((?: *\S.*)(?:\n *\S.*)*?)\n==+$/gm,
-    (match, g1) => `<h1>${g1.replace(/\n/g, '<br>')}</h1>`
+    (match, text) => `<h1>${text.replace(/\n/g, '<br>')}</h1>`
   );
 
   // alt heading h2
@@ -122,7 +122,7 @@ async function parseMd(md: string): Promise<string> {
   // heavy regex action to replace alt h2 and support safari (ios)
   md = md.replace(
     /^((?: *\S.*)(?:\n *\S.*)*?)\n--+$/gm,
-    (match, g1) => `<h2>${g1.replace(/\n/g, '<br>')}</h2>`
+    (match, text) => `<h2>${text.replace(/\n/g, '<br>')}</h2>`
   );
 
   // LISTS - ordered, unordered and checklist(tasks)
@@ -243,14 +243,14 @@ async function parseMd(md: string): Promise<string> {
   // BLOCKQUOTE, nesting capable through simple recursion
   md = await replaceAsync(
     md,
-    /^ *>.*(\n *[^<\s].*)*/gm, // match, auto guard against infinite recursion
+    /^ *>.*(?:\n *[^<\s].*)*/gm, // match, auto guard against infinite recursion
     // function not called if no match
     async (match) => `<blockquote>${await parseMd(match.replace(/^ *>/gm, ''))}</blockquote>`
   );
 
   // PARAGRAPH p
   md = md.replace(
-    /^(?![ \t]*[<\n]).+(\n(?![ \t]*[<\n]).+)*/gm,
+    /^(?![ \t]*[<\n]).+(?:\n(?![ \t]*[<\n]).+)*/gm,
     (match) => `<p>${match.replace(/\n/g, '<br>')}</p>`
   );
 
@@ -273,7 +273,7 @@ async function parseMd(md: string): Promise<string> {
         .join(' ');
     }
     // prevent "auto links and www. links" below from capturing this
-    src = src.replace(/[htpsw]/gm, (match: string) => `&#${match.charCodeAt(0)};`);
+    src = src.replace(/[htpsw]/g, (match: string) => `&#${match.charCodeAt(0)};`);
     return `<img src="${src.trim()}" alt="${alt ? alt.trim() : ''}" title="${
       title ? title.trim() : ''
     }" ${props}>`;
@@ -284,7 +284,7 @@ async function parseMd(md: string): Promise<string> {
     /\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim,
     (match, text, href, g3, title) => {
       // prevent "auto links and www. links" below from capturing this
-      href = href.replace(/[htpsw]/gm, (match: string) => `&#${match.charCodeAt(0)};`);
+      href = href.replace(/[htpsw]/g, (match: string) => `&#${match.charCodeAt(0)};`);
       return `<a href="${href}" title="${title ? title.trim() : ''}">${text.trim()}</a>`;
     }
   );
