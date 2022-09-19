@@ -7,12 +7,13 @@ function App() {
   const [down, setDown] = useState(0);
   const [left, setLeft] = useState(0);
 
-  const sytle = `what a \n life here is where output styles will be`;
+  const sytle = `Top: ${down}px \nLeft: ${left}px\nHeight: ${up}px\nWidth: ${right}px `;
 
   return (
     <div className="app">
       <div className="column-1">
-        <p>{sytle}</p>
+        <p style={{ color: 'green' }}> Absolute positioning </p>
+        <pre>{sytle}</pre>
       </div>
       <div className="column-2">
         <div className="outerDiv">
@@ -21,11 +22,11 @@ function App() {
       </div>
       <div className="column-3">
         <div className="controls">
-          up
+          height
           <input type="number" onChange={(e) => setUp(+e.currentTarget.value)} />
-          right
+          width
           <input type="number" onChange={(e) => setRight(+e.currentTarget.value)} />
-          down
+          top
           <input type="number" onChange={(e) => setDown(+e.currentTarget.value)} />
           left
           <input type="number" onChange={(e) => setLeft(+e.currentTarget.value)} />
