@@ -2,8 +2,8 @@ import { test, describe, expect } from 'vitest';
 
 import parseMd from '../src/helpers/parseMd';
 
-// Headings
-describe('Headings', () => {
+// Headings 1 to 6
+describe('Headings edit wow', () => {
   test("transforms '# heading 1' to '<h1>heading 1</h1>'", async () => {
     await expect(parseMd('# heading 1')).resolves.toBe('<h1>heading 1</h1>');
   });
@@ -28,6 +28,7 @@ describe('Headings', () => {
     await expect(parseMd('###### heading 6')).resolves.toBe('<h6>heading 6</h6>');
   });
 
+  // multiple headings with text formatting
   describe('with multiple headings', () => {
     test('transforms multiple headings with multiple lines and multiple headings', async () => {
       await expect(
@@ -40,7 +41,9 @@ describe('Headings', () => {
     });
   });
 
+  // heading alternate syntaxes for h1 and h2
   describe('alternative headings for h1 and h2', () => {
+    // alternate syntax for h1
     test('transforms  "heading 1\n=====" to "<h1>heading 1</h1>', async () => {
       await expect(parseMd('heading 1\n=====')).resolves.toBe('<h1>heading 1</h1>');
     });
@@ -51,13 +54,24 @@ describe('Headings', () => {
       );
     });
 
+    // alt h1 with text formattings
+    test('transforms  "heading 1\n=====" with text formatting', async () => {
+      await expect(parseMd('heading 1\n=====\n')).resolves.toBe('<h1>heading 1</h1>');
+    });
+
+    // alternate h2 syntax
     test('transforms  "heading 2\n-----" to "<h2>heading 2</h2>', async () => {
       await expect(parseMd('heading 2\n-----')).resolves.toBe('<h2>heading 2</h2>');
+    });
+
+    // alt h2 with text formattings
+    test('transforms  "heading 2\n-----" with text formatting', async () => {
+      await expect(parseMd('heading 2\n-----\n')).resolves.toBe('<h2>heading 2</h2>');
     });
   });
 });
 
-// List
+// List (ordered, unordered and task list)
 describe('Lists', () => {
   describe('Unordered', () => {
     test("transforms '- item 1' to '<ul><li>item 1</li></ul>'", async () => {
@@ -66,6 +80,13 @@ describe('Lists', () => {
     test("transforms '- item 1\n- item 2' to '<ul><li>item 1</li><li>item 2</li></ul>'", async () => {
       expect(parseMd('- item 1\n- item 2')).resolves.toBe(
         '<ul>\n<li>item 1</li>\n<li>item 2</li>\n</ul>'
+      );
+    });
+
+    // nested unordered list
+    test("transforms '- item 1\n  - item 2' to '<ul><li>item 1<ul><li>item 2</li></ul></li></ul>'", async () => {
+      expect(parseMd('- item 1\n  - item 2')).resolves.toBe(
+        '<ul>\n<li>item 1\n<ul>\n<li>item 2</li>\n</ul>\n</li>\n</ul>'
       );
     });
   });
@@ -79,6 +100,32 @@ describe('Lists', () => {
         '<ol start=1>\n<li>item 1</li>\n<li>item 2</li>\n</ol>'
       );
     });
+
+    // nested ordered list
+    test("transforms '1. item 1\n  1. item 2' to '<ol><li>item 1<ol><li>item 2</li></ol></li></ol>'", async () => {
+      expect(parseMd('1. item 1\n  1. item 2')).resolves.toBe(
+        '<ol start=1>\n<li>item 1\n<ol start=1>\n<li>item 2</li>\n</ol>\n</li>\n</ol>'
+      );
+    });
+  });
+
+  describe('Task List', () => {
+    test("transforms '- [ ] item 1' to '<ul><li><input type='checkbox' disabled> item 1</li></ul>'", async () => {
+      expect(parseMd('- [ ] item 1')).resolves.toBe(
+        '<ul>\n<li><input type="checkbox" disabled> item 1</li>\n</ul>'
+      );
+    });
+    test("transforms '- [x] item 1' to '<ul><li><input type='checkbox' disabled checked> item 1</li></ul>'", async () => {
+      expect(parseMd('- [x] item 1')).resolves.toBe(
+        '<ul>\n<li><input type="checkbox" disabled checked> item 1</li>\n</ul>'
+      );
+    });
+  });
+  // nested task list
+  test("transforms '- [ ] item 1\n  - [x] item 2' to '<ul><li><input type='checkbox' disabled> item 1<ul><li><input type='checkbox' disabled checked> item 2</li></ul></li></ul>'", async () => {
+    expect(parseMd('- [ ] item 1\n  - [x] item 2')).resolves.toBe(
+      '<ul>\n<li><input type="checkbox" disabled> item 1\n<ul>\n<li><input type="checkbox" disabled checked> item 2</li>\n</ul>\n</li>\n</ul>'
+    );
   });
 });
 
