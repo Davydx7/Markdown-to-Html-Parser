@@ -7,13 +7,17 @@ function App() {
   const [down, setDown] = useState(0);
   const [left, setLeft] = useState(0);
 
-  const sytle = `Top: ${down}px \nLeft: ${left}px\nHeight: ${up}px\nWidth: ${right}px `;
+  const absoluteStyle = `Top: ${down}px \nLeft: ${left}px\nHeight: ${up}px\nWidth: ${right}px `;
+
+  const relativeStyle = `Top: ${down}px \nLeft: ${left}px\nHeight: ${up}px\nWidth: ${right}px `;
 
   return (
     <div className="app">
       <div className="column-1">
         <p style={{ color: 'green' }}> Absolute positioning </p>
-        <pre>{sytle}</pre>
+        <pre>{absoluteStyle}</pre>
+        <p style={{ color: 'green' }}> Relative positioning </p>
+        <pre>{relativeStyle}</pre>
       </div>
       <div className="column-2">
         <div className="outerDiv">
@@ -21,6 +25,10 @@ function App() {
         </div>
       </div>
       <div className="column-3">
+        <div className="position">
+          <button>Absolute</button>
+          <button>Relative</button>
+        </div>
         <div className="controls">
           height
           <input type="number" onChange={(e) => setUp(+e.currentTarget.value)} />
