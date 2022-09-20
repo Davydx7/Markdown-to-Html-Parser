@@ -19,9 +19,10 @@
   place-items: center;
   background-color: rgb(17, 12, 36);
   border: 0.2rem solid black;
+  overflow: hidden;
 
-  .outerDiv {
-    display: block;
+  .parentElement {
+    position: relative;
     background-color: rgb(212, 212, 248);
     width: 90%;
     height: 90%;
@@ -29,13 +30,36 @@
     resize: both;
   }
 
-  .innerDiv {
-    display: inline-block;
+  .anchor {
+    position: absolute;
+    background-color: rgba(255, 0, 0, 0.274);
+    padding: 0.1rem; // to stay visible at 0 height/width
+    overflow: visible;
+    top: 8rem;
+    left: 5rem;
+  }
+
+  .pivot {
+    // display: contents;
+    position: absolute;
+    border-radius: 100%;
+    background-color: rgba(0, 255, 0, 0.274);
+    padding: 0.1rem; // to stay visible at 0 height/width
+    overflow: visible;
+    top: 8rem;
+    left: 5rem;
+  }
+
+  .childElement {
+    position: absolute;
     background-color: rgb(154, 55, 247);
-    width: 100px;
-    height: 100px;
-    padding: 1rem;
-    overflow: auto;
+    padding: 0.1rem; // to stay visible at 0 height/width
+    // width: 1rem; // overides 'right'
+    // height: 1rem; // overrides 'bottom'
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
   }
 }
 .column-3 {

@@ -20,13 +20,15 @@ function App() {
         <pre>{relativeStyle}</pre>
       </div>
       <div className="column-2">
-        <div className="outerDiv">
-          <div className="innerDiv" style={{ height: `${up}px`, width: `${right}px` }} />
+        <div className="parentElement">
+          <div className="anchor" title="anchor" style={{ height: `${up}px`, width: `${right}px` }}>
+            <div className="childElement" title="main element" />
+          </div>
         </div>
       </div>
       <div className="column-3">
         <div className="position">
-          <button>Absolute</button>
+          <button disabled>Absolute</button>
           <button>Relative</button>
         </div>
         <div className="controls">
