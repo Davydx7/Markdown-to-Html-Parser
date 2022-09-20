@@ -3,7 +3,7 @@ import { test, describe, expect } from 'vitest';
 import parseMd from '../src/helpers/parseMd';
 
 // Headings 1 to 6
-describe('Headings edit wow', () => {
+describe('Headings', () => {
   test("transforms '# heading 1' to '<h1>heading 1</h1>'", async () => {
     await expect(parseMd('# heading 1')).resolves.toBe('<h1>heading 1</h1>');
   });
