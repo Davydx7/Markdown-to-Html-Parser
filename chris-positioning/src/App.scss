@@ -13,6 +13,7 @@
   background-color: rgb(9, 8, 31);
   padding: 1rem;
 }
+
 .column-2 {
   padding: 1rem;
   display: grid;
@@ -37,31 +38,36 @@
     overflow: visible;
     top: 8rem;
     left: 5rem;
+    width: 10rem;
+    height: 10rem;
   }
 
   .pivot {
     // display: contents;
     position: absolute;
     border-radius: 100%;
-    background-color: rgba(0, 255, 0, 0.274);
-    padding: 0.1rem; // to stay visible at 0 height/width
+    padding: 0.01rem;
+    outline: 5px solid rgb(0, 255, 0);
     overflow: visible;
     top: 8rem;
     left: 5rem;
+    z-index: 10;
+    // transform: translate(-50%,-50%);
+    // width: 10rem;
+    // height: 10rem;
   }
 
   .childElement {
     position: absolute;
-    background-color: rgb(154, 55, 247);
+    background-color: rgba(154, 55, 247, 0.425);
     padding: 0.1rem; // to stay visible at 0 height/width
-    // width: 1rem; // overides 'right'
-    // height: 1rem; // overrides 'bottom'
-    top: 10%;
-    bottom: 10%;
-    left: 10%;
-    right: 10%;
+    top: -5rem;
+    left: -5rem;
+    width: 10rem; // overides 'right'
+    height: 10rem; // overrides 'bottom'
   }
 }
+
 .column-3 {
   padding: 1rem;
   background-color: rgb(9, 8, 31);

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.scss';
 
 function App() {
+  const [isAbsolute, setIsAbsolute] = useState<boolean>(true);
   const [up, setUp] = useState(0);
   const [right, setRight] = useState(0);
   const [down, setDown] = useState(0);
@@ -13,23 +14,34 @@ function App() {
 
   return (
     <div className="app">
+      {/* left output column */}
       <div className="column-1">
         <p style={{ color: 'green' }}> Absolute positioning </p>
         <pre>{absoluteStyle}</pre>
         <p style={{ color: 'green' }}> Relative positioning </p>
         <pre>{relativeStyle}</pre>
       </div>
+
+      {/* middle display column */}
       <div className="column-2">
-        <div className="parentElement">
-          <div className="anchor" title="anchor" style={{ height: `${up}px`, width: `${right}px` }}>
-            <div className="childElement" title="main element" />
+        <div className="parentElement" title="viewport">
+          <div className="anchor" title="anchor">
+            <div className="pivot" title="pivot">
+              <div className="childElement" title="positioned element" />
+            </div>
           </div>
         </div>
       </div>
+
+      {/* right input column */}
       <div className="column-3">
         <div className="position">
-          <button disabled>Absolute</button>
-          <button>Relative</button>
+          <button onClick={() => setIsAbsolute(true)} disabled={isAbsolute}>
+            Absolute
+          </button>
+          <button onClick={() => setIsAbsolute(false)} disabled={!isAbsolute}>
+            Relative
+          </button>
         </div>
         <div className="controls">
           height
