@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './App.scss';
+import AbsolutePanel from './components/AbsolutePanel';
+import RelativePanel from './components/RelativePanel';
 
 function App() {
   const [isAbsolute, setIsAbsolute] = useState<boolean>(true);
@@ -43,16 +45,7 @@ function App() {
             Relative
           </button>
         </div>
-        <div className="controls">
-          height
-          <input type="number" onChange={(e) => setUp(+e.currentTarget.value)} />
-          width
-          <input type="number" onChange={(e) => setRight(+e.currentTarget.value)} />
-          top
-          <input type="number" onChange={(e) => setDown(+e.currentTarget.value)} />
-          left
-          <input type="number" onChange={(e) => setLeft(+e.currentTarget.value)} />
-        </div>
+        {isAbsolute ? <AbsolutePanel /> : <RelativePanel />}
       </div>
     </div>
   );
