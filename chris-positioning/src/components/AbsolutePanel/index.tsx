@@ -1,28 +1,38 @@
 import { useState } from 'react';
+import './absolutePanel.scss';
 
 const AbsolutePanel: React.FC = () => {
   const [isShow, setIsShow] = useState(false);
 
   return (
-    <div className="relativePanel">
-      <span>Anchor</span>
-      <div className="anchor">
-        <span>X</span>
-        <input type="number" />
-        <span>Y</span>
-        <input type="number" />
-      </div>
-      <span>Positioning</span>
-      <div className="positioning">
-        <span>X offset:</span>
-        <input type="number" />
-        <span>Width:</span>
-        <input type="number" />
-        <span>Y offset:</span>
-        <input type="number" />
-        <span>Height:</span>
-        <input type="number" />
-      </div>
+    <div className="absolutePanel">
+      <fieldset className="anchor">
+        <legend>Anchor:</legend>
+        <label>
+          X:
+          <input id="x" type="number" min={0} max={100} />
+        </label>
+        <label>
+          Y:
+          <input id="y" type="number" min={0} max={100} />
+        </label>
+      </fieldset>
+
+      <fieldset className="positioning">
+        <legend>Positioning</legend>
+        <label>
+          X offset: <input type="number" /> px
+        </label>
+        <label>
+          Y offset: <input type="number" /> px
+        </label>
+        <label>
+          Width: <input type="number" /> px
+        </label>
+        <label>
+          Height: <input type="number" /> px
+        </label>
+      </fieldset>
     </div>
   );
 };

@@ -1,0 +1,66 @@
+.absolutePanel{
+	display: grid;
+	font-size: 1rem;
+	gap: 1rem;
+
+	// input {
+	// 	width: 5rem;
+	// }
+
+	.anchor {
+		display: flex;
+		gap: 1rem;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		width: 100%;
+
+
+		label {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+
+			input {
+				width: 100%;
+				border-radius: 0.3rem;
+				border-style: none;
+			}
+
+			input:invalid {
+				border: 1px solid red;
+			}
+		}
+
+	}
+
+	.positioning {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		width: 100%;
+
+
+		label {
+			width: 100%;
+			display: grid;
+			// flex-direction: column;
+			align-items: left;
+			gap: 0.3rem;
+
+			input {
+				width: 100%;
+				border-radius: 0.3rem;
+				border-style: none;
+			}
+
+			input:invalid {
+				border: 1px solid red;
+			}
+		}
+
+	}
+
+}

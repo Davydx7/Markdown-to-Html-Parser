@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './relativePanel.scss';
 
 const RelativePanel: React.FC = () => {
   const [isShow, setIsShow] = useState(false);
