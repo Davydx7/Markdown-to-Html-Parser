@@ -38,10 +38,10 @@ function App() {
       {/* right input column */}
       <div className="column-3">
         <div className="position">
-          <button onClick={() => setIsAbsolute(true)} disabled={isAbsolute}>
+          <button onClick={() => setIsAbsolute(true)} className={!isAbsolute ? 'selected' : ''}>
             Absolute
           </button>
-          <button onClick={() => setIsAbsolute(false)} disabled={!isAbsolute}>
+          <button onClick={() => setIsAbsolute(false)} className={isAbsolute ? 'selected' : ''}>
             Relative
           </button>
         </div>

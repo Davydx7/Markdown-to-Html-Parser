@@ -7,19 +7,20 @@ const AbsolutePanel: React.FC = () => {
   return (
     <div className="absolutePanel">
       <fieldset className="anchor">
-        <legend>Anchor:</legend>
+        <legend>. Anchors :</legend>
         <label>
-          X:
+          <strong>X</strong>
           <input id="x" type="number" min={0} max={100} />
         </label>
+        <span>%</span>
         <label>
-          Y:
+          <strong>Y</strong>
           <input id="y" type="number" min={0} max={100} />
         </label>
       </fieldset>
 
       <fieldset className="positioning">
-        <legend>Positioning</legend>
+        <legend>. Positioning :</legend>
         <label>
           X offset: <input type="number" /> px
         </label>

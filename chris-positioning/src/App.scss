@@ -74,12 +74,14 @@
   color: white;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   // overflow: hidden;
   // grid-column: 1;
 
   .position{
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
     align-items: center;
   }
 }
