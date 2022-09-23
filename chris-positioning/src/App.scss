@@ -36,10 +36,10 @@
     background-color: rgba(255, 0, 0, 0.274);
     padding: 0.1rem; // to stay visible at 0 height/width
     overflow: visible;
-    top: 8rem;
-    left: 5rem;
-    width: 10rem;
-    height: 10rem;
+    // top: 8rem;
+    // left: 5rem;
+    // width: 10rem;
+    // height: 10rem;
   }
 
   .pivot {
@@ -49,22 +49,18 @@
     padding: 0.01rem;
     outline: 5px solid rgb(0, 255, 0);
     overflow: visible;
-    top: 8rem;
-    left: 5rem;
-    z-index: 10;
-    // transform: translate(-50%,-50%);
-    // width: 10rem;
-    // height: 10rem;
+    // top: 8rem;
+    // left: 5rem;
   }
 
   .childElement {
     position: absolute;
     background-color: rgba(154, 55, 247, 0.425);
     padding: 0.1rem; // to stay visible at 0 height/width
-    top: -5rem;
-    left: -5rem;
-    width: 10rem; // overides 'right'
-    height: 10rem; // overrides 'bottom'
+    // top: -5rem;
+    // left: -5rem;
+    // width: 10rem; // overides 'right'
+    // height: 10rem; // overrides 'bottom'
   }
 }
 

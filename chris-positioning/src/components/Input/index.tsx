@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { DataContext } from '../../store/DataContext';
 
 type ValueType =
+  | 'x'
+  | 'y'
   | 'xMax'
   | 'xMin'
   | 'yMax'

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Input from '../Input';
 import './absolutePanel.scss';
 
 const AbsolutePanel: React.FC = () => {
@@ -10,28 +11,36 @@ const AbsolutePanel: React.FC = () => {
         <legend>. Anchors :</legend>
         <label>
           <strong>X</strong>
-          <input id="x" type="number" min={0} max={100} />
+          <Input value="x" />
         </label>
         <span>%</span>
         <label>
           <strong>Y</strong>
-          <input id="y" type="number" min={0} max={100} />
+          <Input value="y" />
         </label>
       </fieldset>
 
       <fieldset className="positioning">
         <legend>. Positioning :</legend>
         <label>
-          X offset: <input type="number" /> px
+          X offset:
+          <Input value="xOffset" />
+          px
         </label>
         <label>
-          Y offset: <input type="number" /> px
+          Y offset:
+          <Input value="yOffset" />
+          px
         </label>
         <label>
-          Width: <input type="number" /> px
+          Width:px
+          <Input value="width" />
+          px
         </label>
         <label>
-          Height: <input type="number" /> px
+          Height:
+          <Input value="height" />
+          px
         </label>
       </fieldset>
     </div>

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { CSSProperties, useState } from 'react';
 import './App.scss';
 import AbsolutePanel from './components/AbsolutePanel';
+import Display from './components/Display';
 import RelativePanel from './components/RelativePanel';
 
 function App() {
@@ -17,26 +18,18 @@ function App() {
   return (
     <div className="app">
       {/* left output column */}
-      <div className="column-1">
+      <aside className="column-1">
         <p style={{ color: 'green' }}> Absolute positioning </p>
         <pre>{absoluteStyle}</pre>
         <p style={{ color: 'green' }}> Relative positioning </p>
         <pre>{relativeStyle}</pre>
-      </div>
+      </aside>
 
       {/* middle display column */}
-      <div className="column-2">
-        <div className="parentElement" title="viewport">
-          <div className="anchor" title="anchor">
-            <div className="pivot" title="pivot">
-              <div className="childElement" title="positioned element" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <Display isAbsolute={isAbsolute} />
 
       {/* right input column */}
-      <div className="column-3">
+      <aside className="column-3">
         <div className="position">
           <button onClick={() => setIsAbsolute(true)} className={!isAbsolute ? 'selected' : ''}>
             Absolute
@@ -46,7 +39,7 @@ function App() {
           </button>
         </div>
         {isAbsolute ? <AbsolutePanel /> : <RelativePanel />}
-      </div>
+      </aside>
     </div>
   );
 }
