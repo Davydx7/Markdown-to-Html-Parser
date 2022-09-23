@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { DataContext } from '../../store/DataContext';
 import './relativePanel.scss';
 
 const RelativePanel: React.FC = () => {
-  const [isShow, setIsShow] = useState(false);
+  const { data, setValue } = useContext(DataContext)!;
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  //   setData({ ...data, xMin: +e.currentTarget.value });
 
   return (
     <div className="relativePanel">
@@ -11,15 +14,23 @@ const RelativePanel: React.FC = () => {
         <strong>X</strong>
         <strong>Y</strong>
         <span>%</span>
-        <input id="xMin" type="number" value={50} min={0} max={100} />
+        <input
+          id="xMin"
+          type="number"
+          onChange={setValue}
+          value={data.xMin}
+          // min={0}
+          // max={100}
+        />
         <span>-- min --</span>
-        <input id="yMin" type="number" value={50} min={0} max={100} />
+        <input id="yMin" type="number" value={data.yMin} onChange={setValue} min={0} max={100} />
+        {/*
         <span>%</span>
         <span>%</span>
-        <input id="xMax" type="number" value={75} min={0} max={100} />
+        <input id="xMax" type="number" defaultValue={75} min={0} max={100} />
         <span>-- max --</span>
-        <input id="yMax" type="number" value={75} min={0} max={100} />
-        <span>%</span>
+        <input id="yMax" type="number" defaultValue={75} min={0} max={100} />
+        <span>%</span> */}
       </fieldset>
 
       <fieldset className="positioning">

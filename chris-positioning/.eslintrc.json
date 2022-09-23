@@ -58,6 +58,6 @@
     "no-unused-expressions": 1,
     "no-param-reassign": 0,
     "no-plusplus": 0,
-    "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}]
+    "sort-keys": ["warn", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2, "allowLineSeparatedGroups": true}]
   }
 }
