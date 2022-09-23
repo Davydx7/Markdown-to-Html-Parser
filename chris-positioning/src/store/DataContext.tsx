@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, SetStateAction, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 
 type DataStateType = {
   xMax: number;
@@ -21,7 +21,6 @@ type DataContextType = {
   data: DataStateType;
   setValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
-// type DataContextType = { data: DataStateType; setData: Dispatch<SetStateAction<DataStateType>> };
 
 export const DataContext = createContext<DataContextType | null>(null);
 DataContext.displayName = 'DataContext';
@@ -46,10 +45,12 @@ const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
   const [data, setData] = useState<DataStateType>(dataObj);
 
-  const setValue = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setData({ ...data, [e.currentTarget.id]: +e.currentTarget.value });
+  const store = useMemo(() => {
+    const setValue = (e: React.ChangeEvent<HTMLInputElement>) =>
+      setData({ ...data, [e.currentTarget.id]: +e.currentTarget.value });
 
-  const store = useMemo(() => ({ data, setValue }), [data]);
+    return { data, setValue };
+  }, [data]);
 
   return <DataContext.Provider value={store}>{children}</DataContext.Provider>;
 };
