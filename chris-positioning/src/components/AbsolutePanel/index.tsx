@@ -33,7 +33,7 @@ const AbsolutePanel: React.FC = () => {
           px
         </label>
         <label>
-          Width:px
+          Width:
           <Input value="width" />
           px
         </label>
@@ -41,6 +41,19 @@ const AbsolutePanel: React.FC = () => {
           Height:
           <Input value="height" />
           px
+        </label>
+      </fieldset>
+
+      <fieldset className="pivot">
+        <legend>. Pivot :</legend>
+        <label>
+          X:
+          <Input value="xPivot" />
+        </label>
+        <span>%</span>
+        <label>
+          Y:
+          <Input value="yPivot" />
         </label>
       </fieldset>
     </div>

@@ -4,6 +4,14 @@ type DataStateType = {
   x: number;
   y: number;
 
+  height: number;
+  width: number;
+  xOffset: number;
+  yOffset: number;
+
+  xPivot: number;
+  yPivot: number;
+
   xMax: number;
   xMin: number;
   yMax: number;
@@ -13,11 +21,6 @@ type DataStateType = {
   left: number;
   right: number;
   top: number;
-
-  height: number;
-  width: number;
-  xOffset: number;
-  yOffset: number;
 };
 
 type DataContextType = {
@@ -31,22 +34,26 @@ DataContext.displayName = 'DataContext';
 const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const dataObj: DataStateType = {
     // absolute anchors
-    x: 0,
-    y: 0,
+    x: 10,
+    y: 10,
 
     // absolute positioning
-    height: 0,
-    width: 0,
-    xOffset: 0,
-    yOffset: 0,
+    height: 100,
+    width: 100,
+    xOffset: 100,
+    yOffset: 100,
+
+    // pivot
+    xPivot: 50,
+    yPivot: 50,
 
     // relative anchors
-    xMax: 0,
-    xMin: 0,
-    yMax: 0,
-    yMin: 0,
+    xMax: 75,
+    xMin: 25,
+    yMax: 75,
+    yMin: 25,
 
-    // relative positioning
+    // relative margins
     bottom: 0,
     left: 0,
     right: 0,

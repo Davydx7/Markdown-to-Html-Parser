@@ -1,41 +1,79 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useContext } from 'react';
+import { DataContext } from '../../store/DataContext';
+
+import './display.scss';
 
 const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
-  const anchor: CSSProperties = {
-    position: 'absolute',
+  const {
+    data: {
+      x,
+      y,
+      xMax,
+      xMin,
+      yMax,
+      yMin,
+      xPivot,
+      yPivot,
+      bottom,
+      left,
+      right,
+      top,
+      height,
+      width,
+      xOffset,
+      yOffset
+    },
+    setValue
+  } = useContext(DataContext)!;
 
-    bottom: '25%',
-    left: '25%',
-    right: '25%',
-    top: '25%'
-    // height: `${up}px`,
-    // width: `${right}px`,
-  };
+  const anchor: CSSProperties = isAbsolute
+    ? {
+        position: 'absolute',
+
+        left: `${x}%`,
+        top: `${y}%`,
+
+        borderRadius: '100%',
+        outline: '0.5rem solid red',
+        padding: '0.01rem'
+      }
+    : {
+        position: 'absolute',
+
+        bottom: `${100 - yMax}%`,
+        left: `${xMin}%`,
+        right: `${100 - xMax}%`,
+        top: `${yMin}%`
+      };
 
   const pivot: CSSProperties = {
-    display: 'contents'
-    // position: 'absolute',
-    // bottom: '75%',
-    // left: '25%',
-    // right: '75%',
-    // top: '25%'
-    // height: `${up}px`,
-    // width: `${right}px`,
-  };
-
-  const child: CSSProperties = {
+    display: isAbsolute ? 'block' : 'contents',
     position: 'absolute',
 
-    bottom: '25%',
-    left: '25%',
-    right: '25%',
-    top: '25%'
-
-    // height: `${up}px`,
-    // width: `${right}px`,
+    left: `${xOffset}px`,
+    top: `${yOffset}px`
   };
+
+  const child: CSSProperties = isAbsolute
+    ? {
+        position: 'absolute',
+
+        height: `${height}px`,
+        width: `${width}px`,
+
+        transform: `translate(-${xPivot}%, -${yPivot}%)` // pivot center
+      }
+    : {
+        position: 'absolute',
+
+        bottom: `${bottom}px`,
+        left: `${left}px`,
+        right: `${right}px`,
+        top: `${top}px`
+      };
+
   return (
-    <main className="column-2">
+    <main className="display">
       <div className="parentElement" title="viewport">
         <div className="anchor" title="anchor" style={anchor}>
           <div className="pivot" title="pivot" style={pivot}>

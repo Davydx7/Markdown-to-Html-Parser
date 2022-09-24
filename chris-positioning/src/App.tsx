@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from 'react';
+import { useState } from 'react';
 import './App.scss';
 import AbsolutePanel from './components/AbsolutePanel';
 import Display from './components/Display';

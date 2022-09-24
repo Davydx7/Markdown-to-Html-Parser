@@ -9,12 +9,12 @@ const RelativePanel: React.FC = () => (
       <strong>Y</strong>
       <span>%</span>
       <Input value="xMin" />
-      <span>-- min --</span>
+      <span>-min-</span>
       <Input value="yMin" />
       <span>%</span>
       <span>%</span>
       <Input value="xMax" />
-      <span>-- max --</span>
+      <span>-max-</span>
       <Input value="yMax" />
       <span>%</span>
     </fieldset>

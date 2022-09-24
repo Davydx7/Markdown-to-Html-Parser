@@ -8,6 +8,8 @@ type ValueType =
   | 'xMin'
   | 'yMax'
   | 'yMin'
+  | 'xPivot'
+  | 'yPivot'
   | 'bottom'
   | 'left'
   | 'right'

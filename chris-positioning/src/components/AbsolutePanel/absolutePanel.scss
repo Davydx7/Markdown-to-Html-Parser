@@ -72,4 +72,35 @@
 
 	}
 
+	.pivot {
+		display: flex;
+		align-items: flex-end;
+		gap: 1rem;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		width: 100%;
+
+
+		label {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.5rem;
+
+			input {
+				width: 100%;
+				border-radius: 0.3rem;
+				border-style: none;
+				font-size: 1rem;
+				padding: 0.3rem;
+			}
+
+			input:invalid {
+				outline: 1px solid red;
+			}
+		}
+
+	}
+
 }
