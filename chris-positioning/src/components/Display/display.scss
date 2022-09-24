@@ -11,13 +11,13 @@
     background-color: rgb(212, 212, 248);
     width: 90%;
     height: 90%;
-    overflow: hidden;
+    overflow: visible;
     resize: both;
   }
 
   .anchor {
     position: absolute;
-    background-color: rgba(255, 0, 0, 0.562);
+    background-color: rgba(255, 0, 0, 0.5);
     padding: 0.1rem; // to stay visible at 0 height/width
     overflow: visible;
   }
@@ -34,7 +34,7 @@
 
   .childElement {
     position: absolute;
-    background-color: rgba(154, 55, 247, 0.753);
+    background-color: rgba(154, 55, 247, 0.781);
     padding: 0.02rem; // to stay visible at 0 height/width
   }
 }

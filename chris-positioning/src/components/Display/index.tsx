@@ -22,8 +22,7 @@ const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
       width,
       xOffset,
       yOffset
-    },
-    setValue
+    }
   } = useContext(DataContext)!;
 
   const anchor: CSSProperties = isAbsolute
@@ -71,6 +70,21 @@ const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
         right: `${right}px`,
         top: `${top}px`
       };
+
+  // CSS Equivalence for Relative Positioning
+  // const test: CSSProperties = {
+  //   position: 'absolute',
+
+  //   left: `${xMin}%`,
+  //   right: `${100 - xMax}%`,
+  //   top: `${yMin}%`,
+  //   bottom: `${100 - yMax}%`,
+
+  //   marginLeft: `${left}px`,
+  //   marginRight: `${right}px`,
+  //   marginTop: `${top}px`,
+  //   marginBottom: `${bottom}px`
+  // };
 
   return (
     <main className="display">
