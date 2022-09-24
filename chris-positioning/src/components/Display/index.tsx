@@ -60,7 +60,7 @@ const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
         height: `${height}px`,
         width: `${width}px`,
 
-        transform: `translate(-${xPivot}%, -${yPivot}%)` // pivot center
+        transform: `translate(${-xPivot}%, ${-yPivot}%)` // pivot center
       }
     : {
         position: 'absolute',
@@ -71,8 +71,21 @@ const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
         top: `${top}px`
       };
 
+  // CSS Equivalence for Absolute Positioning
+  // const absolute: CSSProperties = {
+  //   position: 'absolute',
+
+  //   left: `calc(${x}% + ${xOffset}px)`,
+  //   top: `calc(${y}% + ${yOffset}px)`,
+
+  //   height: `${height}px`,
+  //   width: `${width}px`,
+
+  //   transform: `translate(${-xPivot}%, ${-yPivot}%)`
+  // };
+
   // CSS Equivalence for Relative Positioning
-  // const test: CSSProperties = {
+  // const relative: CSSProperties = {
   //   position: 'absolute',
 
   //   left: `${xMin}%`,

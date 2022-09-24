@@ -6,7 +6,7 @@ import OutputPanel from './components/OutputPanel';
 import RelativePanel from './components/RelativePanel';
 
 function App() {
-  const [isAbsolute, setIsAbsolute] = useState<boolean>(true);
+  const [isAbsolute, setIsAbsolute] = useState<boolean>(false);
 
   return (
     <div className="app">

@@ -22,13 +22,23 @@ const OutputPanel: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
       width,
       xOffset,
       yOffset
-    },
-    setValue
+    }
   } = useContext(DataContext)!;
 
   const Parent = `position: relative;`;
 
-  const element = `position: absolute;
+  const absolute = `position: absolute;
+
+left: calc(${x}% + ${xOffset}px);
+top: calc(${y}% + ${yOffset}px);
+
+height: ${height}px;
+width: ${width}px;
+
+translate: ${-xPivot}%, ${-yPivot}%;
+`;
+
+  const relative = `position: absolute;
 
 left: ${xMin}%;
 right: ${100 - xMax}%;
@@ -40,16 +50,18 @@ margin-right: ${right}px;
 margin-top: ${top}px;
 margin-bottom: ${bottom}px;`;
 
+  const element = isAbsolute ? absolute : relative;
+
   return (
     <aside className="outputPanel">
       <span>CSS Equivalence</span>
       <div className="parent">
         <p style={{ color: 'rgb(16, 236, 101)' }}> Parent </p>
-        <pre>{Parent}</pre>
+        <div className="code">{Parent}</div>
       </div>
       <div className="element">
         <p style={{ color: 'rgb(16, 236, 101)' }}> Element </p>
-        <pre>{element}</pre>
+        <div className="code">{element}</div>
       </div>
     </aside>
   );

@@ -1,6 +1,13 @@
 .outputPanel {
-  // grid-column: 1;
+  display: flex;
+	flex-direction: column;
+	gap: 2rem;
   background-color: rgb(3, 2, 19);
   padding: 1rem;
 	font-size: 1.3rem;
+
+	.code {
+		white-space: pre;
+		font-family: monospace;
+	}
 }
