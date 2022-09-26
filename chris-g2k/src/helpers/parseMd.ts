@@ -1,74 +1,61 @@
+import DOMPurify from 'dompurify'; // mitigate against XSS attacks
 import Prism from 'prismjs'; // code syntax highlight library
 import replaceAsync from './replaceAsync';
-
-// lists (unordered, ordered, task)
-function lists(match: string) {
-  const leadingSpaces: number[] = []; // spaces each before list item
-  const nestDepths: [string, number][] = []; // array of [ul/ol, depth(leading space for the element)]
-
-  let result = ''; // final html output
-
-  match.split('\n').forEach((line, i) => {
-    leadingSpaces.push(line.length - line.trimStart().length);
-    const pushIn = leadingSpaces[i] - leadingSpaces[i - 1]; // leading space diff
-
-    const isOl = !!line.match(/^ *\d/);
-    const lineNum = isOl ? `start=${line.match(/\d+/)![0]}` : '';
-    const el = isOl ? 'ol' : 'ul';
-
-    // task checkbox
-    const isChecked = !!line.match(/^ *(?:\d+\.|[-+*]) +\[x\] /i);
-    const isUnchecked = !!line.match(/^ *(?:\d+\.|[-+*]) +\[ \] /i);
-
-    // checbox
-    const input =
-      isChecked || isUnchecked
-        ? `<input type="checkbox" disabled class="item-checkbox" ${isChecked ? 'checked' : ''}>`
-        : '';
-
-    const classBox = isChecked || isUnchecked ? 'class="checkbox-item"' : '';
-
-    // regex to trim off markdown syntax from list text
-    const reg = /^ *(?:\d+\.|[-+*]) +(?:\[[ x]\])?/i;
-
-    if (Number.isNaN(pushIn)) {
-      // firs line
-      nestDepths.push([el, leadingSpaces[i - 1]]);
-      result += `<${el} class='top' ${lineNum}>\n<li ${classBox}>${input} ${line
-        .replace(reg, '')
-        .trim()}`;
-    } else if (pushIn === 0 || pushIn === 1) {
-      // no nest change
-      result += `</li>\n<li ${classBox}>${input} ${line.replace(reg, '').trim()}`;
-    } else if (pushIn > 1) {
-      // nestIn
-      nestDepths.push([el, leadingSpaces[i - 1]]);
-
-      result += `\n<${el} ${lineNum}>\n<li ${classBox}>${input} ${line.replace(reg, '').trim()}`;
-    } else if (pushIn < 0) {
-      // nestOut
-      // pop out of nest as many times as we need to
-      while (nestDepths.length > 1 && leadingSpaces[i] - nestDepths[nestDepths.length - 1][1] < 2) {
-        result += `</li>\n</${nestDepths[nestDepths.length - 1][0]}>`;
-        nestDepths.pop();
-      }
-
-      result += `</li>\n<li ${classBox}>${input} ${line.replace(reg, '').trim()}`;
-    }
-  });
-
-  // close all open nests
-  for (let i = nestDepths.length - 1; i >= 0; i--) {
-    result += `</li>\n</${nestDepths[i][0]}>`;
-  }
-
-  return result;
-}
+import lists from './lists';
 
 // asynchroneous for the case of fetching non-default language syntax highlighting module
 async function parseMd(md: string): Promise<string> {
   // mitigate difference in windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
+
+  // PRE with syntax highlighting
+  md = await replaceAsync(
+    md,
+    /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm,
+    async (match, g1, lang, code) => {
+      lang = lang.trim().toLowerCase(); // guard against case sensitivity
+      let highlightedCode = '';
+
+      // for default languages confiuqred in prismjs (vite.config.ts)
+      if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
+        highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+        // stop formating markdown syntaxes and escaping characters in <pre>
+        highlightedCode = highlightedCode
+          .replace(/[()*_^~`\\]/gm, (match) => `&#${match.charCodeAt(0)};`)
+          .replace('==', '&#61;&#61;'); // guard against <mark> ==highlighting==
+
+        return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+      }
+
+      // else import(bundled to fetch) the language and highlight
+      await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
+        .then(() => {
+          highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+          // stop formating markdown syntaxes and escaping characters in <pre>
+          highlightedCode = highlightedCode
+            .replace(/[()*_^~`\\]/gm, (match) => `&#${match.charCodeAt(0)};`)
+            .replace('==', '&#61;&#61;'); // guard against <mark> ==highlighting==
+        })
+        .catch((e) => {
+          highlightedCode = code;
+        });
+
+      return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+    }
+  );
+
+  // escape secial characters
+  md = md.replace(/\\(.)/g, (match, character) => {
+    if (character === '\\') return '&#92;'; // escape backslash itself
+
+    const escapeable = '`*{}[]<>()#+-.!|~=^_'.includes(character); // escapeable characters
+
+    if (escapeable) return `&#${character.charCodeAt(0)};`;
+
+    return match;
+  });
 
   // HEADINGS
   md = md.replace(/^ *#{6} +(.+)/gm, '<h6>$1</h6>');
@@ -145,57 +132,6 @@ async function parseMd(md: string): Promise<string> {
 
   // HR - horizontal rule
   md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
-
-  // PRE with syntax highlighting
-  md = await replaceAsync(
-    md,
-    /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm,
-    async (match, g1, lang, code) => {
-      lang = lang.trim().toLowerCase(); // guard against case sensitivity
-      let highlightedCode = '';
-
-      // for default languages confiuqred in prismjs (vite.config.ts)
-      if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
-        highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
-
-        // stop formating markdown syntaxes and escaping characters in <pre>
-        highlightedCode = highlightedCode.replace(
-          /[()*_^~`\\]/gm,
-          (match) => `&#${match.charCodeAt(0)};`
-        );
-
-        return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
-      }
-
-      // else import(bundled to fetch) the language and highlight
-      await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
-        .then(() => {
-          highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
-
-          // stop formating markdown syntaxes and escaping characters in <pre>
-          highlightedCode = highlightedCode.replace(
-            /[()*_^~`\\]/gm,
-            (match) => `&#${match.charCodeAt(0)};`
-          );
-        })
-        .catch((e) => {
-          highlightedCode = code;
-        });
-
-      return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
-    }
-  );
-
-  // escape secial characters
-  md = md.replace(/\\(.)/g, (match, character) => {
-    if (character === '\\') return '&#92;'; // escape backslash itself
-
-    const escapeable = '`*{}[]<>()#+-.!|~=^_'.includes(character); // escapeable characters
-
-    if (escapeable) return `&#${character.charCodeAt(0)};`;
-
-    return match;
-  });
 
   // TABLES
   md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (match) => {
@@ -317,6 +253,9 @@ async function parseMd(md: string): Promise<string> {
 
   // Highlighting
   md = md.replace(/==([^=\n].*?)==/gim, '<mark>$1</mark>');
+
+  // purify html important for security
+  md = DOMPurify.sanitize(md);
 
   return md;
 }
