@@ -70,17 +70,6 @@ async function parseMd(md: string): Promise<string> {
   // mitigate difference in windows and linux line endings
   md = md.replace(/\r\n?/gm, '\n');
 
-  // escape secial characters
-  md = md.replace(/\\(.)/g, (match, character) => {
-    if (character === '\\') return '&#92;'; // escape backslash itself
-
-    const escapeable = '`*{}[]<>()#+-.!|'.includes(character); // escapeable characters
-
-    if (escapeable) return `&#${character.charCodeAt(0)};`;
-
-    return match;
-  });
-
   // HEADINGS
   md = md.replace(/^ *#{6} +(.+)/gm, '<h6>$1</h6>');
   md = md.replace(/^ *#{5} +(.+)/gm, '<h5>$1</h5>');
@@ -154,6 +143,60 @@ async function parseMd(md: string): Promise<string> {
         .replace(/^ *: (.*)/gm, '<dd>$1</dd>')}\n</dl>`
   );
 
+  // HR - horizontal rule
+  md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
+
+  // PRE with syntax highlighting
+  md = await replaceAsync(
+    md,
+    /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm,
+    async (match, g1, lang, code) => {
+      lang = lang.trim().toLowerCase(); // guard against case sensitivity
+      let highlightedCode = '';
+
+      // for default languages confiuqred in prismjs (vite.config.ts)
+      if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
+        highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+        // stop formating markdown syntaxes and escaping characters in <pre>
+        highlightedCode = highlightedCode.replace(
+          /[()*_^~`\\]/gm,
+          (match) => `&#${match.charCodeAt(0)};`
+        );
+
+        return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+      }
+
+      // else import(bundled to fetch) the language and highlight
+      await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
+        .then(() => {
+          highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
+
+          // stop formating markdown syntaxes and escaping characters in <pre>
+          highlightedCode = highlightedCode.replace(
+            /[()*_^~`\\]/gm,
+            (match) => `&#${match.charCodeAt(0)};`
+          );
+        })
+        .catch((e) => {
+          highlightedCode = code;
+        });
+
+      return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
+    }
+  );
+
+  // escape secial characters
+  md = md.replace(/\\(.)/g, (match, character) => {
+    if (character === '\\') return '&#92;'; // escape backslash itself
+
+    const escapeable = '`*{}[]<>()#+-.!|~=^_'.includes(character); // escapeable characters
+
+    if (escapeable) return `&#${character.charCodeAt(0)};`;
+
+    return match;
+  });
+
   // TABLES
   md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (match) => {
     const rows = match.split('\n'); // all table row
@@ -197,49 +240,6 @@ async function parseMd(md: string): Promise<string> {
     return `<table>\n<thead>\n<tr>\n${headingRow}\n</tr>\n</thead>\n\n<tbody>\n${body}\n</tbody>\n</table>`;
   });
 
-  // HR - horizontal rule
-  md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
-
-  // PRE with syntax highlighting
-  md = await replaceAsync(
-    md,
-    /^ *(`{3,})(.*)\n((?:.*\n)*?) *\1/gm,
-    async (match, g1, lang, code) => {
-      lang = lang.trim().toLowerCase(); // guard against case sensitivity
-      let highlightedCode = '';
-
-      // for default languages confiuqred in prismjs (vite.config.ts)
-      if (/typescript|javascript|css|markdown|cpp|html|json/.test(lang)) {
-        highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
-
-        // stop formating markdown syntaxes in <pre>
-        highlightedCode = highlightedCode.replace(
-          /[()*_^~`]/gm,
-          (match) => `&#${match.charCodeAt(0)};`
-        );
-
-        return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
-      }
-
-      // else import(bundled to fetch) the language and highlight
-      await import(`../../node_modules/prismjs/components/prism-${lang}.js`)
-        .then(() => {
-          highlightedCode = Prism.highlight(code, Prism.languages[lang], lang);
-
-          // stop formating markdown syntaxes in <pre>
-          highlightedCode = highlightedCode.replace(
-            /[()*_^~`]/gm,
-            (match) => `&#${match.charCodeAt(0)};`
-          );
-        })
-        .catch((e) => {
-          highlightedCode = code;
-        });
-
-      return `<pre class="lang-${lang}">${highlightedCode.replace(/\n/g, '<br>')}</pre>`;
-    }
-  );
-
   // BLOCKQUOTE, nesting capable through simple recursion
   md = await replaceAsync(
     md,
@@ -255,6 +255,13 @@ async function parseMd(md: string): Promise<string> {
   );
 
   // INLINE TRANSFORMATIONS hAPPENS AFTER ALL BLOCK LEVEL TRANSFORMS
+
+  // code
+  md = md.replace(
+    /`([^`\n]+)`/gim,
+    (match, code) =>
+      `<code>${code.replace(/[()*_^~=]/gm, (m: string) => `&#${m.charCodeAt(0)};`)}</code>`
+  );
 
   // IMAGES
   md = md.replace(/!\[(.*?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gm, (match, alt, src, g3, title) => {
@@ -310,9 +317,6 @@ async function parseMd(md: string): Promise<string> {
 
   // Highlighting
   md = md.replace(/==([^=\n].*?)==/gim, '<mark>$1</mark>');
-
-  // code
-  md = md.replace(/`([^`\n]+)`/gim, '<code>$1</code>');
 
   return md;
 }

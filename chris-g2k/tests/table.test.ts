@@ -5,12 +5,12 @@ import parseMd from '../src/helpers/parseMd';
 // Tables
 describe('Tables', () => {
   test('transforms table without alignment', async () => {
-    expect(parseMd('| header 1 | header 2 |\n|---|---|\n| item 1 | item 2 |')).resolves.toBe(
+    await expect(parseMd('| header 1 | header 2 |\n|---|---|\n| item 1 | item 2 |')).resolves.toBe(
       '<table>\n<thead>\n<tr>\n<th>header 1</th><th>header 2</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>item 1</td><td>item 2</td>\n</tr>\n</tbody>\n</table>'
     );
   });
   test('transforms table with alignments', async () => {
-    expect(
+    await expect(
       parseMd(
         '| header 1 | header 2 | header 3 |\n|:---|:---:|----:|\n| item 1 | item 2 | item 3 |'
       )

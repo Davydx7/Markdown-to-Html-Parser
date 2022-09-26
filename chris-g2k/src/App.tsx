@@ -176,8 +176,11 @@ A \`Code\` 🧨 between texts
 \`\`\`javascript
 // sample script
 let x = 5;
-var y = 'it works';
+var y = 'it works *like* /123';
 const z = [\`arr\`, 4, {}, true]
+
+y = y.replace(/\\*/, '');
+y = y.replace(/\\/\\d+/, 'abc');
 
 console.log(z.length); //4
 
@@ -185,7 +188,7 @@ function add (a, b) {
   return a + b;
 }
 
-add(x,y);  // '5it works'
+add(8,7);  // '5it works'
 \`\`\`
 `}
         </textarea>
