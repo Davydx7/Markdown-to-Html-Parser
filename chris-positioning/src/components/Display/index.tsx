@@ -38,7 +38,7 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
   } = useContext(DataContext)!;
 
   const anchor: CSSProperties =
-    isUnity && isAbsolute
+    isUnity && isAbsolute // Unity Absolute
       ? {
           position: 'absolute',
 
@@ -49,7 +49,7 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
           outline: '0.5rem solid red',
           padding: '0.01rem'
         }
-      : isUnity && !isAbsolute
+      : isUnity && !isAbsolute // Unity Relative
       ? {
           position: 'absolute',
 
@@ -58,11 +58,12 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
           right: `${100 - xMax}%`,
           top: `${yMin}%`
         }
-      : !isUnity && isAbsolute
+      : !isUnity && isAbsolute // CSS Absolute
       ? {
           display: 'contents'
         }
       : {
+          // CSS Relative
           position: 'absolute',
 
           bottom: `${CssInsetBottom}%`,
@@ -80,7 +81,7 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
   };
 
   const child: CSSProperties =
-    isUnity && isAbsolute
+    isUnity && isAbsolute // Unity Absolute
       ? {
           position: 'absolute',
 
@@ -89,7 +90,7 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
 
           transform: `translate(${-xPivot}%, ${-yPivot}%)` // pivot center
         }
-      : isUnity && !isAbsolute
+      : isUnity && !isAbsolute // Unity Relative
       ? {
           position: 'absolute',
 
@@ -98,7 +99,7 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
           right: `${right}px`,
           top: `${top}px`
         }
-      : !isUnity && isAbsolute
+      : !isUnity && isAbsolute // CSS Absolute
       ? {
           position: 'absolute',
 
@@ -109,6 +110,7 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
           width: `${CssWidth}px`
         }
       : {
+          // CSS Relative
           position: 'absolute',
 
           bottom: `${CssMarginBottom}px`,

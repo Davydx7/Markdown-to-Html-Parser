@@ -3,7 +3,7 @@ import './cssPanel.scss';
 
 const CssPanel: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => (
   <div className="cssPanel">
-    {isAbsolute ? (
+    {isAbsolute ? ( // if absolute, show absolute input fields
       <>
         <fieldset className="cssFieldset">
           <legend>. OFFSETS :</legend>
@@ -26,6 +26,7 @@ const CssPanel: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => (
         </fieldset>
       </>
     ) : (
+      // else, show relative input fields
       <>
         <fieldset className="cssFieldset">
           <legend>. INSETS :</legend>

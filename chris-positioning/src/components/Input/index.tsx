@@ -1,35 +1,7 @@
 import { useContext } from 'react';
-import { DataContext } from '../../store/DataContext';
+import { DataContext, DataStateType } from '../../store/DataContext';
 
-type ValueType =
-  | 'x'
-  | 'y'
-  | 'xMax'
-  | 'xMin'
-  | 'yMax'
-  | 'yMin'
-  | 'xPivot'
-  | 'yPivot'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'top'
-  | 'height'
-  | 'width'
-  | 'xOffset'
-  | 'yOffset'
-  | 'CssInsetTop'
-  | 'CssInsetRight'
-  | 'CssInsetBottom'
-  | 'CssInsetLeft'
-  | 'CssMarginTop'
-  | 'CssMarginRight'
-  | 'CssMarginBottom'
-  | 'CssMarginLeft'
-  | 'CssOffsetLeft'
-  | 'CssOffsetTop'
-  | 'CssWidth'
-  | 'CssHeight';
+type ValueType = keyof DataStateType;
 
 const Input: React.FC<{ value: ValueType }> = ({ value }) => {
   const { data, setValue } = useContext(DataContext)!;
