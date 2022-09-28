@@ -1,6 +1,6 @@
 import React, { createContext, useMemo, useState } from 'react';
 
-type DataStateType = {
+export type DataStateType = {
   x: number;
   y: number;
 
@@ -21,6 +21,22 @@ type DataStateType = {
   left: number;
   right: number;
   top: number;
+
+  CssInsetTop: number;
+  CssInsetRight: number;
+  CssInsetLeft: number;
+  CssInsetBottom: number;
+
+  CssMarginTop: number;
+  CssMarginRight: number;
+  CssMarginLeft: number;
+  CssMarginBottom: number;
+
+  CssOffsetLeft: number;
+  CssOffsetTop: number;
+
+  CssWidth: number;
+  CssHeight: number;
 };
 
 type DataContextType = {
@@ -33,31 +49,51 @@ DataContext.displayName = 'DataContext';
 
 const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const dataObj: DataStateType = {
-    // absolute anchors
+    // Unity absolute anchors
     x: 10,
     y: 10,
 
-    // absolute positioning
+    // Unity absolute positioning
     height: 100,
     width: 100,
     xOffset: 100,
     yOffset: 100,
 
-    // pivot
+    // Unity pivot
     xPivot: 50,
     yPivot: 50,
 
-    // relative anchors
+    // Unity relative anchors
     xMax: 75,
     xMin: 25,
     yMax: 75,
     yMin: 25,
 
-    // relative margins
+    // Unity relative margins
     bottom: 0,
     left: 0,
     right: 0,
-    top: 0
+    top: 0,
+
+    // Css relative Insets
+    CssInsetTop: 25,
+    CssInsetRight: 25,
+    CssInsetLeft: 25,
+    CssInsetBottom: 25,
+
+    // Css Margins
+    CssMarginTop: 0,
+    CssMarginRight: 0,
+    CssMarginLeft: 0,
+    CssMarginBottom: 0,
+
+    // Css Absolute Offsets
+    CssOffsetLeft: 100,
+    CssOffsetTop: 100,
+
+    // Css Absolute dimensions
+    CssWidth: 100,
+    CssHeight: 100
   };
 
   const [data, setData] = useState<DataStateType>(dataObj);

@@ -1,32 +1,44 @@
 import { useState } from 'react';
 import './App.scss';
-import AbsolutePanel from './components/AbsolutePanel';
+import UnityPanel from './components/UnityPanel';
 import Display from './components/Display';
 import OutputPanel from './components/OutputPanel';
-import RelativePanel from './components/RelativePanel';
+import CssPanel from './components/CssPanel';
 
 function App() {
   const [isAbsolute, setIsAbsolute] = useState<boolean>(false);
+  const [isUnity, setIsUnity] = useState<boolean>(true);
 
   return (
     <div className="app">
       {/* left output column */}
-      <OutputPanel isAbsolute={isAbsolute} />
+      <OutputPanel isAbsolute={isAbsolute} isUnity={isUnity} />
 
       {/* middle display column */}
-      <Display isAbsolute={isAbsolute} />
+      <Display isAbsolute={isAbsolute} isUnity={isUnity} />
 
       {/* right input column */}
       <aside className="column-3">
+        <span>Input Type</span>
+        <div className="mode">
+          <button onClick={() => setIsUnity(true)} className={isUnity ? 'selected' : ''}>
+            Unity
+          </button>
+          <button onClick={() => setIsUnity(false)} className={isUnity ? '' : 'selected'}>
+            CSS
+          </button>
+        </div>
+        <hr />
         <div className="position">
-          <button onClick={() => setIsAbsolute(true)} className={!isAbsolute ? 'selected' : ''}>
+          <button onClick={() => setIsAbsolute(true)} className={isAbsolute ? 'selected' : ''}>
             Absolute
           </button>
-          <button onClick={() => setIsAbsolute(false)} className={isAbsolute ? 'selected' : ''}>
+          <button onClick={() => setIsAbsolute(false)} className={isAbsolute ? '' : 'selected'}>
             Relative
           </button>
         </div>
-        {isAbsolute ? <AbsolutePanel /> : <RelativePanel />}
+        <hr />
+        {isUnity ? <UnityPanel isAbsolute={isAbsolute} /> : <CssPanel isAbsolute={isAbsolute} />}
       </aside>
     </div>
   );

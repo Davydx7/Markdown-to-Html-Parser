@@ -3,7 +3,7 @@ import { DataContext } from '../../store/DataContext';
 
 import './display.scss';
 
-const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
+const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolute, isUnity }) => {
   const {
     data: {
       x,
@@ -21,55 +21,103 @@ const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
       height,
       width,
       xOffset,
-      yOffset
+      yOffset,
+      CssInsetTop,
+      CssInsetRight,
+      CssInsetLeft,
+      CssInsetBottom,
+      CssMarginTop,
+      CssMarginRight,
+      CssMarginLeft,
+      CssMarginBottom,
+      CssOffsetLeft,
+      CssOffsetTop,
+      CssWidth,
+      CssHeight
     }
   } = useContext(DataContext)!;
 
-  const anchor: CSSProperties = isAbsolute
-    ? {
-        position: 'absolute',
+  const anchor: CSSProperties =
+    isUnity && isAbsolute
+      ? {
+          position: 'absolute',
 
-        left: `${x}%`,
-        top: `${y}%`,
+          left: `${x}%`,
+          top: `${y}%`,
 
-        borderRadius: '100%',
-        outline: '0.5rem solid red',
-        padding: '0.01rem'
-      }
-    : {
-        position: 'absolute',
+          borderRadius: '100%',
+          outline: '0.5rem solid red',
+          padding: '0.01rem'
+        }
+      : isUnity && !isAbsolute
+      ? {
+          position: 'absolute',
 
-        bottom: `${100 - yMax}%`,
-        left: `${xMin}%`,
-        right: `${100 - xMax}%`,
-        top: `${yMin}%`
-      };
+          bottom: `${100 - yMax}%`,
+          left: `${xMin}%`,
+          right: `${100 - xMax}%`,
+          top: `${yMin}%`
+        }
+      : !isUnity && isAbsolute
+      ? {
+          display: 'contents'
+        }
+      : {
+          position: 'absolute',
+
+          bottom: `${CssInsetBottom}%`,
+          left: `${CssInsetLeft}%`,
+          right: `${CssInsetRight}%`,
+          top: `${CssInsetTop}%`
+        };
 
   const pivot: CSSProperties = {
-    display: isAbsolute ? 'block' : 'contents',
+    display: !isUnity || !isAbsolute ? 'contents' : 'block',
     position: 'absolute',
 
     left: `${xOffset}px`,
     top: `${yOffset}px`
   };
 
-  const child: CSSProperties = isAbsolute
-    ? {
-        position: 'absolute',
+  const child: CSSProperties =
+    isUnity && isAbsolute
+      ? {
+          position: 'absolute',
 
-        height: `${height}px`,
-        width: `${width}px`,
+          height: `${height}px`,
+          width: `${width}px`,
 
-        transform: `translate(${-xPivot}%, ${-yPivot}%)` // pivot center
-      }
-    : {
-        position: 'absolute',
+          transform: `translate(${-xPivot}%, ${-yPivot}%)` // pivot center
+        }
+      : isUnity && !isAbsolute
+      ? {
+          position: 'absolute',
 
-        bottom: `${bottom}px`,
-        left: `${left}px`,
-        right: `${right}px`,
-        top: `${top}px`
-      };
+          bottom: `${bottom}px`,
+          left: `${left}px`,
+          right: `${right}px`,
+          top: `${top}px`
+        }
+      : !isUnity && isAbsolute
+      ? {
+          position: 'absolute',
+
+          top: `${CssOffsetTop}px`,
+          left: `${CssOffsetLeft}px`,
+
+          height: `${CssHeight}px`,
+          width: `${CssWidth}px`
+        }
+      : {
+          position: 'absolute',
+
+          top: `${CssMarginTop}px`,
+          right: `${CssMarginRight}px`,
+          bottom: `${CssMarginBottom}px`,
+          left: `${CssMarginLeft}px`
+        };
+
+  // React style Object for Element CSS
 
   // CSS Equivalence for Absolute Positioning
   // const absolute: CSSProperties = {
@@ -81,7 +129,7 @@ const Display: React.FC<{ isAbsolute: boolean }> = ({ isAbsolute }) => {
   //   height: `${height}px`,
   //   width: `${width}px`,
 
-  //   transform: `translate(${-xPivot}%, ${-yPivot}%)`
+  //  translate: `${-xPivot}%, ${-yPivot}%`
   // };
 
   // CSS Equivalence for Relative Positioning

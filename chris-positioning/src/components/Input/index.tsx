@@ -17,7 +17,19 @@ type ValueType =
   | 'height'
   | 'width'
   | 'xOffset'
-  | 'yOffset';
+  | 'yOffset'
+  | 'CssInsetTop'
+  | 'CssInsetRight'
+  | 'CssInsetBottom'
+  | 'CssInsetLeft'
+  | 'CssMarginTop'
+  | 'CssMarginRight'
+  | 'CssMarginBottom'
+  | 'CssMarginLeft'
+  | 'CssOffsetLeft'
+  | 'CssOffsetTop'
+  | 'CssWidth'
+  | 'CssHeight';
 
 const Input: React.FC<{ value: ValueType }> = ({ value }) => {
   const { data, setValue } = useContext(DataContext)!;

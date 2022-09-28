@@ -1,4 +1,4 @@
-.relativePanel{
+.cssPanel{
 	display: grid;
 	font-size: 1rem;
 	gap: 1rem;
@@ -43,7 +43,7 @@
 
 	}
 
-	.positioning {
+	.margins{
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		column-gap: 1.5rem;
@@ -64,6 +64,35 @@
 			input {
 				grid-column: 1;
 				width: 100%;
+				border-radius: 0.3rem;
+				border-style: none;
+				font-size: 1rem;
+			  padding: 0.3rem;
+			}
+
+			input:invalid {
+				outline: 1px solid red;
+			}
+		}
+
+	}
+
+	.cssFieldset{
+		display: grid;
+		row-gap: 1rem;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		width: 100%;
+
+
+		label {
+			width: 100%;
+			display: flex;
+			gap: 0.5rem;
+
+			input {
+				width: 50%;
+				margin-left: auto;
 				border-radius: 0.3rem;
 				border-style: none;
 				font-size: 1rem;
