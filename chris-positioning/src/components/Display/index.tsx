@@ -102,8 +102,8 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
       ? {
           position: 'absolute',
 
-          top: `${CssOffsetTop}px`,
           left: `${CssOffsetLeft}px`,
+          top: `${CssOffsetTop}px`,
 
           height: `${CssHeight}px`,
           width: `${CssWidth}px`
@@ -111,10 +111,10 @@ const Display: React.FC<{ isAbsolute: boolean; isUnity: boolean }> = ({ isAbsolu
       : {
           position: 'absolute',
 
-          top: `${CssMarginTop}px`,
-          right: `${CssMarginRight}px`,
           bottom: `${CssMarginBottom}px`,
-          left: `${CssMarginLeft}px`
+          left: `${CssMarginLeft}px`,
+          right: `${CssMarginRight}px`,
+          top: `${CssMarginTop}px`
         };
 
   // React style Object for Element CSS

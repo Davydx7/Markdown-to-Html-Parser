@@ -76,24 +76,24 @@ const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     top: 0,
 
     // Css relative Insets
-    CssInsetTop: 25,
-    CssInsetRight: 25,
-    CssInsetLeft: 25,
     CssInsetBottom: 25,
+    CssInsetLeft: 25,
+    CssInsetRight: 25,
+    CssInsetTop: 25,
 
     // Css Margins
-    CssMarginTop: 0,
-    CssMarginRight: 0,
-    CssMarginLeft: 0,
     CssMarginBottom: 0,
+    CssMarginLeft: 0,
+    CssMarginRight: 0,
+    CssMarginTop: 0,
 
     // Css Absolute Offsets
     CssOffsetLeft: 100,
     CssOffsetTop: 100,
 
     // Css Absolute dimensions
-    CssWidth: 100,
-    CssHeight: 100
+    CssHeight: 100,
+    CssWidth: 100
   };
 
   const [data, setData] = useState<DataStateType>(dataObj);
