@@ -1,4 +1,6 @@
-import { test, describe, expect } from 'vitest';
+// @vitest-environment jsdom
+
+import { test, describe, expect, vi } from 'vitest';
 
 import parseMd from '../src/helpers/parseMd';
 
@@ -53,16 +55,16 @@ describe('Blockquotes', () => {
       )
     ).resolves.toBe(
       `<blockquote><p>blockquote</p>
-<blockquote><ul class='top' >
-<li > nested list in blockqoute</li>
-<li > item 2
-<ul >
-<li > nests
-<ol start=1>
-<li > numbered nest</li>
-<li > in blockquote
-<ul >
-<li class="checkbox-item"><input type="checkbox" disabled class="item-checkbox" checked> check list nesting</li>
+<blockquote><ul class="top">
+<li> nested list in blockqoute</li>
+<li> item 2
+<ul>
+<li> nests
+<ol start="1">
+<li> numbered nest</li>
+<li> in blockquote
+<ul>
+<li class="checkbox-item"><input checked="" class="item-checkbox" disabled="" type="checkbox"> check list nesting</li>
 </ul></li>
 </ol></li>
 </ul></li>
@@ -81,7 +83,7 @@ describe('Blockquotes', () => {
 > \`\`\``
       )
     ).resolves.toBe(
-      `<blockquote><pre class="lang-javascript"> <span class="token keyword">let</span> works <span class="token operator">=</span> <span class="token string">'it Works!'</span><br> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">&#40;</span><span class="token string">'awesome'</span><span class="token punctuation">&#41;</span><br></pre></blockquote>`
+      `<blockquote><pre class="lang-javascript"> <span class="token keyword">let</span> works <span class="token operator">=</span> <span class="token string">'it Works!'</span><br> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'awesome'</span><span class="token punctuation">)</span><br></pre></blockquote>`
     );
   });
 

@@ -215,8 +215,10 @@ async function parseMd(md: string): Promise<string> {
         })
         .join(' ');
     }
-    // prevent "auto links and www. links" below from capturing this
-    src = src.replace(/[htpsw]/g, (match: string) => `&#${match.charCodeAt(0)};`);
+    // prevent "auto links and www. links" and text formatting in src, alt and title
+    src = src.replace(/[htpsw()*_^~=]/g, (match: string) => `&#${match.charCodeAt(0)};`);
+    alt = alt?.replace(/[htpsw()*_^~=]/g, (match: string) => `&#${match.charCodeAt(0)};`);
+    title = title?.replace(/[htpsw()*_^~=]/g, (match: string) => `&#${match.charCodeAt(0)};`);
     return `<img src="${src.trim()}" alt="${alt ? alt.trim() : ''}" title="${
       title ? title.trim() : ''
     }" ${props}>`;
@@ -226,14 +228,18 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(
     /\[(.+?)\]\( *(\S+?)(?: (['"])(.*?)\3)? *\)/gim,
     (match, text, href, g3, title) => {
-      // prevent "auto links and www. links" below from capturing this
-      href = href.replace(/[htpsw]/g, (match: string) => `&#${match.charCodeAt(0)};`);
+      // prevent "auto links and www. links" and text formatting in src, alt and title
+      href = href.replace(/[htpsw()*_^~=]/g, (match: string) => `&#${match.charCodeAt(0)};`);
+      title = title?.replace(/[htpsw()*_^~=]/g, (match: string) => `&#${match.charCodeAt(0)};`);
       return `<a href="${href}" title="${title ? title.trim() : ''}">${text.trim()}</a>`;
     }
   );
 
   // auto links
-  md = md.replace(/<?\b(https?:\/\/[^\s<>]+)>?/gim, '<a href="$1">$1</a>');
+  md = md.replace(
+    /<?\b(https?:\/\/[^\s<>]+)>?/gim,
+    (m, link) => `<a href="${link.replace(/w/, '&#119;')}">${link.replace(/w/, '&#119;')}</a>`
+  );
   // www. links
   md = md.replace(/<?\b(www\.[^\s<>]+)>?/gim, '<a href="http://$1">$1</a>');
   // Emails

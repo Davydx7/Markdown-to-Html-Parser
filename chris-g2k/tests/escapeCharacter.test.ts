@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { test, describe, expect } from 'vitest';
 
 import parseMd from '../src/helpers/parseMd';
@@ -7,9 +9,7 @@ describe('Escape character', () => {
   test('escape all escapeable characters', async () => {
     await expect(
       parseMd(
-        `\\\\
-
-\\\`
+        `\\\`
 
 \\*
 
@@ -34,37 +34,35 @@ describe('Escape character', () => {
 \\|`
       )
     ).resolves.toBe(
-      `<p>&#92;</p>
+      `<p>\`</p>
 
-<p>&#96;</p>
+<p>*</p>
 
-<p>&#42;</p>
+<p>{ }</p>
 
-<p>&#123; &#125;</p>
+<p>[ ]</p>
 
-<p>&#91; &#93;</p>
+<p>&lt; &gt;</p>
 
-<p>&#60; &#62;</p>
+<p>( )</p>
 
-<p>&#40; &#41;</p>
+<p>#</p>
 
-<p>&#35;</p>
+<p>+</p>
 
-<p>&#43;</p>
+<p>-</p>
 
-<p>&#45;</p>
+<p>.</p>
 
-<p>&#46;</p>
+<p>!</p>
 
-<p>&#33;</p>
-
-<p>&#124;</p>`
+<p>|</p>`
     );
   });
 
   // escape the backslash itself
   test('escape backslash itself', async () => {
-    await expect(parseMd('\\\\')).resolves.toBe('<p>&#92;</p>');
+    await expect(parseMd('\\\\')).resolves.toBe('<p>\\</p>');
   });
 
   // doesn't escape letters
@@ -87,6 +85,6 @@ describe('Escape character', () => {
 
   // escape characters in code
   test('escape characters in code', async () => {
-    await expect(parseMd('`\\\\`')).resolves.toBe('<p><code>&#92;</code></p>');
+    await expect(parseMd('`\\*code\\*`')).resolves.toBe('<p><code>*code*</code></p>');
   });
 });

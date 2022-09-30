@@ -26,7 +26,7 @@ function lists(match: string) {
     const classBox = isChecked || isUnchecked ? 'class="checkbox-item"' : '';
 
     // regex to trim off markdown syntax from list text
-    const reg = /^ *(?:\d+\.|[-+*]) +(?:\[[ x]\])?/i;
+    const reg = /^ *(?:\d+\.|[-+*]) +(?:\[[ x]\] +)?/i;
 
     if (Number.isNaN(pushIn)) {
       // firs line
