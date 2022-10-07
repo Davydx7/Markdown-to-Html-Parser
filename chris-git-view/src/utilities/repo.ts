@@ -1,12 +1,16 @@
-function repo (): object {
-	const createCommit = undefined;
-	const repoObject = {
-		file: 'strings',
-		createCommit: () => 'void',
-		createPullRequest: () => 'void'
+class GitRepo {
+	public commits: object[]
+	public branches: object[]
+	public currentBranch: object
+	public author: string
+
+	constructor () {
+		this.author = ''
+		this.branches= []
+		this.currentBranch= {}
+		this.commits= []
 	}
 
-	return repoObject
 }
 
-export default repo;
+export default GitRepo;
