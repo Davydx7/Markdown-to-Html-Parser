@@ -7,12 +7,17 @@ module.exports = {
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    project: './tsconfig.json'
   },
   plugins: ['react', 'prettier'],
   rules: {
     'prettier/prettier': ['error'],
     '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'warn'
+    '@typescript-eslint/explicit-function-return-type': 'warn',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-implied-eval': 'off',
+    'no-new-func': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off'
   }
 };

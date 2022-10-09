@@ -1,9 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import './App.css';
+import { Gitgraph } from '@gitgraph/react';
+import { createGitgraph } from '@gitgraph/js';
 
-function App() {
+function App(): JSX.Element {
   const [count, setCount] = useState(0);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref.current !== null) {
+      const gitgraph = createGitgraph(ref.current);
+
+      const master = gitgraph.branch('master');
+      master.commit('Initial commit');
+
+      const develop = gitgraph.branch('develop');
+      develop.commit('Add TypeScript');
+
+      const aFeature = gitgraph.branch('a-feature');
+      aFeature.commit('Make it work').commit('Make it right').commit('Make it fast');
+
+      develop.merge(aFeature);
+      develop.commit('Prepare v1');
+
+      master.merge(develop).tag('v1.0.0');
+    }
+  }, []);
+
+  const func = Function(
+    'gitgraph',
+    `const master = gitgraph.branch('master');
+  master.commit('Initial commit');
+  const feature = master.branch('workesss');
+  feature.commit('Add cool feature');
+  master.commit('Release 1.0.0');`
+  );
 
   return (
     <div className="App">
@@ -15,14 +47,8 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <div ref={ref}></div>
+      <Gitgraph>{func as any}</Gitgraph>
     </div>
   );
 }

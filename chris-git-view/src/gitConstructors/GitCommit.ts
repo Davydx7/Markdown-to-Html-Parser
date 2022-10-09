@@ -14,16 +14,18 @@ class GitCommit {
   public branches: object[];
   public author: object;
   public tags: object[];
+  public commitName: string;
 
   public subject?: string;
   public body?: string;
   public hash?: string;
   public parents?: string[];
 
-  constructor(branch: GitBranch) {
+  constructor(branch: GitBranch, commitName: string) {
     this.author = {};
     this.branches = [];
     this.tags = [];
+    this.commitName = commitName;
 
     this.branches.push(branch);
   }

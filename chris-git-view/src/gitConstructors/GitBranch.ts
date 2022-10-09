@@ -14,9 +14,9 @@ class GitBranch {
     this._gitRepo = gitRepo;
   }
 
-  public createCommit() {
+  public createCommit(name: string) {
     // commit
-    const newCommit = new GitCommit(this);
+    const newCommit = new GitCommit(this, name);
     this.commits.push(newCommit);
     return this;
   }
