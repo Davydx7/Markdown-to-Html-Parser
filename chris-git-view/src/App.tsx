@@ -4,6 +4,7 @@ import './App.css';
 import { Gitgraph } from '@gitgraph/react';
 import { createGitgraph } from '@gitgraph/js';
 import { useRepoStore } from './controllers/repoStore';
+import useTestStore from './controllers/testStore';
 
 function App(): JSX.Element {
   const [count, setCount] = useState(0);
@@ -31,24 +32,57 @@ function App(): JSX.Element {
     }
   }, []);
 
-  const func = Function(
-    'gitgraph',
-    `const master = gitgraph.branch('master');
-  master.commit('Initial commit');
-  const feature = master.branch('workesss');
-  feature.commit('Add cool feature');
-  master.commit('Release 1.0.0');`
-  );
+  // const func = Function(
+  //   'gitgraph',
+  //   `const master = gitgraph.branch('master');
+  // master.commit('Initial commit');
+  // const feature = master.branch('workesss');
+  // feature.commit('Add cool feature');
+  // master.commit('Release 1.0.0');`
+  // );
+
+  const { obj, unrelated, setObj, setUnrelated } = useTestStore((state) => state);
 
   return (
     <div className="App">
       <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <span>{obj.test}</span>
+
+        <div>
+          <button
+            onClick={() =>
+              setObj({
+                test: 'newOfficialTestString',
+                setTest: (tes: string) => {
+                  alert('actually working');
+                }
+              })
+            }>
+            official Zustand set Obj
+          </button>
+          <button
+            onClick={() =>
+              setObj({
+                test: 'another Official',
+                setTest: (test: string) => {
+                  alert('actually working too');
+                  // this.test = 'thefuck';
+                }
+              })
+            }>
+            official Zustand set Obj
+          </button>
+        </div>
+        <hr />
+        <div>
+          <button
+            onClick={() => {
+              obj.setTest('newUNOFFICIALTestString');
+              setUnrelated();
+            }}>
+            UNOFFICIAL
+          </button>
+        </div>
       </div>
       <div>
         <button onClick={() => createRepo('myRepo')}>create repo</button>
@@ -56,7 +90,7 @@ function App(): JSX.Element {
         <button onClick={() => createCommit('commit')}>commit</button>
       </div>
       <div ref={ref}></div>
-      <Gitgraph>{func as any}</Gitgraph>
+      {/* <Gitgraph>{func as any}</Gitgraph> */}
     </div>
   );
 }

@@ -11,6 +11,8 @@ interface GitRepoStore {
   repoGraph: any;
   branchGraph: any;
 
+  repoGraphString: string;
+
   refDiv?: HTMLDivElement | null;
   setRefDiv?: (ref: HTMLDivElement) => void;
   createRepo: (name: string) => void;
@@ -26,10 +28,12 @@ export const useRepoStore = create<GitRepoStore>((set, get) => ({
   repoGraph: '',
   branchGraph: '',
 
+  repoGraphString: '',
+
   createRepo: (name: string) => {
     const repo = new GitRepo(name);
-
     const repoGraph = createGitgraph(get().refDiv!);
+
     set({ gitRepo: repo });
     set({ repoGraph });
   },
@@ -38,6 +42,9 @@ export const useRepoStore = create<GitRepoStore>((set, get) => ({
     if (get().gitRepo !== null) {
       const branch = get().gitRepo!.createBranch(name);
       const branchGraph = get().repoGraph.branch(name);
+
+      get().repoGraphString.concat(`const ${name} = gitgraph.branch('${name}');`);
+
       set({ gitBranch: branch });
       set({ branchGraph });
     }

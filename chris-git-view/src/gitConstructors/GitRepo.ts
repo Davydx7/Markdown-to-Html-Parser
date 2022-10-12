@@ -5,7 +5,7 @@ import GitTag from './GitTag';
 class GitRepo {
   public commits: GitCommit[];
   public branches: Map<string, GitBranch>;
-  public currentBranch: GitBranch;
+  public currentBranch: GitBranch | null;
   public author: object;
   public tags: GitTag[];
   public repoName: string;
@@ -14,14 +14,12 @@ class GitRepo {
     this.repoName = repoName;
     this.author = {};
     this.branches = new Map();
-    this.currentBranch = new GitBranch('master', this);
+    this.currentBranch = null;
     this.commits = [];
     this.tags = [];
-
-    this.branches.set('master', this.currentBranch);
   }
 
-  public createBranch(branchName: string = 'master') {
+  public createBranch(branchName: string = 'master'): GitBranch {
     // createBranch
     const branch = new GitBranch(branchName, this);
     this.branches.set(branchName, branch);

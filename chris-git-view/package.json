@@ -32,6 +32,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.8",
     "prettier": "^2.7.1",
+    "simple-zustand-devtools": "^1.1.0",
     "typescript": "*",
     "vite": "^3.1.0"
   }
