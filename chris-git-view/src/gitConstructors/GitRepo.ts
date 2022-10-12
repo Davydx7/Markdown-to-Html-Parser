@@ -9,6 +9,7 @@ class GitRepo {
   public author: object;
   public tags: GitTag[];
   public repoName: string;
+  public graphFunctionString: string;
 
   constructor(repoName: string) {
     this.repoName = repoName;
@@ -17,24 +18,35 @@ class GitRepo {
     this.currentBranch = null;
     this.commits = [];
     this.tags = [];
+    this.graphFunctionString = '';
   }
 
-  public createBranch(branchName: string = 'master'): GitBranch {
+  public createBranch(branchName: string = 'master'): GitBranch | undefined {
     // createBranch
-    const branch = new GitBranch(branchName, this);
-    this.branches.set(branchName, branch);
 
-    this.currentBranch = branch;
+    if (this.currentBranch != null) {
+      this.currentBranch.createBranch(branchName);
+    } else {
+      const branch = new GitBranch(branchName, this);
+      this.branches.set(branchName, branch);
 
-    return branch;
+      this.currentBranch = branch;
+
+      this.graphFunctionString += `const ${branchName} = gitgraph.branch("${branchName}");`;
+
+      return branch;
+    }
+  }
+
+  public commit(name: string): void {
+    // commit
+    if (this.currentBranch != null) {
+      this.currentBranch.createCommit(name);
+    }
   }
 
   public checkoutBranch() {
     // checkoutBranch
-  }
-
-  public commit() {
-    // commit
   }
 
   // public push () {

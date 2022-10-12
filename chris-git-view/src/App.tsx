@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import reactLogo from './assets/react.svg';
 import './App.css';
 import { Gitgraph } from '@gitgraph/react';
-import { createGitgraph } from '@gitgraph/js';
 import { useRepoStore } from './controllers/repoStore';
 import useTestStore from './controllers/testStore';
 
+import { faker } from '@faker-js/faker';
+
 function App(): JSX.Element {
-  const [count, setCount] = useState(0);
+  const [graphString, setGraphString] = useState<string>('');
+  const [showGraph, setShowGraph] = useState<boolean>(false);
+
   const ref = useRef<HTMLDivElement>(null);
-  const { createRepo, createBranch, createCommit, setRefDiv } = useRepoStore((state) => state);
+  const { setGitRepo, setRefDiv, gitRepo } = useRepoStore((state) => state);
 
   useEffect(() => {
     if (ref.current !== null) {
@@ -32,14 +34,9 @@ function App(): JSX.Element {
     }
   }, []);
 
-  // const func = Function(
-  //   'gitgraph',
-  //   `const master = gitgraph.branch('master');
-  // master.commit('Initial commit');
-  // const feature = master.branch('workesss');
-  // feature.commit('Add cool feature');
-  // master.commit('Release 1.0.0');`
-  // );
+  const func = Function('gitgraph', `${graphString}`);
+
+  console.log(graphString);
 
   const { obj, unrelated, setObj, setUnrelated } = useTestStore((state) => state);
 
@@ -47,50 +44,16 @@ function App(): JSX.Element {
     <div className="App">
       <div>
         <span>{obj.test}</span>
-
-        <div>
-          <button
-            onClick={() =>
-              setObj({
-                test: 'newOfficialTestString',
-                setTest: (tes: string) => {
-                  alert('actually working');
-                }
-              })
-            }>
-            official Zustand set Obj
-          </button>
-          <button
-            onClick={() =>
-              setObj({
-                test: 'another Official',
-                setTest: (test: string) => {
-                  alert('actually working too');
-                  // this.test = 'thefuck';
-                }
-              })
-            }>
-            official Zustand set Obj
-          </button>
-        </div>
-        <hr />
-        <div>
-          <button
-            onClick={() => {
-              obj.setTest('newUNOFFICIALTestString');
-              setUnrelated();
-            }}>
-            UNOFFICIAL
-          </button>
-        </div>
       </div>
       <div>
-        <button onClick={() => createRepo('myRepo')}>create repo</button>
-        <button onClick={() => createBranch('myBranch')}>create branch</button>
-        <button onClick={() => createCommit('commit')}>commit</button>
+        <button onClick={() => setGitRepo('myRepo')}>create repo</button>
+        <button onClick={() => gitRepo?.createBranch(faker.lorem.word())}>create branch</button>
+        <button onClick={() => gitRepo?.commit('commit')}>commit</button>
+        <button onClick={() => setGraphString(gitRepo!.graphFunctionString)}>DrawGraph</button>
+        <button onClick={() => setShowGraph(!showGraph)}>toggle Graph</button>
       </div>
       <div ref={ref}></div>
-      {/* <Gitgraph>{func as any}</Gitgraph> */}
+      {showGraph && <Gitgraph>{func as any}</Gitgraph>}
     </div>
   );
 }
