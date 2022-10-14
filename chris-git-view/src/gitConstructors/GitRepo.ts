@@ -1,11 +1,13 @@
 import GitBranch from './GitBranch';
 import GitCommit from './GitCommit';
+import GitPullRequest from './GitPullRequest';
 import GitTag from './GitTag';
 
 class GitRepo {
   public commits: GitCommit[];
   public branches: Map<string, GitBranch>;
   public currentBranch: GitBranch | null;
+  public pullRequests: GitPullRequest[];
   public author: object;
   public tags: GitTag[];
   public repoName: string;
@@ -16,6 +18,7 @@ class GitRepo {
     this.author = {};
     this.branches = new Map();
     this.currentBranch = null;
+    this.pullRequests = [];
     this.commits = [];
     this.tags = [];
     this.graphFunctionString = '';

@@ -1,5 +1,6 @@
 import GitCommit from './GitCommit';
 import GitRepo from './GitRepo';
+import GitPullRequest from './GitPullRequest';
 
 class GitBranch {
   public commits: GitCommit[];
@@ -42,8 +43,21 @@ class GitBranch {
     // merge
   }
 
+  public checkout() {
+    // checkout this branch
+    this._gitRepo.currentBranch = this;
+    this._gitRepo.graphFunctionString += `${this.branchName}.checkout();`;
+  }
+
   public rebase() {
     // rebase
+  }
+
+  public pullRequest(otherBranch: GitBranch) {
+    // rebase
+    const pullRequest = new GitPullRequest(this, otherBranch);
+
+    this._gitRepo.pullRequests.push(pullRequest);
   }
 
   public delete() {
