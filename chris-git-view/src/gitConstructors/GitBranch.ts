@@ -75,10 +75,6 @@ class GitBranch {
   getAuthor() {
     // getAuthor
   }
-
-  getCurrentBranch() {
-    // getCurrentBranch
-  }
 }
 
 export default GitBranch;
