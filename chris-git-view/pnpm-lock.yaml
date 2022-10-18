@@ -20,6 +20,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-promise: ^6.0.0
   eslint-plugin-react: ^7.31.8
+  highlight.js: ^11.6.0
   prettier: ^2.7.1
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -34,6 +35,7 @@ dependencies:
   '@typescript-eslint/parser': 5.39.0_z4bbprzjrhnsfa24uvmcbu7f5q
   diff: 5.1.0
   diff2html: 3.4.19
+  highlight.js: 11.6.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   zustand: 4.1.2_react@18.2.0
@@ -1681,7 +1683,6 @@ packages:
     engines: {node: '>=12.0.0'}
     requiresBuild: true
     dev: false
-    optional: true
 
   /hogan.js/3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}

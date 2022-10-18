@@ -2,22 +2,33 @@ import GitCommit from './GitCommit';
 import GitRepo from './GitRepo';
 import GitPullRequest from './GitPullRequest';
 
+export interface File {
+  name: string;
+  type: string;
+  content: string;
+  lastModified: Date;
+}
+
 class GitBranch {
   public commits: GitCommit[];
   public author: object;
   public branchName: string;
   public _gitRepo: GitRepo;
+  public file: File;
+  public index: File;
 
-  constructor(name: string, gitRepo: GitRepo) {
+  constructor(name: string, gitRepo: GitRepo, file: File) {
     this.author = {};
     this.commits = [];
     this.branchName = name;
     this._gitRepo = gitRepo;
+    this.file = file;
+    this.index = file;
   }
 
   public createBranch(branchName: string = 'master'): GitBranch {
     // createBranch
-    const branch = new GitBranch(branchName, this._gitRepo);
+    const branch = new GitBranch(branchName, this._gitRepo, this.file);
     this._gitRepo.branches.set(branchName, branch);
 
     this._gitRepo.currentBranch = branch;
@@ -29,7 +40,7 @@ class GitBranch {
 
   public createCommit(name: string) {
     // commit
-    const newCommit = new GitCommit(this, name);
+    const newCommit = new GitCommit(this, name, this.index);
     this.commits.push(newCommit);
 
     this._gitRepo.graphFunctionString += `${this.branchName}.commit("${name}");`;
@@ -38,6 +49,15 @@ class GitBranch {
 
     return this;
   }
+
+  public add() {
+    // add
+    this.index = this.file;
+  }
+
+  // public stash () {
+  // 	// stash
+  // }
 
   public merge() {
     // merge

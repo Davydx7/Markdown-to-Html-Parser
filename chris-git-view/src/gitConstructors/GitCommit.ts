@@ -1,4 +1,4 @@
-import GitBranch from './GitBranch';
+import GitBranch, { File } from './GitBranch';
 
 interface GitCommitOptions {
   branches: object[];
@@ -15,19 +15,29 @@ class GitCommit {
   public author: object;
   public tags: object[];
   public commitName: string;
+  public file: File;
 
   public subject?: string;
   public body?: string;
   public hash?: string;
   public parents?: string[];
 
-  constructor(branch: GitBranch, commitName: string) {
+  constructor(branch: GitBranch, commitName: string, file: File) {
     this.author = {};
     this.branches = [];
     this.tags = [];
     this.commitName = commitName;
+    this.file = file;
 
     this.branches.push(branch);
+  }
+
+  public addBranch(branch: GitBranch): void {
+    this.branches.push(branch);
+  }
+
+  public fileChanged(): void {
+    // fileChanged
   }
 }
 

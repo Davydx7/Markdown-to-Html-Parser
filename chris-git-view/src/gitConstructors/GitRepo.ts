@@ -30,7 +30,12 @@ class GitRepo {
     if (this.currentBranch != null) {
       this.currentBranch.createBranch(branchName);
     } else {
-      const branch = new GitBranch(branchName, this);
+      const branch = new GitBranch(branchName, this, {
+        name: 'file',
+        type: 'html',
+        content: '<h1>Hello World</h1>',
+        lastModified: new Date()
+      });
       this.branches.set(branchName, branch);
 
       this.currentBranch = branch;
