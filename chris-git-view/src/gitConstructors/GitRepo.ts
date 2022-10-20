@@ -81,14 +81,6 @@ class GitRepo {
   // 	// rebase
   // }
 
-  // public stash () {
-  // 	// stash
-  // }
-
-  // public add () {
-  // 	// add
-  // }
-
   // public status () {
   // 	// status
   // }
@@ -96,12 +88,15 @@ class GitRepo {
   // public diff () {
   // 	// diff
   // }
+
   // public tag () {
   // 	// tag
   // }
+
   // public remote () {
   // 	// remote
   // }
+
   // public remove () {
   // 	// remove
   // }
