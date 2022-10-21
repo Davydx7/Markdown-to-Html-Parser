@@ -13,13 +13,13 @@
   "dependencies": {
     "@gitgraph/js": "^1.4.0",
     "@gitgraph/react": "^1.6.0",
-    "@tanstack/react-location": "^3.7.4",
     "@typescript-eslint/parser": "^5.0.0",
     "diff": "^5.1.0",
     "diff2html": "^3.4.19",
     "highlight.js": "^11.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.2",
     "zustand": "^4.1.2"
   },
   "devDependencies": {

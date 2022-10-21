@@ -10,6 +10,9 @@ import { faker } from '@faker-js/faker';
 import { Diff2HtmlUI } from 'diff2html/lib/ui/js/diff2html-ui-slim.js';
 import 'highlight.js/styles/github.css';
 import 'diff2html/bundles/css/diff2html.min.css';
+import Sidebar from './components/panels/Sidebar';
+import Header from './components/panels/Header';
+import Main from './components/panels/Main';
 
 function App(): JSX.Element {
   const [graphString, setGraphString] = useState<string>('');
@@ -61,7 +64,7 @@ function App(): JSX.Element {
 
   return (
     <div className="App">
-      <div>
+      {/* <div>
         <span>{obj.test}</span>
       </div>
       <div>
@@ -71,7 +74,7 @@ function App(): JSX.Element {
         <button onClick={() => setGraphString(gitRepo!.graphFunctionString)}>DrawGraph</button>
         <button onClick={() => setShowGraph(!showGraph)}>toggle Graph</button>
       </div>
-      {showGraph && <Gitgraph>{func as any}</Gitgraph>}
+      {showGraph && <Gitgraph>{func as any}</Gitgraph>} */}
       {/* <div
         dangerouslySetInnerHTML={{ __html: outputHtml }}
         style={{
@@ -80,7 +83,7 @@ function App(): JSX.Element {
           backgroundColor: 'white',
           padding: '1rem'
         }}></div> */}
-      <br></br>
+      {/* <br></br>
       <br></br>
       <div style={{ whiteSpace: 'pre-wrap', textAlign: 'start' }}>{Diffed}</div>
       <div
@@ -90,10 +93,10 @@ function App(): JSX.Element {
           color: 'darkgreen',
           backgroundColor: 'white',
           padding: '1rem'
-        }}></div>
-      {/* <Header />
-        <SidePanel/>
-        <Main /> */}
+        }}></div> */}
+      <Header />
+      <Sidebar />
+      <Main />
     </div>
   );
 }
