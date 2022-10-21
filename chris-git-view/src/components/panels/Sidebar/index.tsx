@@ -1,4 +1,6 @@
+import './sidebar.scss';
+
 const Sidebar = () => {
-  return <div>Sidebar</div>;
+  return <nav className="sidebar">Sidebar</nav>;
 };
 export default Sidebar;

@@ -1,4 +1,5 @@
+import './main.scss';
 const Main = () => {
-  return <div>Main</div>;
+  return <main className="main">Main</main>;
 };
 export default Main;
