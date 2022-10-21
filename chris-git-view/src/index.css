@@ -2,6 +2,13 @@
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 html {
   font-size: 62.5%;
 }
@@ -11,8 +18,7 @@ body {
   background-color: rgb(26, 21, 34);
   color: white;
 }
-
+/*
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+  margin: 0;
+} */
