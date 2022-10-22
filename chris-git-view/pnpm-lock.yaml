@@ -10,6 +10,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
   '@vitejs/plugin-react': ^2.1.0
+  classnames: ^2.3.2
   diff: ^5.1.0
   diff2html: ^3.4.19
   eslint: ^8.0.1
@@ -25,6 +26,7 @@ specifiers:
   prettier: ^2.7.1
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-icons: ^4.6.0
   react-router-dom: ^6.4.2
   sass: ^1.55.0
   simple-zustand-devtools: ^1.1.0
@@ -36,12 +38,14 @@ dependencies:
   '@gitgraph/js': 1.4.0
   '@gitgraph/react': 1.6.0_react@18.2.0
   '@typescript-eslint/parser': 5.39.0_z4bbprzjrhnsfa24uvmcbu7f5q
+  classnames: 2.3.2
   diff: 5.1.0
   diff2html: 3.4.19
   highlight.js: 11.6.0
   normalize.css: 8.0.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-icons: 4.6.0_react@18.2.0
   react-router-dom: 6.4.2_biqbaboplfbrettd7655fr4n2y
   sass: 1.55.0
   zustand: 4.1.2_react@18.2.0
@@ -826,6 +830,10 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: false
+
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
     dev: false
 
   /color-convert/1.9.3:
@@ -2203,6 +2211,14 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-icons/4.6.0_react@18.2.0:
+    resolution: {integrity: sha512-rR/L9m9340yO8yv1QT1QurxWQvWpbNHqVX0fzMln2HEb9TEIrQRGsqiNFQfiv9/JEUbyHmHPlNTB2LWm2Ttz0g==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

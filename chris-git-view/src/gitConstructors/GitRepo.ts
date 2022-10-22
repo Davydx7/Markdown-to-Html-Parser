@@ -1,4 +1,4 @@
-import GitBranch from './GitBranch';
+import GitBranch, { File } from './GitBranch';
 import GitCommit from './GitCommit';
 import GitPullRequest from './GitPullRequest';
 import GitTag from './GitTag';
@@ -12,6 +12,7 @@ class GitRepo {
   public tags: GitTag[];
   public repoName: string;
   public graphFunctionString: string;
+  public file: File;
 
   constructor(repoName: string) {
     this.repoName = repoName;
@@ -22,6 +23,13 @@ class GitRepo {
     this.commits = [];
     this.tags = [];
     this.graphFunctionString = '';
+
+    this.file = {
+      name: 'file.txt',
+      type: 'text',
+      content: 'Hello World',
+      lastModified: new Date()
+    };
   }
 
   public createBranch(branchName: string = 'master'): GitBranch | undefined {
@@ -55,6 +63,11 @@ class GitRepo {
 
   public checkoutBranch() {
     // checkoutBranch
+  }
+
+  public saveFile(file: File): void {
+    // saveFile
+    this.file = file;
   }
 
   // public push () {

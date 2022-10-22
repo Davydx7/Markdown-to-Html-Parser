@@ -42,6 +42,7 @@ class GitBranch {
     // commit
     const newCommit = new GitCommit(this, name, this.index);
     this.commits.push(newCommit);
+    this._gitRepo.commits.push(newCommit);
 
     this._gitRepo.graphFunctionString += `${this.branchName}.commit("${name}");`;
 
