@@ -5,7 +5,7 @@ import { createGitgraph } from '@gitgraph/js';
 import GitRepo from '../gitConstructors/GitRepo';
 
 interface GitRepoStore {
-  gitRepo: GitRepo | null;
+  gitRepo: GitRepo;
 
   setGitRepo: (name: string) => void;
 
@@ -14,7 +14,7 @@ interface GitRepoStore {
 }
 
 export const useRepoStore = create<GitRepoStore>((set, get) => ({
-  gitRepo: null,
+  gitRepo: new GitRepo('myRepo'),
   refDiv: null,
 
   setGitRepo(name) {

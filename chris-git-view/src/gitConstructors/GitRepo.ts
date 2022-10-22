@@ -3,6 +3,13 @@ import GitCommit from './GitCommit';
 import GitPullRequest from './GitPullRequest';
 import GitTag from './GitTag';
 
+const intialFile: File = {
+  name: 'initialFile',
+  content: 'initialContent of file',
+  type: 'text',
+  lastModified: new Date()
+};
+
 class GitRepo {
   public commits: GitCommit[];
   public branches: Map<string, GitBranch>;
@@ -24,26 +31,17 @@ class GitRepo {
     this.tags = [];
     this.graphFunctionString = '';
 
-    this.file = {
-      name: 'file.txt',
-      type: 'text',
-      content: 'Hello World',
-      lastModified: new Date()
-    };
+    this.file = intialFile;
+    this.createBranch('master', intialFile);
   }
 
-  public createBranch(branchName: string = 'master'): GitBranch | undefined {
+  public createBranch(branchName: string = 'master', file: File): GitBranch | undefined {
     // createBranch
 
     if (this.currentBranch != null) {
       this.currentBranch.createBranch(branchName);
     } else {
-      const branch = new GitBranch(branchName, this, {
-        name: 'file',
-        type: 'html',
-        content: '<h1>Hello World</h1>',
-        lastModified: new Date()
-      });
+      const branch = new GitBranch(branchName, this, file);
       this.branches.set(branchName, branch);
 
       this.currentBranch = branch;

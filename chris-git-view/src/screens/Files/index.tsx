@@ -6,7 +6,7 @@ import './files.scss';
 const Files: React.FC = () => {
   const { gitRepo } = useRepoStore((state) => state);
 
-  const [fileText, setFileText] = useState('');
+  const [fileText, setFileText] = useState<string>(gitRepo.file.content);
 
   const handleChanges: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setFileText(e.target.value);
