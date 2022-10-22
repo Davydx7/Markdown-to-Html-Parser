@@ -46,8 +46,6 @@ class GitBranch {
 
     this._gitRepo.graphFunctionString += `${this.branchName}.commit("${name}");`;
 
-    alert(this._gitRepo.graphFunctionString);
-
     return this;
   }
 

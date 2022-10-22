@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import { Gitgraph } from '@gitgraph/react';
 import { useRepoStore } from './controllers/repoStore';
-import useTestStore from './controllers/testStore';
 import { applyPatch, createPatch } from 'diff';
 
 import { faker } from '@faker-js/faker';
@@ -32,12 +30,6 @@ function App(): JSX.Element {
       ui.highlightCode();
     }
   }, []);
-
-  const func = Function('gitgraph', `${graphString}`);
-
-  console.log(graphString);
-
-  const { obj, unrelated, setObj, setUnrelated } = useTestStore((state) => state);
 
   const oldString = `old string
   is awesome

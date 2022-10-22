@@ -11,12 +11,17 @@ import PullRequests from './screens/PullRequests';
 import DiffView from './screens/DiffView';
 import GraphView from './screens/GraphView';
 import Settings from './screens/Settings';
+import GitClient from './screens/GitClient';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      {
+        path: 'gitclient',
+        element: <GitClient />
+      },
       {
         path: 'files',
         element: <Files />

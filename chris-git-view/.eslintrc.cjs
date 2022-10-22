@@ -18,6 +18,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-implied-eval': 'off',
     'no-new-func': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'react/prop-types': 'off'
   }
 };

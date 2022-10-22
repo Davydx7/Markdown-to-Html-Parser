@@ -3,6 +3,7 @@ import './sidebar.scss';
 
 const Sidebar: React.FC = () => {
   const screens = [
+    ['gitclient', 'Git Client'],
     ['files', 'Files'],
     ['commits', 'Commits'],
     ['branches', 'Branches'],
