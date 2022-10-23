@@ -9,6 +9,12 @@ export interface File {
   lastModified: Date;
 }
 
+export interface Directory {
+  [key: string]: File | Directory;
+}
+
+export type paths = string[];
+
 class GitBranch {
   public commits: GitCommit[];
   public author: object;
@@ -26,7 +32,7 @@ class GitBranch {
     this.index = file;
   }
 
-  public createBranch(branchName: string = 'master'): GitBranch {
+  public createBranch(branchName: string): GitBranch {
     // createBranch
     const branch = new GitBranch(branchName, this._gitRepo, this.file);
     this._gitRepo.branches.set(branchName, branch);
@@ -35,12 +41,14 @@ class GitBranch {
 
     this._gitRepo.graphFunctionString += `const ${branchName} = ${this.branchName}.branch("${branchName}");`;
 
+    alert(this._gitRepo.graphFunctionString);
+
     return branch;
   }
 
   public createCommit(name: string) {
     // commit
-    const newCommit = new GitCommit(this, name, this.index);
+    const newCommit = new GitCommit(this, name, this.file);
     this.commits.push(newCommit);
     this._gitRepo.commits.push(newCommit);
 
@@ -65,7 +73,6 @@ class GitBranch {
   public checkout() {
     // checkout this branch
     this._gitRepo.currentBranch = this;
-    this._gitRepo.graphFunctionString += `${this.branchName}.checkout();`;
   }
 
   public rebase() {

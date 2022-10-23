@@ -19,6 +19,7 @@ module.exports = {
     '@typescript-eslint/no-implied-eval': 'off',
     'no-new-func': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 };

@@ -31,16 +31,28 @@ const GitClient: React.FC = () => {
     gitRepo?.commit(commitMessage ?? 'no message');
   };
 
+  const handleBranch = () => {
+    const branchName = prompt('branch name');
+    if (branchName) {
+      gitRepo?.createBranch(branchName);
+    }
+  };
+
   return (
     <div className="gitClient">
       <div>current branch: {gitRepo.currentBranch?.branchName}</div>
 
+      <p>Samplefile.txt:</p>
       <textarea name="file" id="" value={fileText} onChange={handleChanges} />
 
-      <div className="files__buttons">
+      <div>
         <Button onClick={handleSave}>Save</Button>
         {/* <Button className="files__buttons__button" onClick={}>Cancel</Button> */}
         <Button onClick={handleCommit}>Commit</Button>
+      </div>
+      <div>
+        <Button onClick={handleBranch}>Branch</Button>
+        <Button>Checkout Branch</Button>
       </div>
     </div>
   );

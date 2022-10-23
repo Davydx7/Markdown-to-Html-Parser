@@ -32,16 +32,16 @@ class GitRepo {
     this.graphFunctionString = '';
 
     this.file = intialFile;
-    this.createBranch('master', intialFile);
+    this.createBranch('master');
   }
 
-  public createBranch(branchName: string = 'master', file: File): GitBranch | undefined {
+  public createBranch(branchName: string = 'master'): GitBranch | undefined {
     // createBranch
 
     if (this.currentBranch != null) {
       this.currentBranch.createBranch(branchName);
     } else {
-      const branch = new GitBranch(branchName, this, file);
+      const branch = new GitBranch(branchName, this, this.file);
       this.branches.set(branchName, branch);
 
       this.currentBranch = branch;
@@ -59,13 +59,20 @@ class GitRepo {
     }
   }
 
-  public checkoutBranch() {
+  public checkoutBranch(branchName: string): void {
     // checkoutBranch
+    if (this.branches.has(branchName)) {
+      this.currentBranch = this.branches.get(branchName)!;
+      this.file = this.currentBranch.file;
+    } else {
+      alert('Branch does not exist');
+    }
   }
 
   public saveFile(file: File): void {
     // saveFile
     this.file = file;
+    this.currentBranch!.file = file;
   }
 
   // public push () {

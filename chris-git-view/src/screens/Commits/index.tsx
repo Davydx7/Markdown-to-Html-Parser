@@ -6,9 +6,11 @@ const Commits = () => {
   const { gitRepo } = useRepoStore((state) => state);
   return (
     <div>
-      {gitRepo.commits.map((commit) => (
-        <div key={commit.commitName}>{commit.commitName}</div>
-      ))}
+      <ul>
+        {gitRepo.commits.map((commit) => (
+          <li key={commit.commitName}>{commit.commitName}</li>
+        ))}
+      </ul>
     </div>
   );
 };
