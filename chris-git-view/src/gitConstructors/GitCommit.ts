@@ -1,4 +1,5 @@
-import GitBranch, { File } from './GitBranch';
+import GitBranch from './GitBranch';
+import { File } from './GitRepo';
 
 interface GitCommitOptions {
   branches: object[];

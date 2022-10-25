@@ -1,19 +1,6 @@
 import GitCommit from './GitCommit';
-import GitRepo from './GitRepo';
+import GitRepo, { File } from './GitRepo';
 import GitPullRequest from './GitPullRequest';
-
-export interface File {
-  name: string;
-  type: string;
-  content: string;
-  lastModified: Date;
-}
-
-export interface Directory {
-  [key: string]: File | Directory;
-}
-
-export type paths = string[];
 
 class GitBranch {
   public commits: GitCommit[];

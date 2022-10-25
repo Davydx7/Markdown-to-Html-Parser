@@ -1,7 +1,20 @@
-import GitBranch, { File } from './GitBranch';
+import GitBranch from './GitBranch';
 import GitCommit from './GitCommit';
 import GitPullRequest from './GitPullRequest';
 import GitTag from './GitTag';
+
+export interface File {
+  name: string;
+  type: string;
+  content: string;
+  lastModified: Date;
+}
+
+export interface Directory {
+  [key: string]: File | Directory;
+}
+
+export type paths = string[];
 
 const intialFile: File = {
   name: 'initialFile',
@@ -20,6 +33,8 @@ class GitRepo {
   public repoName: string;
   public graphFunctionString: string;
   public file: File;
+  public workingDirectory: Directory;
+  public stagingArea: Directory;
 
   constructor(repoName: string) {
     this.repoName = repoName;
@@ -30,6 +45,8 @@ class GitRepo {
     this.commits = [];
     this.tags = [];
     this.graphFunctionString = '';
+    this.workingDirectory = {};
+    this.stagingArea = {};
 
     this.file = intialFile;
     this.createBranch('master');
