@@ -44,6 +44,10 @@ class GitBranch {
     return this;
   }
 
+  public save() {
+    // save
+  }
+
   public add() {
     // add
     this.index = this.file;
