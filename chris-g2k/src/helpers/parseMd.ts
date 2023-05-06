@@ -134,7 +134,7 @@ async function parseMd(md: string): Promise<string> {
   md = md.replace(/^ *([-*_])\1{2,} *$/gm, '<hr>');
 
   // TABLES
-  md = md.replace(/^ *\|(.*?\|)+ *\n *\|(:?-+:?\|)+( *\n *\|(.*?\|)+)* */gm, (match) => {
+  md = md.replace(/^ *\|(.*?\|)+ *\n *\|( *:?-+:? *\|)+( *\n *\|(.*?\|)+)* */gm, (match) => {
     const rows = match.split('\n'); // all table row
 
     // store each column's alignment
