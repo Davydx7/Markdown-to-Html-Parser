@@ -1,0 +1,118 @@
+@use '../../styles/index.scss' as s;
+
+.output {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  border: 1px solid var(--mdBorder);
+  border-radius: 4px;
+  padding: 1.5rem;
+  color: var(--mdText);
+  // word-break: break-all;
+  overflow-wrap: break-word;
+
+  * {
+    margin: revert;
+    padding: revert;
+  }
+
+  > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  > *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  h1,
+  h2 {
+    text-decoration: underline;
+    text-decoration-color: var(--mdTextDull);
+  }
+
+  ul {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 0.5rem 0;
+
+    &.top {
+      padding-left: 1.5rem;
+      margin: 1.6rem 0 1.6rem 0;
+    }
+  }
+
+  ol {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 0.5rem 0;
+
+    &.top {
+      padding-left: 1.5rem;
+      margin: 1.6rem 0 1.6rem 0;
+    }
+  }
+
+  li.checkbox-item {
+    list-style: none;
+
+    >input{
+      margin-left: -2rem;
+      vertical-align: middle;
+    }
+  }
+
+  hr {
+    border: 0.1rem solid var(--mdTextDull);
+  }
+
+  blockquote {
+    padding: 0 1rem;
+    border-left: 0.4rem solid var(--mdTextDull);
+    color: var(--mdTextDull);
+    margin: 0;
+  }
+
+  code {
+    background-color: var(--mdCodeBackground);
+    padding: 0.2rem 0.3rem;
+    border-radius: 0.4rem;
+  }
+
+  pre {
+    background-color: var(--mdCodeBackground);
+    border-radius: 0.5rem;
+    border: 0.1rem solid var(--mdTextDull);
+    padding: 1rem;
+  }
+
+  table {
+    // text-align: left;
+    border-collapse: collapse;
+    background-color: var(--mdTableBackground);
+    border-radius: 0.5rem;
+    // overflow: hidden;
+    margin: 0.5rem 0;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  th,
+  td {
+    border: 0.1rem solid var(--mdTableBorders);
+    padding: 1rem;
+  }
+
+  th {
+    background: var(--mdThBackground);
+  }
+
+  tbody > tr:nth-child(even) {
+    background-color: var(--mdTableBackgroundEven);
+  }
+
+  mark {
+    color: var(--mdHighlightColor);
+    background-color: var(--mdHighlightBackgroundColor);
+    font-weight: 500;
+  }
+}
