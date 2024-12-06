@@ -11,15 +11,17 @@ type Props = {
 
 const RenderContent: React.FC<Props> = ({ text, markdown = true }) => {
   const ref = useRef<HTMLDivElement>(null);
-
   parseMd(text).then((parsed) => {
-    if (ref.current) {
-      if (markdown) {
-        ref.current.innerHTML = parsed;
-      } else {
-        ref.current.innerText = parsed;
-      }
+    if (!ref.current) {
+      return;
     }
+
+    if (markdown) {
+      ref.current.innerHTML = parsed;
+      return;
+    }
+
+    ref.current.innerText = parsed;
   });
 
   return <div className="output line-numbers" ref={ref} />;

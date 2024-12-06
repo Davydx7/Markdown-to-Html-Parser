@@ -53,7 +53,7 @@
   li.checkbox-item {
     list-style: none;
 
-    >input{
+    > input {
       margin-left: -2rem;
       vertical-align: middle;
     }
@@ -81,6 +81,15 @@
     border-radius: 0.5rem;
     border: 0.1rem solid var(--mdTextDull);
     padding: 1rem;
+    white-space: pre-wrap;
+  }
+
+  dl,
+  details {
+    border: 0.1rem solid var(--mdTextDull);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0.5rem 0;
   }
 
   table {
